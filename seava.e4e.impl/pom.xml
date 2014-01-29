@@ -9,7 +9,7 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>seava.e4e.impl</artifactId>
-	<name>extjs4erp - Implementation</name>
+	<name>e4e - Implementation</name>
 	<description>Implementation source code</description>
 	<packaging>jar</packaging>
 	

@@ -9,7 +9,7 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>seava.e4e.extjs</artifactId>
-	<name>extjs4erp - Extjs library</name>
+	<name>e4e - Extjs library</name>
 	<description>Extjs library [v 4.2.1]</description>
 	<packaging>jar</packaging>
 </project>

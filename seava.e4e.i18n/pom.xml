@@ -9,7 +9,7 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>seava.e4e.i18n</artifactId>
-	<name>extjs4erp - Translations</name>
+	<name>e4e - Translations</name>
 	<description>Includes translation files for the framework and Extjs library</description>
 	<packaging>jar</packaging>
 </project>

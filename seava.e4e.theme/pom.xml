@@ -9,7 +9,7 @@
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
 	<artifactId>seava.e4e.theme</artifactId>
-	<name>extjs4erp - Themes</name>
+	<name>e4e - Themes</name>
 	<description>Themes</description>
 	<packaging>jar</packaging>
 </project>
