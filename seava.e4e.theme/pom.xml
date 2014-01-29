@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<parent>
 		<relativePath>../seava.e4e</relativePath>
-		<groupId>ro.seava.lib</groupId>
+		<groupId>ro.seava.lib.e4e</groupId>
 		<artifactId>seava.e4e</artifactId>
 		<version>2.0.0-SNAPSHOT</version>
 	</parent>
