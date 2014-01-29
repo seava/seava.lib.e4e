@@ -1,0 +1,76 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<groupId>ro.seava.lib</groupId>
+	<artifactId>seava.e4e</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
+	<name>extjs4erp</name>
+	<description>Extjs based user interface framework for ERP style business applications</description>
+	<packaging>pom</packaging>
+	<url>http://www.seava.ro/extjs4erp</url>
+	
+	<scm>
+		<url>https://github.com/seava/seava.e4e</url>
+		<connection>scm:git:https://github.com/seava/seava.e4e.git</connection>
+		<developerConnection>scm:git:https://github.com/seava/seava.e4e.git</developerConnection>
+	</scm>
+	
+	<properties>
+		
+		<!-- library version -->
+		
+		<version.yuicompressor>2.4.7</version.yuicompressor>
+		
+		<!-- plugin version -->
+		
+		<version.antrun>1.7</version.antrun>
+		<version.jar>2.3</version.jar>
+		
+		<yui.path>${user.home}/.m3/repository/com/yahoo/platform/yui/yuicompressor/${version.yuicompressor}/yuicompressor-${version.yuicompressor}.jar</yui.path>
+	</properties>
+	
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>com.yahoo.platform.yui</groupId>
+				<artifactId>yuicompressor</artifactId>
+				<version>${version.yuicompressor}</version>
+				<type>jar</type>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
+	
+	<!-- ===================== Build ===================== -->
+	
+	<build>
+		<pluginManagement>
+			<plugins>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-jar-plugin</artifactId>
+				<version>${version.jar}</version>
+				<configuration>
+				 	<archive>
+						<manifestFile>src/main/resources/META-INF/MANIFEST.MF</manifestFile>
+					</archive>
+				</configuration>
+			</plugin>
+			<plugin>
+				<groupId>org.apache.maven.plugins</groupId>
+				<artifactId>maven-antrun-plugin</artifactId>
+				<version>${version.antrun}</version>
+			</plugin>
+			</plugins>
+		</pluginManagement>
+	</build>
+	
+	<!-- ========================== Modules ========================== -->
+	
+	<modules>
+		<module>../seava.e4e.impl</module>
+		<module>../seava.e4e.extjs</module>
+		<module>../seava.e4e.i18n</module>
+		<module>../seava.e4e.theme</module>
+	</modules>
+</project>

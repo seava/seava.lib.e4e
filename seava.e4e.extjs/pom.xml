@@ -1,0 +1,15 @@
+<project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
+	
+	<modelVersion>4.0.0</modelVersion>
+	<parent>
+		<relativePath>../seava.e4e</relativePath>
+		<groupId>ro.seava.lib</groupId>
+		<artifactId>seava.e4e</artifactId>
+		<version>2.0.0-SNAPSHOT</version>
+	</parent>
+	<artifactId>seava.e4e.extjs</artifactId>
+	<name>extjs4erp - Extjs library</name>
+	<description>Extjs library [v 4.2.1]</description>
+	<packaging>jar</packaging>
+</project>

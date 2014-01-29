@@ -1,0 +1,7 @@
+Manifest-Version: 1.0
+Bundle-ManifestVersion: 2
+Bundle-Name: extjs4erp - Extjs library
+Bundle-SymbolicName: seava.e4e.extjs
+Bundle-Vendor: Sencha
+Bundle-Version: 2.0.0
+Bundle-License: http://www.sencha.com/products/extjs/license
