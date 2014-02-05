@@ -59,7 +59,7 @@ if (typeof Constants === 'undefined') {
 		SESSION_LOGIN : "doLogin",
 		SESSION_LOGOUT : "doLogout",
 		SESSION_LOCK : "doLock",
-		SESSION_CHANGEPASSWORD : "changePassword",
+		SESSION_CHANGEPASSWORD : "changePassword"
 
 	}
 }
