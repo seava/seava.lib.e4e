@@ -47,6 +47,8 @@ Ext.define("e4e.lov.AbstractCombo", {
 	 * @type Ext.data.Model
 	 */
 	recordModel : null,
+	
+	recordModelFqn : null,
 	/**
 	 * Parameters model signature - record constructor.
 	 * 
@@ -122,9 +124,12 @@ Ext.define("e4e.lov.AbstractCombo", {
 
 	_createStore_ : function() {
 		if (this._dataProviderName_ == null) {
-			this._dataProviderName_ = this.recordModel.substring(
-					this.recordModel.lastIndexOf('.') + 1,
-					this.recordModel.length);
+			if (Ext.isFunction(this.recordModel)) {
+				this.recordModelFqn = this.recordModel.$className;
+			}  
+			this._dataProviderName_ = this.recordModelFqn.substring(
+					this.recordModelFqn.lastIndexOf('.') + 1,
+					this.recordModelFqn.length);
 		}
 		this.store = Ext.create("Ext.data.Store", {
 			model : this.recordModel,

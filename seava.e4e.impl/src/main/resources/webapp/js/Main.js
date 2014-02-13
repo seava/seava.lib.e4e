@@ -124,10 +124,6 @@ Main = {
 	 * @type
 	 */
 	ns : {
-		ad : "seava.mod.ad.",
-		bd : "seava.mod.bd.",
-		md : "seava.mod.md.",
-		wiag : "atraxo.mod.wiag."
 	},
 
 	/**
@@ -136,10 +132,6 @@ Main = {
 	 * @type
 	 */
 	bundle : {
-		ad : "seava.mod.ad",
-		bd : "seava.mod.bd",
-		md : "seava.mod.md",
-		wiag : "seava.mod.md"
 	},
 
 	dsName : {
@@ -270,21 +262,21 @@ Main = {
 	 */
 	urlStaticCoreI18n : null,
 
-	/**
-	 * URL where the translation files are served from for the application
-	 * modules
-	 * 
-	 * @type String
-	 */
-	urlStaticModulesI18n : null,
 
 	/**
 	 * Helper tag for the location of the application modules static resources
 	 * 
 	 * @type String
 	 */
-	urlStaticModulesSubpath : "/webapp/js",
+	urlStaticModuleSubpath : null,
 
+	/**
+	 * Include bundle when build component url ? 
+	 * 
+	 * @type String
+	 */
+	urlStaticModuleUseBundle : false,
+	
 	/**
 	 * configuration variables
 	 * 
@@ -788,7 +780,7 @@ Main = {
 		newCfg.fields = flds;
 		newCfg.extend = "Ext.data.Model";
 		delete newCfg.recordModelFqn;
-		Ext.define(fmn, newCfg);
+		return Ext.define(fmn, newCfg);
 	},
 
 	/**

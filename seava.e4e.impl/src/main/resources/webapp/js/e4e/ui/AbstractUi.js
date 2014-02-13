@@ -343,10 +343,10 @@ Ext.define("e4e.ui.AbstractUi", {
 	},
 
 	_onReady_ : function(p) {
-		var s = this.$className;
-		var simpleName = s.substring(s.lastIndexOf(".") + 1, s.length);
-		getApplication().setFrameTabTitle(simpleName, this._title_);
-		getApplication().applyFrameCallback(simpleName, this);
+		var frameFqn = this.$className;
+		//var simpleName = frameFqn.substring(frameFqn.lastIndexOf(".") + 1, frameFqn.length);
+		getApplication().setFrameTabTitle(frameFqn, this._title_);
+		getApplication().applyFrameCallback(frameFqn, this);
 	},
 
 	_config_ : function() {
@@ -365,8 +365,8 @@ Ext.define("e4e.ui.AbstractUi", {
 			if (sm) {
 				var bsr = this._buttonStateRules_[btnName];
 				var theDc = this._getDc_(sm.dc);
-				var smstate = e4e.ui.FrameButtonStateManager["is_"
-						+ sm.name](theDc);
+				var smstate = e4e.ui.FrameButtonStateManager["is_" + sm.name]
+						(theDc);
 				if (smstate && bsr) {
 					smstate = smstate && bsr.call(this, theDc);
 				}
@@ -380,7 +380,7 @@ Ext.define("e4e.ui.AbstractUi", {
 	},
 
 	_applyStateButtons_ : function(buttonNames) {
-		for ( var i = 0, l = buttonNames.length; i < l; i++) {
+		for (var i = 0, l = buttonNames.length; i < l; i++) {
 			this._applyStateButton_(buttonNames[i]);
 		}
 	},
@@ -399,13 +399,14 @@ Ext.define("e4e.ui.AbstractUi", {
 					.setProvider(new Ext.state.LocalStorageProvider({}));
 		}
 		this._mainViewName_ = "main";
+		var _trlFqn = this.$className.replace(".ui.extjs.", ".i18n.");
 		try {
-			this._trl_ = Ext.create(this.$className + "$Trl");
+			this._trl_ = Ext.create(_trlFqn);
 		} catch (e) {
 			Ext.Msg.show({
 				title : "Invalid language-pack",
-				msg : "No translation file found for " + this.$className
-						+ "$Trl <br> Using the default system language.",
+				msg : "No translation file found for " + _trlFqn
+						+ " <br> Using the default system language.",
 				icon : Ext.MessageBox.INFO,
 				buttons : Ext.Msg.OK
 			});

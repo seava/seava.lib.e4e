@@ -219,7 +219,7 @@ e4e.base.ApplicationMenu$SessionControl = [ {
 /**
  * Main application menu items
  */
-e4e.base.ApplicationMenu$Items_ClientUser = [ {
+e4e.base.ApplicationMenu$Items_ClientUser = [{
 	xtype : "splitbutton",
 	text : Main.translate("appmenuitem", "myaccount__lbl"),
 	menu : new Ext.menu.Menu({
