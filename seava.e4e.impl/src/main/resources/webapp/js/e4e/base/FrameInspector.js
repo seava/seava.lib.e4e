@@ -56,11 +56,8 @@ Ext
 									var dc = {
 										name : item.$className,
 										alias : item._instanceKey_,
-										ds : item.recordModel,
-										dsAlias : item.recordModel.substring(
-												item.recordModel
-														.lastIndexOf('.') + 1,
-												item.recordModel.length)
+										ds : item.recordModelFqn,
+										dsAlias : item.dsName
 									};
 									dcs[dcs.length] = dc;
 								}, this);

@@ -5,10 +5,11 @@
 	<parent>
 		<groupId>ro.seava.commons</groupId>
 		<artifactId>seava.parent.oss</artifactId>
-		<version>2.0.0-SNAPSHOT</version>
+		<version>2.0</version>
 	</parent>
 	<groupId>ro.seava.lib.e4e</groupId>
 	<artifactId>seava.e4e</artifactId>
+	<version>2.0.0-SNAPSHOT</version>
 	<name>e4e</name>
 	<description>Extjs based user interface framework for ERP style business applications</description>
 	<packaging>pom</packaging>
