@@ -31,8 +31,8 @@ Ext.define("e4e.lov.AbstractCombo", {
 	_dataProviderFields_ : null,
 	_dataProviderName_ : null,
 	_dummyValue_ : null,
-	_editDialog_ : null,
-	openDialog : null,
+	_editFrame_ : null,
+	openFrame : null,
 	_isLov_ : true,
 
 	/**
@@ -105,20 +105,20 @@ Ext.define("e4e.lov.AbstractCombo", {
 	},
 
 	onTrigger2Click : function() {
-		if (this._editDialog_ == null) {
+		if (this._editFrame_ == null) {
 			alert("No destination frame specified.");
 			return;
 		} else {
-			if (this._editDialog_.custom == undefined) {
-				this._editDialog_.custom = false;
+			if (this._editFrame_.custom == undefined) {
+				this._editFrame_.custom = false;
 			}
 		}
 		getApplication().showFrame(
-				this._editDialog_.name,
+				this._editFrame_.name,
 				{
-					url : Main.buildUiPath(this._editDialog_.bundle,
-							this._editDialog_.name, this._editDialog_.custom),
-					tocElement : this._editDialog_.tocElement
+					url : Main.buildUiPath(this._editFrame_.bundle,
+							this._editFrame_.name, this._editFrame_.custom),
+					tocElement : this._editFrame_.tocElement
 				});
 	},
 

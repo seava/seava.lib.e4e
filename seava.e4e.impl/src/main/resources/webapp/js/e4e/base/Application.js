@@ -297,7 +297,7 @@ e4e.base.Application = {
 			method : "GET",
 			scope : this,
 			url : Main.sessionAPI("json").lock,
-			timeout : 600000
+			timeout : Main.ajaxTimeout
 		});
 		this.loginWindow.applyState_LockSession();
 		this.showLoginView();

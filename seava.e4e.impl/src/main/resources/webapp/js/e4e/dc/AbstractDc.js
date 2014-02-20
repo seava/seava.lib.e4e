@@ -96,13 +96,13 @@ Ext
 						 * Timeout of Ajax call in store's proxy Default 15
 						 * minutes
 						 */
-						storeTimeout : 900000,
+						storeTimeout : Main.ajaxTimeout,
 
 						/**
 						 * Timeout of Ajax call in RPC commands Default 15
 						 * minutes
 						 */
-						rpcTimeout : 900000,
+						rpcTimeout : Main.ajaxTimeout,
 
 						/**
 						 * Page-size for a query

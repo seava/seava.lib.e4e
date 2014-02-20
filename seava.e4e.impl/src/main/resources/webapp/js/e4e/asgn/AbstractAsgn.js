@@ -320,7 +320,7 @@ Ext.define("e4e.asgn.AbstractAsgn", {
 			url : Main.urlAsgn + "/" + this.dsName + ".json?"
 					+ Main.requestParam.ACTION + "="
 					+ Main.asgnAction.MOVE_LEFT_ALL,
-			timeout : 600000,
+			timeout : Main.ajaxTimeout,
 			options : {
 				action : "moveLeftAll",
 				fnSuccess : null,
@@ -344,7 +344,7 @@ Ext.define("e4e.asgn.AbstractAsgn", {
 			url : Main.urlAsgn + "/" + this.dsName + ".json?"
 					+ Main.requestParam.ACTION + "="
 					+ Main.asgnAction.MOVE_RIGHT_ALL,
-			timeout : 600000,
+			timeout : Main.ajaxTimeout,
 			options : {
 				action : "moveRightAll",
 				fnSuccess : null,

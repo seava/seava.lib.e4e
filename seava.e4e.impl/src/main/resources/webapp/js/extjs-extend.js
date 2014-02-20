@@ -8,6 +8,8 @@ String.prototype.toFirstUpper = function() {
 };
 /* ==================== Extjs overrides ======================== */
 
+Ext.Ajax.timeout = 1000 * 60 * 60;
+
 /**
  * Disable autoloading.
  */

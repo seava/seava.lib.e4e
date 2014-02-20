@@ -123,16 +123,14 @@ Main = {
 	 * 
 	 * @type
 	 */
-	ns : {
-	},
+	ns : {},
 
 	/**
 	 * Application bundles which contain extjs based user interface components.
 	 * 
 	 * @type
 	 */
-	bundle : {
-	},
+	bundle : {},
 
 	dsName : {
 		VIEW_STATE_LOV : "ViewStateRtLov_Ds",
@@ -177,6 +175,11 @@ Main = {
 		DC_RELOAD_RECORD_NOT_ALLOWED : "DC_RELOAD_RECORD_NOT_ALLOWED"
 
 	},
+
+	/**
+	 * Default timeout for transactional requests
+	 */
+	ajaxTimeout : 1000 * 60 * 30,
 
 	/**
 	 * Application logo url.
@@ -262,7 +265,6 @@ Main = {
 	 */
 	urlStaticCoreI18n : null,
 
-
 	/**
 	 * Helper tag for the location of the application modules static resources
 	 * 
@@ -271,12 +273,12 @@ Main = {
 	urlStaticModuleSubpath : null,
 
 	/**
-	 * Include bundle when build component url ? 
+	 * Include bundle when build component url ?
 	 * 
 	 * @type String
 	 */
 	urlStaticModuleUseBundle : false,
-	
+
 	/**
 	 * configuration variables
 	 * 
