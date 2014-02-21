@@ -115,7 +115,7 @@ Ext.define("e4e.ui.FrameBuilder", {
 			var activate = {
 				scope : this.frame,
 				fn : function(cmp, opt) {
-					for ( var i = 0; i < onActivateDoLayoutFor.length; i++) {
+					for (var i = 0; i < onActivateDoLayoutFor.length; i++) {
 						var e = this._getElement_(onActivateDoLayoutFor[i]);
 						e.doLayout();
 					}
@@ -145,7 +145,7 @@ Ext.define("e4e.ui.FrameBuilder", {
 		var items = ((isWrapped) ? this.frame._elems_.get(c)["items"]["items"]
 				: this.frame._elems_.get(c)["items"])
 				|| [];
-		for ( var i = 0, len = list.length; i < len; i++) {
+		for (var i = 0, len = list.length; i < len; i++) {
 			var cmp = this.frame._elems_.get(list[i]);
 			items[items.length] = cmp;
 			if (regions) {
@@ -186,7 +186,7 @@ Ext.define("e4e.ui.FrameBuilder", {
 	 */
 	addToc : function(canvases) {
 		var data = [];
-		for ( var i = 0; i < canvases.length; i++) {
+		for (var i = 0; i < canvases.length; i++) {
 			data[i] = {
 				"name" : canvases[i],
 				"title" : this.frame.translate(canvases[i] + "__ttl")
@@ -318,10 +318,9 @@ Ext.define("e4e.ui.FrameBuilder", {
 		if (!config.listeners.show) {
 			config.listeners.show = {
 				fn : function() {
-					try {
-						this.down(' textfield').focus();
-					} catch (e) {
-
+					var _f = this.down(' textfield');
+					if (_f) {
+						_f.focus();
 					}
 				}
 			}
