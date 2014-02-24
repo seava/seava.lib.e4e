@@ -13,6 +13,12 @@ e4e.base.FrameNavigatorWithIframe = {
 	maxOpenTabs : -1,
 
 	/**
+	 * When open a new frame, until the translation files are loaded, set the
+	 * tab title as the frame fully qualified name or its simple name
+	 */
+	titleAsSimpleName : true,
+
+	/**
 	 * Lookup the application frame instance.
 	 * 
 	 * @param {}
@@ -20,7 +26,8 @@ e4e.base.FrameNavigatorWithIframe = {
 	 * @return {}
 	 */
 	getFrameInstance : function(frame) {
-		var theIFrame = window.frames[Constants.CMP_ID.FRAME_IFRAME_PREFIX + frame];
+		var theIFrame = window.frames[Constants.CMP_ID.FRAME_IFRAME_PREFIX
+				+ frame];
 		var theFrameInstance = null;
 		if (theIFrame) {
 			theFrameInstance = theIFrame.theFrameInstance;
@@ -85,6 +92,12 @@ e4e.base.FrameNavigatorWithIframe = {
 		var ifrID = Constants.CMP_ID.FRAME_IFRAME_PREFIX + resourceType + frame;
 		var vb = getApplication().getViewBody();
 
+		var tabTtl = frame;
+		if (this.titleAsSimpleName) {
+			tabTtl = tabTtl.substring(tabTtl.lastIndexOf('.') + 1,
+					tabTtl.length);
+		}
+
 		if (Ext.isEmpty(document.getElementById(ifrID))
 				&& !Ext.isEmpty(window.frames[ifrID])) {
 			delete window.frames[ifrID];
@@ -105,42 +118,37 @@ e4e.base.FrameNavigatorWithIframe = {
 										+ ').<br> It is not allowed to open more tabs.');
 				return;
 			}
-			vb
-					.add(new Ext.Panel(
-							{
 
-								onDestroy : function() {
-									Ext
-											.destroy(window.frames[this.n21_iframeID].__theViewport__);
-									Ext
-											.destroy(window.frames[this.n21_iframeID].theFrameInstance);
-									try {
-										delete window.frames[this.n21_iframeID];
-									} catch (e) {
-										// alert(e);
-									}
-									this.callParent();
-								},
+			var _odfn = function() {
+				Ext.destroy(window.frames[this.n21_iframeID].__theViewport__);
+				Ext.destroy(window.frames[this.n21_iframeID].theFrameInstance);
+				try {
+					delete window.frames[this.n21_iframeID];
+				} catch (e) {
+				}
+				this.callParent();
+			}
 
-								title : (resourceType != "") ? resourceType
-										+ ":" + frame : frame,
-								id : tabID,
-								n21_iframeID : ifrID,
-								autoScroll : true,
-
-								layout : 'fit',
-								closable : true,
-								html : '<div style="width:100%;height:100%;overflow: hidden;" id="div_'
-										+ frame
-										+ '" ><iframe id="'
-										+ ifrID
-										+ '" name="'
-										+ ifrID
-										+ '" src="'
-										+ params.url
-										+ '" style="border:0;width:100%;height:100%;overflow: hidden" FRAMEBORDER="no"></iframe></div>'
-
-							}));
+			var _p = new Ext.Panel(
+					{
+						onDestroy : _odfn,
+						title : tabTtl,
+						id : tabID,
+						n21_iframeID : ifrID,
+						autoScroll : true,
+						layout : 'fit',
+						closable : true,
+						html : '<div style="width:100%;height:100%;overflow: hidden;" id="div_'
+								+ frame
+								+ '" ><iframe id="'
+								+ ifrID
+								+ '" name="'
+								+ ifrID
+								+ '" src="'
+								+ params.url
+								+ '" style="border:0;width:100%;height:100%;overflow: hidden" FRAMEBORDER="no"></iframe></div>'
+					});
+			vb.add(_p);
 			vb.setActiveTab(tabID);
 		}
 	}
