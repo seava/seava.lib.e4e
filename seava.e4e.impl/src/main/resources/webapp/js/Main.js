@@ -851,9 +851,9 @@ Main = {
 		});
 	},
 
-	navigationTreeMenus : {
-
-	},
+	navigationTreeMenus : null,
+	
+	navigationTopMenus : null,
 
 	/**
 	 * Return a textual representation of the given keyboard shortcut

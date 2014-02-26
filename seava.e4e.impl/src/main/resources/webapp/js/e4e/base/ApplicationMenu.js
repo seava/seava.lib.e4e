@@ -219,7 +219,7 @@ e4e.base.ApplicationMenu$SessionControl = [ {
 /**
  * Main application menu items
  */
-e4e.base.ApplicationMenu$Items_ClientUser = [{
+e4e.base.ApplicationMenu$Items_ClientUser = [ {
 	xtype : "splitbutton",
 	text : Main.translate("appmenuitem", "myaccount__lbl"),
 	menu : new Ext.menu.Menu({
@@ -250,7 +250,7 @@ e4e.base.ApplicationMenu$Items_ClientUser = [{
 
 } ];
 
-e4e.base.ApplicationMenu$Items_SystemUser =  [ {
+e4e.base.ApplicationMenu$Items_SystemUser = [ {
 	xtype : "splitbutton",
 	text : Main.translate("appmenuitem", "myaccount__lbl"),
 	menu : new Ext.menu.Menu({
@@ -279,7 +279,7 @@ e4e.base.ApplicationMenu$Items_SystemUser =  [ {
 		items : e4e.base.ApplicationMenu$HelpItems
 	})
 
-} ] ;
+} ];
 
 /**
  * Database menus
@@ -377,12 +377,16 @@ Ext.define("e4e.base.ApplicationMenu", {
 	 * Create the header's middle part
 	 */
 	_createMiddle_ : function() {
-		if (getApplication().session.user.systemUser === true) {
-			return e4e.base.ApplicationMenu$Items_SystemUser;
-		} else {
-			return e4e.base.ApplicationMenu$Items_ClientUser;
+		var _dbm = [];
+		if (Main.navigationTopMenus != null) {
+			_dbm = this._createMenus_(Main.navigationTopMenus);
 		}
+		if (getApplication().session.user.systemUser === true) {
+			return _dbm.concat(e4e.base.ApplicationMenu$Items_SystemUser);
+		} else {
 
+			return _dbm.concat(e4e.base.ApplicationMenu$Items_ClientUser);
+		}
 	},
 
 	/**
@@ -407,14 +411,7 @@ Ext.define("e4e.base.ApplicationMenu", {
 			id : "e4e.menu.ApplicationMenu$Item$ClientName",
 			text : "--",
 			style : "font-weight:bold;"
-		},
-		/*
-		 * "-", { xtype : "tbtext", id :
-		 * "e4e.menu.ApplicationMenu$Item$CompanyLabel", text :
-		 * Main.translate("appmenuitem", "company__lbl") }, { xtype : "tbtext",
-		 * id : "e4e.menu.ApplicationMenu$Item$CompanyName", text : "--", style :
-		 * "font-weight:bold;" },
-		 */{
+		}, {
 			xtype : "tbspacer",
 			width : 20
 		}, this._createAppInfo_() ];
@@ -485,11 +482,11 @@ Ext.define("e4e.base.ApplicationMenu", {
 	addSystemMenu : function() {
 		if (!this.systemMenuAdded) {
 			this.createSystemMenu();
-			if (this.dbMenu == null) {
-				this.insert(2, this.systemMenu);
-			} else {
-				this.insert(2 + this.dbMenu.length, this.systemMenu);
-			}
+			// if (this.dbMenu == null) {
+			this.insert(2, this.systemMenu);
+			// } else {
+			// this.insert(2 + this.dbMenu.length, this.systemMenu);
+			// }
 			this.systemMenuAdded = true;
 		}
 	},
@@ -539,6 +536,21 @@ Ext.define("e4e.base.ApplicationMenu", {
 	},
 
 	/**
+	 * Create an array of menus from an array of configuration objects
+	 */
+	_createMenus_ : function(cfgArray) {
+		var _m = [];
+		for (var i = 0; i < cfgArray.length; i++) {
+			var e = cfgArray[i];
+			if (!e.text) {
+				e.text = e.title;
+			}
+			_m[_m.length] = this._createMenu_(e);
+		}
+		return _m;
+	},
+
+	/**
 	 * Create a menu from configuration object
 	 */
 	_createMenu_ : function(config) {
@@ -560,9 +572,8 @@ Ext.define("e4e.base.ApplicationMenu", {
 					},
 					menu : {
 						loader : this._createLoader_({
-							menuId : config.db_id
+							menu : config.name
 						}, true)
-
 					}
 				}, config);
 
@@ -592,12 +603,11 @@ Ext.define("e4e.base.ApplicationMenu", {
 										-2, -2 ] : undefined);
 					}
 				}
-
 			},
 			menu : {
 				loader : this._createLoader_({
-					menuItemId : config.db_id
-				}, false)
+					menuItemId : config.db_id || config.id
+				}, true)
 			}
 		};
 	},
@@ -607,7 +617,7 @@ Ext.define("e4e.base.ApplicationMenu", {
 	 */
 	_createLoader_ : function(params, autoload) {
 		return {
-			url : Main.dsAPI("MenuItemDs", "json").read,
+			url : Main.dsAPI(Main.dsName.MENU_ITEM, "json").read,
 			renderer : 'data',
 			autoLoad : autoload,
 			_isLoaded_ : false,
@@ -626,17 +636,19 @@ Ext.define("e4e.base.ApplicationMenu", {
 						var mitems = [];
 						for (var i = 0; i < res.length; i++) {
 							var e = res[i];
-							if (e.frame) {
+							if (e.leaf) {
 								mitems.push(this._createFrameMenuItem_({
 									db_id : e.id,
-									title : e.title,
+									title : e.text,
+									text : e.text,
 									frame : e.frame,
 									bundle : e.bundle
 								}));
 							} else {
 								mitems.push(this._createMenuMenuItem_({
 									db_id : e.id,
-									title : e.title
+									title : e.text,
+									text : e.text
 								}));
 							}
 						}
