@@ -138,8 +138,7 @@ e4e.base.Application = {
 		}
 	},
 
-	
-	gotoNextTab: function() {
+	gotoNextTab : function() {
 		var vb = this.getViewBody();
 		var crt = vb.getActiveTab();
 		var next = crt.nextSibling();
@@ -147,9 +146,9 @@ e4e.base.Application = {
 			vb.setActiveTab(next);
 		} else {
 			vb.setActiveTab(0);
-		}		
+		}
 	},
-	
+
 	/**
 	 * Returns the active tab.
 	 */
@@ -326,7 +325,9 @@ e4e.base.Application = {
 	 *            t selected theme
 	 */
 	changeCurrentTheme : function(t) {
-		window.location.href = Main.urlUiExtjs + "/?theme=" + t
+		window.location.href = Main.urlUiExtjs + "?" + Ext.urlEncode({
+			theme : t
+		})
 	},
 
 	/**
@@ -336,7 +337,9 @@ e4e.base.Application = {
 	 *            l selected language
 	 */
 	changeCurrentLanguage : function(l) {
-		window.location.href = Main.urlUiExtjs + "/?lang=" + l
+		window.location.href = Main.urlUiExtjs + "?" + Ext.urlEncode({
+			lang : l
+		})
 	},
 
 	/**
