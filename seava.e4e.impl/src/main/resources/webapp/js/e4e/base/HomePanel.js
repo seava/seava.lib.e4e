@@ -21,7 +21,7 @@ Ext.define("e4e.base.HomePanel", {
 		var menuConfig = [];
 		var navigAccordeonCfg = null;
 		
-		if (Main.navigationTreeMenus != null) {
+		if (Main.navigationTreeMenus != null && Main.navigationTreeMenus.length > 0 ) {
 			
 			for ( var k in Main.navigationTreeMenus) {
 				menuConfig[menuConfig.length] = Main.navigationTreeMenus[k];
