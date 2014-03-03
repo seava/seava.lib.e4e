@@ -20,6 +20,11 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	 */
 	_filterStore_ : null,
 
+	/**
+	 * Fields combo store
+	 */
+	_fieldStore_ : null,
+
 	initComponent : function(config) {
 		this._buildElements_();
 		var cfg = {
@@ -43,18 +48,24 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 
 	_onApply_ : function() {
 		var ctrl = this._grid_._controller_;
+		var _g = this._grid_; //
 		var fr = [];
+
+		//
 		this._filterStore_.data.each(function(item, idx, len) {
+			var _f = this._fieldStore_.findRecord("title", item.data.title, 0,
+					false, true, true);
 			var r = {
-				fieldName : item.data.field,
+				fieldName : _f.data.name,
 				operation : item.data.operation,
 				value1 : item.data.value1,
 				value2 : item.data.value2
 			}
 			fr[fr.length] = r;
-		});
+		}, this);
 		ctrl.advancedFilter = fr;
 		ctrl.doQuery();
+		this._filterStore_.commitChanges();
 		this.close();
 	},
 
@@ -82,6 +93,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 		var s = this._filterGrid_.getSelectionModel().getSelection()[0].data;
 		this._filterStore_.add({
 			field : s.field,
+			title : s.title,
 			operation : s.operation,
 			value1 : s.value1,
 			value2 : s.value2
@@ -95,7 +107,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 		var af = this._grid_._controller_.advancedFilter;
 		var _items = [];
 		if (af != null && Ext.isArray(af)) {
-			for ( var i = 0, len = af.length; i < len; i++) {
+			for (var i = 0, len = af.length; i < len; i++) {
 				var r = {
 					field : af[i].fieldName,
 					operation : af[i].operation,
@@ -107,7 +119,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 		}
 
 		this._filterStore_ = Ext.create("Ext.data.Store", {
-			fields : [ "field", "operation", "value1", "value2" ],
+			fields : [ "field", "title", "operation", "value1", "value2" ],
 			data : {
 				"items" : _items
 			},
@@ -141,12 +153,12 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	_buildButtons_ : function() {
 		return [ {
 			text : Main.translate("dcvgrid", "filter_apply"),
-			iconCls : "icon-action-filter",
+			// iconCls : "icon-action-filter",
 			scope : this,
 			handler : this._onApply_
 		}, {
 			text : Main.translate("dcvgrid", "filter_clear"),
-			iconCls : "icon-action-rollback",
+			// iconCls : "icon-action-rollback",
 			scope : this,
 			handler : this._onClear_
 		} ];
@@ -157,17 +169,17 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	 */
 	_buildFilterGridActions_ : function() {
 		return [ {
-			text : 'Add',
+			text : Main.translate("tlbitem", "new__lbl"),
 			tooltip : 'Add new filter criteria',
 			scope : this,
 			handler : this._onAdd_
 		}, {
-			text : 'Copy',
+			text : Main.translate("tlbitem", "copy__lbl"),
 			tooltip : 'Copy selected criteria',
 			scope : this,
 			handler : this._onCopy_
 		}, {
-			text : 'Remove',
+			text : Main.translate("tlbitem", "delete_current__lbl"),
 			tooltip : 'Remove selected criteria',
 			scope : this,
 			handler : this._onRemove_
@@ -178,32 +190,39 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	 * Build the filter-grid columns.
 	 */
 	_buildFilterGridColumns_ : function() {
-		var _data = [];
+		var _data = [];		 
+		var _trl = this._grid_._controller_._trl_;
+		
 		this._grid_._controller_.filter.fields.each(function(item, idx, len) {
 			if (!item.name.endsWith("_From") && !item.name.endsWith("_To")) {
+				var _n = item.name;
+				var _t = Main.translateModelField(_trl, _n);				 
 				_data[_data.length] = {
-					name : item.name,
+					name : _n,
+					title : _t,
 					type : item.type
 				}
 			}
 		})
-		var _column_fiel_store = {
-			fields : [ "name", "type" ],
+
+		this._fieldStore_ = Ext.create("Ext.data.Store", {
+			fields : [ "name", "title", "type" ],
 			data : _data
-		};
+		});
 
 		return [
 				{
 					text : "Field",
-					dataIndex : "field",
+					dataIndex : "title",
 					width : 150,
 					editor : {
 						xtype : "combo",
 						selectOnFocus : true,
 						typeAhead : true,
 						queryMode : "local",
-						displayField : "name",
-						store : _column_fiel_store
+						valueField : "title",
+						displayField : "title",
+						store : this._fieldStore_
 					}
 				},
 				{
