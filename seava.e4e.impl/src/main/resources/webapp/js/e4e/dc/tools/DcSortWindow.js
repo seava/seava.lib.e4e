@@ -17,6 +17,16 @@ Ext.define('e4e.dc.tools.DcSortItemSelector', {
 		desc : "Change sort sense(ASC/DESC)"
 	},
 
+	buttonsLabel : {
+		top : "Top",
+		up : "Up",
+		add : ">",
+		remove : "<",
+		down : "Down",
+		bottom : "Bottom",
+		desc : "Asc/Dsc"
+	},
+	
 	/**
 	 * Sort descending button handler
 	 */
@@ -116,8 +126,8 @@ Ext.define("e4e.dc.tools.DcSortWindow", {
 		var cfg = {
 			title : Main.translate("dcvgrid", "sort_title"),
 			border : true,
-			width : 350,
-			height : 300,
+			width : 450,
+			height : 350,
 			resizable : true,
 			closable : true,
 			constrain : true,
