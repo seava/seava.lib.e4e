@@ -223,11 +223,11 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	deferRowRender : true,
 	// enableLocking : true,
 	loadMask : {
-		msg : 'Loading...'
+		msg : Main.translate("msg", "loading") + "..." 
 	},
 	viewConfig : {
 		loadMask : {
-			msg : 'Loading...'
+			msg : Main.translate("msg", "loading") + "..." 
 		},
 		enableTextSelection : true,
 		stripeRows : true,
@@ -307,7 +307,10 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 			this._buildToolbox_(bbitems);
 
 			if (bbitems.length > 0) {
-				cfg["bbar"]["items"] = bbitems;
+				cfg["bbar"]["items"] = {
+					text: "Tools",
+					menu: bbitems
+				};
 			}
 		} else {
 			this._noExport_ = true;
@@ -430,140 +433,77 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	},
 
 	_getBtnImportCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
-			tooltip : Main.translate("dcvgrid", "imp__tlp"),
+			text : Main.translate("dcvgrid", "imp__tlp"),
 			handler : this._doImport_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-import'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "imp__lbl")
-			});
-		}
 	},
 
 	_getBtnExportCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
 			disabled : true,
-			tooltip : Main.translate("dcvgrid", "exp__tlp"),
+			text : Main.translate("dcvgrid", "exp__tlp"),
 			handler : this._doExport_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-export'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "exp__lbl")
-			});
-		}
 	},
 
 	_getBtnFilterCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
-			tooltip : Main.translate("dcvgrid", "filter__tlp"),
+			text : Main.translate("dcvgrid", "filter__tlp"),
 			handler : this._doFilter_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-filter'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "filter__lbl")
-			});
-		}
 	},
 
 	_getBtnSortCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
-			tooltip : Main.translate("dcvgrid", "sort__tlp"),
+			text : Main.translate("dcvgrid", "sort__tlp"),
 			handler : this._doSort_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-sort'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "sort__lbl")
-			});
-		}
 	},
 
 	_getBtnPrintCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
 			disabled : true,
-			tooltip : Main.translate("dcvgrid", "print__tlp"),
+			text : Main.translate("dcvgrid", "print__tlp"),
 			handler : this._doPrint_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-print'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "print__lbl")
-			});
-		}
 	},
 	
 	
 	_getBtnChartCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
 			disabled : true,
-			tooltip : Main.translate("dcvgrid", "chart__tlp"),
+			text : Main.translate("dcvgrid", "chart__tlp"),
 			handler : this._doChart_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-chart'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "chart__lbl")
-			});
-		}
 	},
 
 	_getBtnLayoutCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
-			tooltip : Main.translate("dcvgrid", "layout__tlp"),
+			text : Main.translate("dcvgrid", "layout__tlp"),
 			handler : this._doLayoutManager_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-customlayout'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "layout__lbl")
-			});
-		}
 	},
 
 	/**

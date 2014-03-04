@@ -90,22 +90,13 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 	},
 
 	_getBtnBulkEditCfg_ : function() {
-		var c = {
-			xtype : "button",
+		return c = {
+			//xtype : "button",
 			id : Ext.id(),
-			tooltip : Main.translate("dcvgrid", "upd__tlp"),
+			text : Main.translate("dcvgrid", "upd__tlp"),
 			handler : this._doBulkEdit_,
 			scope : this
 		};
-		if (Main.viewConfig.USE_TOOLBAR_ICONS) {
-			return Ext.apply(c, {
-				iconCls : 'icon-action-edit'
-			});
-		} else {
-			return Ext.apply(c, {
-				text : Main.translate("dcvgrid", "upd__lbl")
-			});
-		}
 	},
 
 	/**
