@@ -47,10 +47,10 @@ Ext.define("e4e.dc.view.DcvGridBuilder", {
 	},
 
 	addNumberColumn : function(config) {
-		config.xtype = "numbercolumn";		
-		config.format = Main.getNumberFormat(config.decimals || 0);
+		config.xtype = "numbercolumn";
 		Ext.applyIf(config, {
-			align : "right"
+			align : "right",
+			format : Main.getNumberFormat(config.decimals || 0)
 		});
 		this.applySharedConfig(config);
 		return this;
@@ -165,7 +165,7 @@ Ext.define("e4e.dc.view.DcvGridBuilder", {
 	addAllFromDataSource : function() {
 
 		var f = this.dcv._controller_.ds.recordFields;
-		for ( var i = 0, len = f.length; i < len; i++) {
+		for (var i = 0, len = f.length; i < len; i++) {
 			var name = f[i]["name"];
 			var type = f[i]["type"];
 			var cfg = {
