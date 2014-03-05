@@ -73,8 +73,6 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 
 	// **************** Defaults and overrides *****************
 
-	clicksToEdit : 1,
-
 	/**
 	 * 
 	 * Override the parent method to add specific functions
@@ -91,7 +89,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 
 	_getBtnBulkEditCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "upd__tlp"),
 			handler : this._doBulkEdit_,

@@ -28,7 +28,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				selectOnFocus : true,
 				noInsert : config.noInsert,
 				noUpdate : config.noUpdate,
-				allowBlank : ((config.allowBlank === false )? false : true)
+				allowBlank : ((config.allowBlank === false) ? false : true)
 			}
 			if (config.maxLength) {
 				config.editor.maxLength = config.maxLength;
@@ -68,7 +68,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				selectOnFocus : true,
 				noInsert : config.noInsert,
 				noUpdate : config.noUpdate,
-				allowBlank : config.allowBlank
+				allowBlank : ((config.allowBlank === false) ? false : true)
 			}
 		}
 		this.applySharedConfig(config);
@@ -93,10 +93,10 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				xtype : "numberfield",
 				format : config.format,
 				decimalPrecision : config.decimals,
-				selectOnFocus : true,
-				allowBlank : config.allowBlank,
+				selectOnFocus : true,				
 				noInsert : config.noInsert,
 				noUpdate : config.noUpdate,
+				allowBlank : ((config.allowBlank === false) ? false : true),
 				fieldStyle : "text-align:right;",
 				hideTrigger : true,
 				keyNavEnabled : false,

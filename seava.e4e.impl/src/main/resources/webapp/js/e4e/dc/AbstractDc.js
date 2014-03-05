@@ -241,7 +241,9 @@ Ext.define("e4e.dc.AbstractDc", {
 	_setup_ : function() {
 		var _trlFqn = this.recordModelFqn.replace(".ui.extjs.", ".i18n.");
 		try {
-			this._trl_ = Ext.create(_trlFqn);
+			if (_trlFqn != this.recordModelFqn) {
+				this._trl_ = Ext.create(_trlFqn);
+			}
 		} catch (e) {
 
 		}

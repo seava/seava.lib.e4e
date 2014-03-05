@@ -344,7 +344,8 @@ Ext.define("e4e.ui.AbstractUi", {
 
 	_onReady_ : function(p) {
 		var frameFqn = this.$className;
-		//var simpleName = frameFqn.substring(frameFqn.lastIndexOf(".") + 1, frameFqn.length);
+		// var simpleName = frameFqn.substring(frameFqn.lastIndexOf(".") + 1,
+		// frameFqn.length);
 		getApplication().setFrameTabTitle(frameFqn, this._title_);
 		getApplication().applyFrameCallback(frameFqn, this);
 	},
@@ -401,7 +402,9 @@ Ext.define("e4e.ui.AbstractUi", {
 		this._mainViewName_ = "main";
 		var _trlFqn = this.$className.replace(".ui.extjs.", ".i18n.");
 		try {
-			this._trl_ = Ext.create(_trlFqn);
+			if (_trlFqn != this.$className) {
+				this._trl_ = Ext.create(_trlFqn);
+			}
 		} catch (e) {
 			Ext.Msg.show({
 				title : "Invalid language-pack",
