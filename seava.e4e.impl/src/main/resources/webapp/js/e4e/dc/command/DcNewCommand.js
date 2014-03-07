@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcNewCommand", {
 	extend : "e4e.dc.command.AbstractDcSyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.CREATE,
+
 	onExecute : function(options) {
 		var dc = this.dc;
 		var store = dc.store;
@@ -29,7 +31,7 @@ Ext.define("e4e.dc.command.DcNewCommand", {
 			dc.store.add(r);
 		}
 
-		dc.fireEvent("afterDoNew", {
+		dc.fireEvent("afterDo" + this.dcApiMethod, {
 			dc : dc,
 			options : options
 		});

@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcClearQueryCommand", {
 	extend : "e4e.dc.command.AbstractDcSyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.CLEAR_QUERY,
+	
 	onExecute : function(options) {
 		var dc = this.dc;
 

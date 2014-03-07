@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcReloadRecCommand", {
 	extend : "e4e.dc.command.AbstractDcAsyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.RELOAD_REC,
+
 	beforeExecute : function() {
 		var r = this.dc.getRecord();
 		if (!r || r.phantom || !r.data.id) {

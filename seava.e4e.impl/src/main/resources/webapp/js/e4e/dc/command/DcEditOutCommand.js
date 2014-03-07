@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcEditOutCommand", {
 	extend : "e4e.dc.command.AbstractDcSyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.EDIT_OUT,
+	
 	onExecute : function(options) {
 		this.dc.fireEvent("onEditOut", this, options);
 	},

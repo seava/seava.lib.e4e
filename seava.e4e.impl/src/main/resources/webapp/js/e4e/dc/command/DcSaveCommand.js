@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcSaveCommand", {
 	extend : "e4e.dc.command.AbstractDcAsyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.SAVE,
+
 	errorTpl : Ext.create('Ext.XTemplate', [
 			'<ul style="list-style-type: none;padding:0; margin:0;">',
 			'<tpl for=".">', '<li style="list-style-type: none;">',
@@ -39,7 +41,7 @@ Ext.define("e4e.dc.command.DcSaveCommand", {
 		this.dc.store.sync({
 			success : this.onAjaxSuccess,
 			scope : this,
-			options: options
+			options : options
 		});
 	},
 
@@ -92,7 +94,7 @@ Ext.define("e4e.dc.command.DcSaveCommand", {
 		}
 		var len = recs.length;
 		var errors = null;
-		for ( var i = 0; i < len; i++) {
+		for (var i = 0; i < len; i++) {
 			errors = recs[i].validate();
 			if (!errors.isValid()) {
 				errors.each(this.addFieldNameToError, this);

@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcRpcFilterCommand", {
 	extend : "e4e.dc.command.AbstractDcAsyncCommand",
 
+	dcApiMethod : e4e.dc.DcCommandFactory.RPC_FILTER,
+
 	/**
 	 * Call a service on the data-source filter.
 	 * 

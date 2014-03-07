@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcQueryCommand", {
 	extend : "e4e.dc.command.AbstractDcAsyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.RUN_QUERY,
+
 	beforeExecute : function() {
 		var dc = this.dc;
 		if (!dc.filter.isValid()) {

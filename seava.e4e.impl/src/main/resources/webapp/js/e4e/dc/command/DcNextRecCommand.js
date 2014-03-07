@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcNextRecCommand", {
 	extend : "e4e.dc.command.AbstractDcSyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.NEXT_REC,
+
 	onExecute : function(options) {
 		var dc = this.dc;
 		if (dc.selectedRecords.length <= 1) {

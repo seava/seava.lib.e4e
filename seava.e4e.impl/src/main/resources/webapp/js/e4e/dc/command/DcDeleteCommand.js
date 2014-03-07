@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcDeleteCommand", {
 	extend : "e4e.dc.command.AbstractDcSyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.DELETE,
+
 	constructor : function(config) {
 		this.callParent(arguments);
 		this.confirmByUser = true;
@@ -20,26 +22,19 @@ Ext.define("e4e.dc.command.DcDeleteCommand", {
 			dc.store.sync({
 				success : this.onAjaxSuccess,
 				scope : this,
-				options: options
+				options : options
 			});
 		} else {
 			dc.doDefaultSelection();
-		}		
+		}
 	},
 
 	onAjaxSuccess : function(batch, options) {
 		Ext.Msg.hide();
-
-		// if (options.operation.action == "update" || options.operation.action
-		// == "create") {
-		//this.dc.afterDoSaveSuccess();
-		// }
-
 		this.dc.requestStateUpdate();
 		this.dc.fireEvent("afterDoCommitSuccess", this.dc, options.options);
-
 	},
-	
+
 	isActionAllowed : function() {
 		if (e4e.dc.DcActionsStateManager.isDeleteDisabled(this.dc)) {
 			this.dc.warning(Main.msg.DC_DELETE_NOT_ALLOWED, "msg");

@@ -5,6 +5,8 @@
 Ext.define("e4e.dc.command.DcCancelCommand", {
 	extend : "e4e.dc.command.AbstractDcSyncCommand",
 
+	dcApiMethod : e4e.dc.DcActionsFactory.CANCEL,
+	
 	onExecute : function(options) {
 		var dc = this.dc;
 		if (dc.store.getCount() == 0) {

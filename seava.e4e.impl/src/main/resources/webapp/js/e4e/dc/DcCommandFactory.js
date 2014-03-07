@@ -8,12 +8,16 @@
  */
 e4e.dc.DcCommandFactory = {
 
+	RPC_DATA : "RpcData",
+	RPC_DATALIST : "RpcDataList",
+	RPC_FILTER : "RpcFilter",
+
 	/**
 	 * List of command names which are not registered as actions either as they
 	 * are internal DC commands or not managed as actions.
 	 */
 	commandNames : function() {
-		return [ "RpcData", "RpcDataList", "RpcFilter" ];
+		return [ this.RPC_DATA, this.RPC_DATALIST, this.RPC_FILTER ];
 	},
 
 	/**
@@ -23,7 +27,7 @@ e4e.dc.DcCommandFactory = {
 	createCommands : function(dc, names) {
 
 		var result = {};
-		for ( var i = 0, l = names.length; i < l; i++) {
+		for (var i = 0, l = names.length; i < l; i++) {
 			var n = names[i];
 			result["do" + n] = this["create" + n + "Command"](dc);
 		}

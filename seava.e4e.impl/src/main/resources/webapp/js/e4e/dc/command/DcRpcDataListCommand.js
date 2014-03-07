@@ -4,6 +4,8 @@
 Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 	extend : "e4e.dc.command.AbstractDcAsyncCommand",
 
+	dcApiMethod : e4e.dc.DcCommandFactory.RPC_DATALIST,
+	
 	/**
 	 * Call a service on the data-source.
 	 * 
