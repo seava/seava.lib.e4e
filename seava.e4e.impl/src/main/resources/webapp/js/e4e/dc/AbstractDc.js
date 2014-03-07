@@ -425,6 +425,13 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	/**
+	 * Reload the current data-set (page) from server
+	 */
+	doReloadPage : function(options) {
+		this.commands.doReloadPage.execute(options);
+	},
+
+	/**
 	 * Call a server side RPC with the filter instance
 	 */
 	doRpcFilter : function(options) {

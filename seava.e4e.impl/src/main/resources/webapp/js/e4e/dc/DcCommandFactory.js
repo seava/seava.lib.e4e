@@ -123,5 +123,11 @@ e4e.dc.DcCommandFactory = {
 		return new e4e.dc.command.DcReloadRecCommand({
 			dc : dc
 		});
+	},
+
+	createReloadPageCommand : function(dc) {
+		return new e4e.dc.command.DcReloadPageCommand({
+			dc : dc
+		});
 	}
 };

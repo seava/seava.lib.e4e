@@ -209,6 +209,14 @@ e4e.dc.DcActionsStateManager = {
 		return !this._isReloadRecDisabled(flags);
 	},
 
+	_isReloadPageDisabled : function(flags) {
+		return this._isQueryDisabled(flags);
+	},
+
+	_isReloadPageEnabled : function(flags) {
+		return this._isQueryEnabled(flags);
+	},
+	
 	_isEditInEnabled : function(flags) {
 		!this._isEditInDisabled(flags);
 	},

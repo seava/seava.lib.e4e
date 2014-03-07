@@ -21,9 +21,10 @@ e4e.dc.DcActionsFactory = {
 	PREV_REC : "PrevRec",
 	NEXT_REC : "NextRec",
 	RELOAD_REC : "ReloadRec",
+	RELOAD_PAGE : "ReloadPage",
 
 	BUTTON_UI : "default",
-	
+
 	/**
 	 * List with the names of the registered actions. See the appropriate create
 	 * method for the meaning of each of the actions.
@@ -31,7 +32,8 @@ e4e.dc.DcActionsFactory = {
 	actionNames : function() {
 		return [ this.RUN_QUERY, this.CLEAR_QUERY, this.CREATE, this.COPY,
 				this.SAVE, this.DELETE, this.CANCEL, this.EDIT_IN,
-				this.EDIT_OUT, this.PREV_REC, this.NEXT_REC, this.RELOAD_REC ];
+				this.EDIT_OUT, this.PREV_REC, this.NEXT_REC, this.RELOAD_REC,
+				this.RELOAD_PAGE ];
 	},
 
 	/**
@@ -40,7 +42,7 @@ e4e.dc.DcActionsFactory = {
 	 */
 	createActions : function(dc, names) {
 		var result = {};
-		for ( var i = 0, l = names.length; i < l; i++) {
+		for (var i = 0, l = names.length; i < l; i++) {
 			var n = names[i];
 			result["do" + n] = this["create" + n + "Action"](dc);
 		}
@@ -53,14 +55,14 @@ e4e.dc.DcActionsFactory = {
 	createQueryAction : function(dc) {
 		return new Ext.Action({
 			name : "doQuery",
-			ui: this.BUTTON_UI,
+			ui : this.BUTTON_UI,
 			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
 					: null,
 			disabled : false,
 			text : Main.translate("tlbitem", "load__lbl"),
 			tooltip : Main.translate("tlbitem", "load__tlp") + " | "
 					+ Main.keyBindingToString(Main.keyBindings.dc.doQuery),
-			scope : dc,			
+			scope : dc,
 			handler : dc.doQuery
 		});
 	},
@@ -72,7 +74,7 @@ e4e.dc.DcActionsFactory = {
 		return new Ext.Action(
 				{
 					name : "doClearQuery",
-					ui: this.BUTTON_UI,
+					ui : this.BUTTON_UI,
 					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
 							: null,
 					disabled : false,
@@ -92,7 +94,7 @@ e4e.dc.DcActionsFactory = {
 	createNewAction : function(dc) {
 		return new Ext.Action({
 			name : "doNew",
-			ui: this.BUTTON_UI,
+			ui : this.BUTTON_UI,
 			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-new"
 					: null,
 			disabled : false,
@@ -110,7 +112,7 @@ e4e.dc.DcActionsFactory = {
 	createCopyAction : function(dc) {
 		return new Ext.Action({
 			name : "doCopy",
-			ui: this.BUTTON_UI,
+			ui : this.BUTTON_UI,
 			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-copy"
 					: null,
 			disabled : true,
@@ -128,7 +130,7 @@ e4e.dc.DcActionsFactory = {
 	createSaveAction : function(dc) {
 		return new Ext.Action({
 			name : "doSave",
-			ui: this.BUTTON_UI,
+			ui : this.BUTTON_UI,
 			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-save"
 					: null,
 			disabled : true,
@@ -147,7 +149,7 @@ e4e.dc.DcActionsFactory = {
 		return new Ext.Action(
 				{
 					name : "deleteSelected",
-					ui: this.BUTTON_UI,
+					ui : this.BUTTON_UI,
 					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-delete"
 							: null,
 					disabled : true,
@@ -168,7 +170,7 @@ e4e.dc.DcActionsFactory = {
 		return new Ext.Action(
 				{
 					name : "doCancel",
-					ui: this.BUTTON_UI,
+					ui : this.BUTTON_UI,
 					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-rollback"
 							: null,
 					disabled : true,
@@ -188,7 +190,7 @@ e4e.dc.DcActionsFactory = {
 	createEditInAction : function(dc) {
 		return new Ext.Action({
 			name : "doEditIn",
-			ui: this.BUTTON_UI,
+			ui : this.BUTTON_UI,
 			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-edit"
 					: null,
 			disabled : true,
@@ -206,7 +208,7 @@ e4e.dc.DcActionsFactory = {
 	createEditOutAction : function(dc) {
 		return new Ext.Action({
 			name : "doEditOut",
-			ui: this.BUTTON_UI,
+			ui : this.BUTTON_UI,
 			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-back"
 					: null,
 			disabled : false,
@@ -226,7 +228,7 @@ e4e.dc.DcActionsFactory = {
 		return new Ext.Action(
 				{
 					name : "doPrevRec",
-					ui: this.BUTTON_UI,
+					ui : this.BUTTON_UI,
 					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-previous"
 							: null,
 					disabled : false,
@@ -247,7 +249,7 @@ e4e.dc.DcActionsFactory = {
 	createNextRecAction : function(dc) {
 		return new Ext.Action({
 			name : "doNextRec",
-			ui: this.BUTTON_UI,
+			ui : this.BUTTON_UI,
 			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-next"
 					: null,
 			disabled : false,
@@ -266,14 +268,34 @@ e4e.dc.DcActionsFactory = {
 		return new Ext.Action(
 				{
 					name : "doReloadRec",
-					ui: this.BUTTON_UI,
+					ui : this.BUTTON_UI,
 					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-refresh"
 							: null,
 					disabled : false,
 					text : Main.translate("tlbitem", "reload_rec__lbl"),
 					tooltip : Main.translate("tlbitem", "reload_rec__tlp"),
 					scope : dc,
-					handler : dc.reloadCurrentRecord
+					handler : dc.doReloadRecord
+				});
+	},
+	
+	
+	/**
+	 * Create the action to reload the current record from server.
+	 */
+	createReloadPageAction : function(dc) {
+		return new Ext.Action(
+				{
+					name : "doReloadPage",
+					ui : this.BUTTON_UI,
+					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-refresh"
+							: null,
+					disabled : false,
+					text : Main.translate("tlbitem", "reload_page__lbl"),
+					tooltip : Main.translate("tlbitem", "reload_page__tlp"),
+					scope : dc,
+					handler : dc.doReloadPage
 				});
 	}
+	
 };
