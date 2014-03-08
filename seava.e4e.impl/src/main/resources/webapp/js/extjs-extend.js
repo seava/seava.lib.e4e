@@ -165,6 +165,34 @@ Ext.override(Ext.form.field.Base, {
 
 });
 
+Ext.override(Ext.container.Container, {
+	_enable_ : function(args) {
+		this.enable(args);
+	},
+
+	_disable_ : function(args) {
+		this.disable(args);
+	},
+
+	_setDisabled_ : function(args) {
+		this.setDisabled(args);
+	}
+});
+
+Ext.override(Ext.button.Button, {
+	_enable_ : function(args) {
+		this.enable(args);
+	},
+
+	_disable_ : function(args) {
+		this.disable(args);
+	},
+
+	_setDisabled_ : function(args) {
+		this.setDisabled(args);
+	}
+});
+
 // TODO: check if ext 4.2.1 has some changes here
 
 Ext.override(Ext.form.field.Text, {

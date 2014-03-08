@@ -47,11 +47,11 @@ Ext.define("e4e.ui.ActionBuilder", {
 	 */
 	addButton : function(config) {
 		var cfg = config || {};
-		Ext.applyIf(config, {
+		Ext.applyIf(cfg, {
 			id : Ext.id(),
 			xtype : "button"
 		});
-		this.frame._tlbitms_.add(this.name + "__" + config.name, config);
+		this.frame._tlbitms_.add(this.name + "__" + cfg.name, cfg);
 		return this;
 	},
 
@@ -77,7 +77,7 @@ Ext.define("e4e.ui.ActionBuilder", {
 			xtype : "label",
 			cls : "dnet-toolbar-label"
 		});
-		this.frame._tlbitms_.add(this.name + "__" + config.name, config);
+		this.frame._tlbitms_.add(this.name + "__" + cfg.name, cfg);
 		return this;
 	},
 

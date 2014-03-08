@@ -184,7 +184,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 	_gotoFirstNavigationItem_ : function() {
 		try {
-			this.down(" textfield").focus();
+			this.down("textfield").focus();
 		} catch (e) {
 
 		}
@@ -369,8 +369,8 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			return;
 		}
 		if (record.phantom) {
-			this.getForm().getFields().each(
-					function(item, index, length) {
+			this._elems_.each(
+					function(item_, index, length) { var item = this._get_(item_.name);
 						if (item._visibleFn_ != undefined) {
 							item.setVisible(this._canSetVisible_(item.name,
 									record));
@@ -387,8 +387,8 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 						}
 					}, this);
 		} else {
-			this.getForm().getFields().each(
-					function(item, index, length) {
+			this._elems_.each(
+					function(item_, index, length) {var item = this._get_(item_.name);
 						if (item._visibleFn_ != undefined) {
 							item.setVisible(this._canSetVisible_(item.name,
 									record));
