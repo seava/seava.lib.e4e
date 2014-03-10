@@ -117,6 +117,19 @@ Ext.define("e4e.ui.ActionBuilder", {
 	},
 
 	/**
+	 * Add clear-query action.
+	 */
+	addClearQuery : function(config) {
+		var cfg = config || {};
+		Ext.applyIf(cfg, {
+			dc : this.dc
+		});
+		var a = this.frame._getDc_(cfg.dc).actions.doClearQuery;
+		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
+		return this;
+	},
+	
+	/**
 	 * Add next record action
 	 */
 	addNextRec : function(config) {

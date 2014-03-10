@@ -245,7 +245,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				this.enable();
 			}
 			if (this._images_ != null) {
-				for ( var i = 0, l = this._images_.length; i < l; i++) {
+				for (var i = 0, l = this._images_.length; i < l; i++) {
 					var img = this._getElement_(this._images_[i]);
 					img.setSrc(record.get(img.dataIndex));
 				}
@@ -274,7 +274,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 */
 	_onUnbind_ : function(record) {
 		if (this._images_ != null) {
-			for ( var i = 0, l = this._images_.length; i < l; i++) {
+			for (var i = 0, l = this._images_.length; i < l; i++) {
 				var img = this._getElement_(this._images_[i]);
 				img.setSrc("");
 			}
@@ -307,7 +307,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			var fields = this.getForm().getFields();
 			if (modFieldNames) {
 				var l = modFieldNames.length;
-				for ( var i = 0; i < l; i++) {
+				for (var i = 0; i < l; i++) {
 					var field = this._findFieldByDataIndex(fields,
 							modFieldNames[i]);
 					if (field) {
@@ -369,41 +369,45 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			return;
 		}
 		if (record.phantom) {
-			this._elems_.each(
-					function(item_, index, length) { var item = this._get_(item_.name);
-						if (item._visibleFn_ != undefined) {
-							item.setVisible(this._canSetVisible_(item.name,
-									record));
-						}
-						if (item.noEdit === true || item.noInsert === true) {
-							item._disable_();
-						} else {
-							if (item._enableFn_ != undefined) {
-								item._setDisabled_(!this._canSetEnabled_(
-										item.name, record));
-							} else {
-								item._enable_();
-							}
-						}
-					}, this);
+			this._elems_.each(function(item_, index, length) {
+				var item = this._get_(item_.name);
+				if (!item) {
+					return;
+				}
+				if (item._visibleFn_ != undefined) {
+					item.setVisible(this._canSetVisible_(item.name, record));
+				}
+				if (item.noEdit === true || item.noInsert === true) {
+					item._disable_();
+				} else {
+					if (item._enableFn_ != undefined) {
+						item._setDisabled_(!this._canSetEnabled_(item.name,
+								record));
+					} else {
+						item._enable_();
+					}
+				}
+			}, this);
 		} else {
-			this._elems_.each(
-					function(item_, index, length) {var item = this._get_(item_.name);
-						if (item._visibleFn_ != undefined) {
-							item.setVisible(this._canSetVisible_(item.name,
-									record));
-						}
-						if (item.noEdit === true || item.noUpdate === true) {
-							item._disable_();
-						} else {
-							if (item._enableFn_ != undefined) {
-								item._setDisabled_(!this._canSetEnabled_(
-										item.name, record));
-							} else {
-								item._enable_();
-							}
-						}
-					}, this);
+			this._elems_.each(function(item_, index, length) {
+				var item = this._get_(item_.name);
+				if (!item) {
+					return;
+				}
+				if (item._visibleFn_ != undefined) {
+					item.setVisible(this._canSetVisible_(item.name, record));
+				}
+				if (item.noEdit === true || item.noUpdate === true) {
+					item._disable_();
+				} else {
+					if (item._enableFn_ != undefined) {
+						item._setDisabled_(!this._canSetEnabled_(item.name,
+								record));
+					} else {
+						item._enable_();
+					}
+				}
+			}, this);
 		}
 
 	},

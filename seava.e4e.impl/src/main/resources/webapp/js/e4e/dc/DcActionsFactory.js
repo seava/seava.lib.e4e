@@ -78,8 +78,8 @@ e4e.dc.DcActionsFactory = {
 					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
 							: null,
 					disabled : false,
-					text : Main.translate("tlbitem", "clearquery__lbl"),
-					tooltip : Main.translate("tlbitem", "clearquery__tlp")
+					text : Main.translate("tlbitem", "clear_query__lbl"),
+					tooltip : Main.translate("tlbitem", "clear_query__tlp")
 							+ " | "
 							+ Main
 									.keyBindingToString(Main.keyBindings.dc.doClearQuery),

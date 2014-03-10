@@ -132,7 +132,7 @@ e4e.dc.DcActionsStateManager = {
 	},
 
 	_isClearQueryDisabled : function(flags) {
-		return true;
+		return false;
 	},
 
 	_isClearQueryEnabled : function(flags) {
