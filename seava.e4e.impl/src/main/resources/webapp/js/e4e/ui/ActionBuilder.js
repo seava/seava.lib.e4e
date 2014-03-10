@@ -117,6 +117,32 @@ Ext.define("e4e.ui.ActionBuilder", {
 	},
 
 	/**
+	 * Add reload-page action.
+	 */
+	addReloadPage : function(config) {
+		var cfg = config || {};
+		Ext.applyIf(cfg, {
+			dc : this.dc
+		});
+		var a = this.frame._getDc_(cfg.dc).actions.doReloadPage;
+		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
+		return this;
+	},
+
+	/**
+	 * Add reload-page action.
+	 */
+	addReloadRec : function(config) {
+		var cfg = config || {};
+		Ext.applyIf(cfg, {
+			dc : this.dc
+		});
+		var a = this.frame._getDc_(cfg.dc).actions.doReloadRec;
+		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
+		return this;
+	},
+
+	/**
 	 * Add clear-query action.
 	 */
 	addClearQuery : function(config) {
@@ -128,7 +154,7 @@ Ext.define("e4e.ui.ActionBuilder", {
 		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
 		return this;
 	},
-	
+
 	/**
 	 * Add next record action
 	 */
@@ -181,7 +207,7 @@ Ext.define("e4e.ui.ActionBuilder", {
 	/**
 	 * Add delete selected records action.
 	 */
-	addDeleteSelected : function(config) {
+	addDelete : function(config) {
 		var cfg = config || {};
 		Ext.applyIf(cfg, {
 			dc : this.dc

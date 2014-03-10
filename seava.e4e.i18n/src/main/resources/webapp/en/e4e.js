@@ -219,10 +219,8 @@ dnet.Translation = {
 		close__tlp: "Close",
 		copy__lbl: "Copy",
 		copy__tlp: "Create a copy of the current record",
-		delete_current__lbl: "Delete",
-		delete_current__tlp: "Delete current record",
-		delete_selected__lbl: "Delete",
-		delete_selected__tlp: "Delete selected records",
+		delete__lbl: "Delete",
+		delete__tlp: "Delete selected records",
 		edit__lbl: "Edit",
 		edit__tlp: "Toogle edit mode for the current record",
 		load__lbl: "Load",
@@ -235,6 +233,10 @@ dnet.Translation = {
 		ok__tlp: "OK",
 		prev_rec__lbl: "Previous",
 		prev_rec__tlp: "Go to previous selected record or previous available record if no selection",
+		reload_page__lbl: "Reload page",
+		reload_page__tlp: "Reload records from current page",
+		reload_rec__lbl: "Reload record",
+		reload_rec__tlp: "Reload current record",
 		save__lbl: "Save",
 		save__tlp: "Save changes"
 	}

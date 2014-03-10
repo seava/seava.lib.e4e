@@ -20,8 +20,17 @@ Ext.define("e4e.dc.command.DcQueryCommand", {
 		var _p = dc.buildRequestParamsForQuery();
 		Ext.apply(dc.store.proxy.extraParams, _p);
 		dc.store.load({
-			page : 1,
-			scope : dc
+			callback : function(records, operation, success) {
+				this.onAjaxResult({
+					records : records,
+					response : operation.response,
+					operation : operation,
+					success : success
+				});
+			},
+			scope : this,
+			options : options,
+			page : 1
 		});
 	},
 

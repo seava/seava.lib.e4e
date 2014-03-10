@@ -42,8 +42,7 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 		config.xtype = "datefield";
 		Ext.applyIf(config, {
 			_mask_ : Masks.DATE,
-			checkChangeBuffer : 600,
-			altFormats: Main.ALT_FORMATS
+			altFormats : Main.ALT_FORMATS
 		});
 		config.format = Main[config._mask_];
 		this.applyModelUpdater(config);
@@ -54,8 +53,10 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 	addDateTimeField : function(config) {
 		config.xtype = "datefield";
 		Ext.applyIf(config, {
-			format : Main.DATETIME_FORMAT
+			_mask_ : Masks.DATETIME_FORMAT,
+			altFormats : Main.ALT_FORMATS
 		});
+		config.format = Main[config._mask_];
 		this.applyModelUpdater(config);
 		this.applySharedConfig(config);
 		return this;
@@ -186,7 +187,7 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 
 	addChildrenTo : function(c, list) {
 		var items = this.dcv._elems_.get(c)["items"] || [];
-		for ( var i = 0, len = list.length; i < len; i++) {
+		for (var i = 0, len = list.length; i < len; i++) {
 			items[items.length] = this.dcv._elems_.get(list[i]);
 		}
 		this.dcv._elems_.get(c)["items"] = items;

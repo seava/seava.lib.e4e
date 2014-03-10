@@ -30,11 +30,7 @@ Ext.define("e4e.dc.command.DcNewCommand", {
 			dc.setRecord(r, true);
 			dc.store.add(r);
 		}
-
-		dc.fireEvent("afterDo" + this.dcApiMethod, {
-			dc : dc,
-			options : options
-		});
+  
 	},
 
 	isActionAllowed : function() {

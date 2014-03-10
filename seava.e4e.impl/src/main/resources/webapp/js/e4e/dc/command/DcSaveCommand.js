@@ -29,33 +29,29 @@ Ext.define("e4e.dc.command.DcSaveCommand", {
 		}
 	},
 
-	// activeElement : null,
-
 	onExecute : function(options) {
 		if (this.dc.params != null) {
 			this.dc.store.proxy.extraParams.params = Ext.JSON
 					.encode(this.dc.params.data);
 		}
-		// this.activeElement = document.activeElement;
 		Main.working();
 		this.dc.store.sync({
-			success : this.onAjaxSuccess,
+			callback : function(batch, options) {
+				this.onAjaxResult({
+					batch : batch,
+					options : options,
+					success : !batch.hasException
+				});
+			},
 			scope : this,
 			options : options
 		});
 	},
 
-	onAjaxSuccess : function(batch, options) {
-		Ext.Msg.hide();
-
-		// if (options.operation.action == "update" || options.operation.action
-		// == "create") {
-		this.dc.afterDoSaveSuccess();
-		// }
-
+	onAjaxSuccess : function(ajaxResult) {
+		this.callParent(arguments);
 		this.dc.requestStateUpdate();
-		this.dc.fireEvent("afterDoCommitSuccess", this.dc, options.options);
-
+		this.dc.fireEvent("afterDoCommitSuccess", this.dc, ajaxResult.options.options);
 	},
 
 	isActionAllowed : function() {

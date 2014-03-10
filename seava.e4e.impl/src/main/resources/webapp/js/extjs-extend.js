@@ -18,6 +18,25 @@ Ext.Loader.setConfig({
 });
 
 /**
+ * Using Ext.Msg.hide() with no shown message box, hide throws an error
+ */
+Ext.override(Ext.window.MessageBox, {
+
+	hide : function() {
+		var me = this;
+		if (me.cfg) { // my change
+			var cls = me.cfg.cls;
+			me.dd.endDrag();
+			me.progressBar.reset();
+			if (cls) {
+				me.removeCls(cls);
+			}
+			me.callParent(arguments);
+		}
+	}
+});
+
+/**
  * Change the clientRecordId. The default value `clientId` is in conflict with
  * our clientId field which represents the tenant-id.
  */

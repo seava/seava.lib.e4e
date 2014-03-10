@@ -21,6 +21,7 @@ Ext.define("e4e.dc.command.DcDeleteCommand", {
 		if (!dc.multiEdit) {
 			dc.store.sync({
 				success : this.onAjaxSuccess,
+				failure : this.onAjaxFailure,
 				scope : this,
 				options : options
 			});
@@ -30,7 +31,7 @@ Ext.define("e4e.dc.command.DcDeleteCommand", {
 	},
 
 	onAjaxSuccess : function(batch, options) {
-		Ext.Msg.hide();
+		this.callParent(arguments);
 		this.dc.requestStateUpdate();
 		this.dc.fireEvent("afterDoCommitSuccess", this.dc, options.options);
 	},

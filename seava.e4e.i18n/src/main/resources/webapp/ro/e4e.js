@@ -219,10 +219,8 @@ dnet.Translation = {
 		close__tlp: "Închide",
 		copy__lbl: "Copiază",
 		copy__tlp: "Copiază înregistrarea curentă",
-		delete_current__lbl: "Şterge",
-		delete_current__tlp: "Şterge înregistrarea curentă",
-		delete_selected__lbl: "Şterge",
-		delete_selected__tlp: "Şterge înregistrările selectate",
+		delete__lbl: "Şterge",
+		delete__tlp: "Şterge înregistrările selectate",
 		edit__lbl: "Modifică",
 		edit__tlp: "Afisează formularul de modificare",
 		load__lbl: "Filtrează",
@@ -235,6 +233,10 @@ dnet.Translation = {
 		ok__tlp: "OK",
 		prev_rec__lbl: "Anterior",
 		prev_rec__tlp: "Încarcă înregistrarea anterioară din cele selectate sau cea anterioră disponibilă dacă nu există selecţie multiplă",
+		reload_page__lbl: "Reîncarcă pagina",
+		reload_page__tlp: "Re-încarcă înregistrările din pagina curentă",
+		reload_rec__lbl: "Reîncarcă înreg.",
+		reload_rec__tlp: "Re-încarcă înregistrarea curentă",
 		save__lbl: "Salvează",
 		save__tlp: "Salvează modificările"
 	}

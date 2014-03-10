@@ -53,13 +53,28 @@ if (typeof Constants === 'undefined') {
 		ASGN_RESET : "reset",
 		ASGN_SAVE : "save",
 		ASGN_CLEANUP : "cleanup",
+
 		/**
 		 * Session/security actions
 		 */
 		SESSION_LOGIN : "doLogin",
 		SESSION_LOGOUT : "doLogout",
 		SESSION_LOCK : "doLock",
-		SESSION_CHANGEPASSWORD : "changePassword"
+		SESSION_CHANGEPASSWORD : "changePassword",
+
+		/**
+		 * Format masks
+		 */
+		EXTJS_DATE_FORMAT : "Y-m-d",
+		EXTJS_TIME_FORMAT : "H:i",
+		EXTJS_DATETIME_FORMAT : "Y-m-d H:i",
+		EXTJS_DATETIMESEC_FORMAT : "Y-m-d H:i:s",
+		EXTJS_MONTH_FORMAT : "Y-m",
+		EXTJS_MODEL_DATE_FORMAT : "Y-m-d H:i:s",
+		EXTJS_ALT_FORMATS : "j|j-n|d|d-m",
+
+		THOUSAND_SEPARATOR : ",",
+		DECIMAL_SEPARATOR : "."
 
 	}
 }
@@ -852,7 +867,7 @@ Main = {
 	},
 
 	navigationTreeMenus : null,
-	
+
 	navigationTopMenus : null,
 
 	/**

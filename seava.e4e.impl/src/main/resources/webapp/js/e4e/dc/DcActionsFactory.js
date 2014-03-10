@@ -148,13 +148,13 @@ e4e.dc.DcActionsFactory = {
 	createDeleteAction : function(dc) {
 		return new Ext.Action(
 				{
-					name : "deleteSelected",
+					name : "doDelete",
 					ui : this.BUTTON_UI,
 					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-delete"
 							: null,
 					disabled : true,
-					text : Main.translate("tlbitem", "delete_selected__lbl"),
-					tooltip : Main.translate("tlbitem", "delete_selected__tlp")
+					text : Main.translate("tlbitem", "delete__lbl"),
+					tooltip : Main.translate("tlbitem", "delete__tlp")
 							+ " | "
 							+ Main
 									.keyBindingToString(Main.keyBindings.dc.doDelete),

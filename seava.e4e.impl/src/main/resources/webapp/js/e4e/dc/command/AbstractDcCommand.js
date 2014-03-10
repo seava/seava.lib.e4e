@@ -54,7 +54,7 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	 * Template method where subclasses or external contexts can provide
 	 * additional logic. If it returns false the execution is stopped.
 	 */
-	beforeExecute : function() {
+	beforeExecute : function(options) {
 		return true;
 	},
 
@@ -64,19 +64,21 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	 * Commands which initiate AJAX calls do not have the result of the remote
 	 * call available here. Provide callbacks for such situations.
 	 */
-	afterExecute : function() {
+	afterExecute : function(options) {
 		if (this.dcApiMethod != null) {
-			var m = this.dc['afterDo' + this.dcApiMethod];
+			var m = this.dc["afterDo" + this.dcApiMethod];
 			if (m != undefined && Ext.isFunction(m)) {
-				m.call(this.dc);
+				m.call(this.dc, options);
 			}
+
+			this.dc.fireEvent("afterDo" + this.dcApiMethod, this.dc, options);
 		}
 	},
 
 	/**
 	 * Provide whatever extra-logic to check if the command can be executed.
 	 */
-	canExecute : function() {
+	canExecute : function(options) {
 		return true;
 	},
 
@@ -87,24 +89,13 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	confirmExecute : function(btn, options) {
 		if (!btn) {
 			if (confirm(this.confirmMessageBody)) {
-				this.onExecute(options);
+				options.confirmed = true;
+				this.execute(options);
 			}
 		}
-
-		// if (!btn) {
-		// Ext.Msg.confirm(this.confirmMessageTitle, this.confirmMessageBody,
-		// function(btn) {
-		// this.confirmExecute(btn, options);
-		// }, this).focus();
-		// } else {
-		// if (btn == "yes" || btn == "ok") {
-		// options.confirmed = true;
-		// this.execute(options);
-		// }
-		// }
 	},
 
-	needsConfirm : function() {
+	needsConfirm : function(options) {
 		return this.confirmByUser;
 	},
 
@@ -121,7 +112,7 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	execute : function(options) {
 		try {
 			options = options || {};
-			if (!this.isActionAllowed()) {
+			if (!this.isActionAllowed(options)) {
 				return;
 			}
 
@@ -132,11 +123,12 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 			 * false Used by AbstractDcvForm to inject its own form validation
 			 * result.
 			 */
-			if (this.beforeExecute() === false || this.beforeExecute() == -1) {
+			var x = this.beforeExecute(options);
+			if (x === false || x == -1) {
 				return false;
 			}
 
-			if (this.needsConfirm() && options.confirmed !== true) {
+			if (this.needsConfirm(options) && options.confirmed !== true) {
 				this.confirmExecute(null, options);
 				return;
 			}

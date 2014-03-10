@@ -57,9 +57,11 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 			xtype : "datecolumn",
 			noInsert : false,
 			noUpdate : false,
-			format : ((config._mask_) ? Main[config._mask_] : Main[_mask_]),
 			_mask_ : _mask_
 		});
+
+		config.format = Main[config._mask_];
+
 		if (!config.editor && config.noEdit !== true) {
 			config.editor = {
 				xtype : "datefield",
@@ -93,7 +95,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				xtype : "numberfield",
 				format : config.format,
 				decimalPrecision : config.decimals,
-				selectOnFocus : true,				
+				selectOnFocus : true,
 				noInsert : config.noInsert,
 				noUpdate : config.noUpdate,
 				allowBlank : ((config.allowBlank === false) ? false : true),

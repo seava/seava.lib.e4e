@@ -386,16 +386,9 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	/**
-	 * Delete current record.
-	 */
-	doDelete : function(options) {
-		this.commands.doDelete.execute(options);
-	},
-
-	/**
 	 * Delete selected records.
 	 */
-	doDeleteSelection : function(options) {
+	doDelete : function(options) {
 		this.commands.doDelete.execute(options);
 	},
 
@@ -975,93 +968,16 @@ Ext.define("e4e.dc.AbstractDc", {
 	 * Default proxy-exception handler
 	 */
 	proxyException : function(proxy, response, operation, eOpts) {
+		if (operation.error) {
+			operation.error.responseText = response.responseText;
+		}
 		if (operation && operation.action == "destroy" && !this.multiEdit) {
 			this.store.rejectChanges();
 		}
 	},
 
-	/**
-	 * Show errors to user. TODO: Externalize it as command.
-	 */
-	showAjaxErrors : function(response, options) {
-		try {
-			Ext.MessageBox.hide();
-		} catch (e) {
-
-		}
-		var msg, withDetails = false;
-		if (response.responseText) {
-			if (response.responseText.length > 2000) {
-				msg = response.responseText.substr(0, 2000);
-				withDetails = true;
-			} else {
-				msg = response.responseText;
-			}
-		} else {
-			msg = "No response received from server.";
-		}
-		var alertCfg = {
-			title : "Server message",
-			msg : msg,
-			scope : this,
-			icon : Ext.MessageBox.ERROR,
-			buttons : Ext.MessageBox.OK
-		}
-		if (withDetails) {
-			alertCfg.buttons['cancel'] = 'Details';
-			alertCfg['detailedMessage'] = response.responseText;
-		}
-		Ext.Msg.show(alertCfg);
-
-	},
-
-	// ************************************************
-	// to be reviewd
-	// ************************************************
-
-	afterDoQuerySuccess : function() {
-		this.fireEvent("afterDoQuerySuccess", this);
-	},
-
-	afterDoQueryFailure : function() {
-		this.fireEvent("afterDoQueryFailure", this);
-	},
-
-	beforeDoSave : function() {
-		this.fireEvent("beforeDoSave", this);
-	},
-
-	afterDoSave : function() {
-		this.fireEvent("afterDoSave", this);
-	},
-
-	afterDoSaveSuccess : function() {
-		this.fireEvent("afterDoSaveSuccess", this);
-	},
-
-	afterDoSaveFailure : function() {
-		this.fireEvent("afterDoSaveFailure", this);
-	},
-
 	/* *********** SERVICE DATA ********************* */
 
-	// doServiceUrl : function(serviceName, specs) {
-	// if (Ext.isEmpty(this.record)) {
-	// throw (e4e.dc.DcExceptions.NO_CURRENT_RECORD);
-	// }
-	// var s = specs || {};
-	//
-	// var p = {
-	// data : Ext.encode(this.record.data)
-	// };
-	// p[Main.requestParam.SERVICE_NAME_PARAM] = serviceName;
-	// p["rpcType"] = "data";
-	// if (s.modal) {
-	// Main.working();
-	// }
-	// return Main.dsAPI(this.dsName, "stream").service + "&"
-	// + Ext.urlEncode(p);
-	// },
 	/**
 	 * Default AJAX request failure handler.
 	 */
@@ -1118,19 +1034,7 @@ Ext.define("e4e.dc.AbstractDc", {
 
 	setDcContext : function(dcCtx) {
 		this.dcContext = dcCtx;
-		// this.mon(this.dcContext, "dataContextChanged",
-		// this.onDcContext_dataContextChanged, this);
 	},
-
-	// onDcContext_dataContextChanged : function(dctx) {
-	// // e4e.dc.DcActionsStateManager.applyStates(this);
-	// // if (dctx.parentDc.getRecord() &&
-	// dctx.parentDc.getRecord().phantom) {
-	// // this.fireEvent("inContextOfNewRecord", this);
-	// // } else {
-	// // this.fireEvent("inContextOfEditRecord", this);
-	// // }
-	// },
 
 	onCleanDc : function() {
 		this.fireEvent('cleanDc', {
