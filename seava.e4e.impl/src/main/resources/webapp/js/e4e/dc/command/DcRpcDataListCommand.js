@@ -5,7 +5,7 @@ Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 	extend : "e4e.dc.command.AbstractDcAsyncCommand",
 
 	dcApiMethod : e4e.dc.DcCommandFactory.RPC_DATALIST,
-	
+
 	/**
 	 * Call a service on the data-source.
 	 * 
@@ -57,15 +57,17 @@ Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 		if (options.modal) {
 			Main.working();
 		}
-		Ext.Ajax.request({
-			url : Main.dsAPI(dc.dsName, ((options.stream) ? "stream" : "json")).service,
-			method : "POST",
-			params : p,
-			success : this.onAjaxSuccess,
-			failure : this.onAjaxFailure,
-			scope : this,
-			options : options
-		});
+		Ext.Ajax
+				.request({
+					url : Main.dsAPI(dc.dsName, ((options.stream) ? "stream"
+							: "json")).service,
+					method : "POST",
+					params : p,
+					success : this.onAjaxSuccess,
+					failure : this.onAjaxFailure,
+					scope : this,
+					options : options
+				});
 	},
 
 	/**
@@ -103,17 +105,17 @@ Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 			var records = dc.store.proxy.reader.readRecords(r.data).records;
 			var srcRecords = options.options.sourceRecords;
 
-			for (var iSource in srcRecords) {
+			for ( var iSource in srcRecords) {
 				var srcRec = srcRecords[iSource];
 
 				var dirty = srcRec.dirty;
 				srcRec.beginEdit();
 
-				for (var iResult in records) {
+				for ( var iResult in records) {
 					var rec = records[iResult];
 
 					if (srcRec.getId() == rec.getId()) {
-						for (var p in rec.data) {
+						for ( var p in rec.data) {
 							srcRec.set(p, rec.data[p]);
 						}
 					}
@@ -163,7 +165,9 @@ Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 		}
 		var o = options.options || {}, serviceName = o.name, s = o || {};
 		var dc = this.dc;
-		dc.showAjaxErrors(response, options);
+		this.showError({
+			message : response.responseText
+		});
 		if (s.callbacks && s.callbacks.failureFn) {
 			s.callbacks.failureFn.call(s.callbacks.failureScope || dc, dc,
 					response, serviceName, options);

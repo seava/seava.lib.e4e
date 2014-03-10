@@ -127,7 +127,9 @@ Ext.define("e4e.dc.command.DcRpcFilterCommand", {
 		}
 		var o = options.options || {}, serviceName = o.name, s = o || {};
 		var dc = this.dc;
-		dc.showAjaxErrors(response, options);
+		this.showError({
+			message : response.responseText
+		});
 		if (s.callbacks && s.callbacks.failureFn) {
 			s.callbacks.failureFn.call(s.callbacks.failureScope || dc, dc,
 					response, serviceName, options);
