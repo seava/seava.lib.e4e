@@ -16,8 +16,6 @@ Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 
 	// **************** Properties *****************
 
-	sortableColumns : false,
-	
 	// **************** Public API *****************
 
 	/**
@@ -63,7 +61,7 @@ Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 	 * Helper method to disable the specified fields.
 	 */
 	_disableFields_ : function(fldNamesArray) {
-		for ( var i = 0, l = fldNamesArray.length; i < l; i++) {
+		for (var i = 0, l = fldNamesArray.length; i < l; i++) {
 			this._get_(fldNamesArray[i]).disable();
 		}
 	},
@@ -108,11 +106,6 @@ Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 	beforeDestroy : function() {
 		this._controller_ = null;
 		this.callParent();
-		try {
-			this._unlinkElemRefs_();
-		} catch (e) {
-
-		}
 		this._elems_.each(this.unlinkElem, this);
 		this._elems_.each(this.destroyElement, this);
 	},

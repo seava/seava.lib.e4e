@@ -67,11 +67,11 @@ Ext.define("e4e.dc.view.AbstractDcvFilterPropGrid",
 
 				var cfg = {
 					autoScroll : true,
+					sortableColumns : false,
 					source : sourceObj,
 					propertyNames : propertyNames,
 					customEditors : customEditors,
 					customRenderers : customRenderers
-					
 				};
 				Ext.apply(this, cfg);
 				this.callParent(arguments);

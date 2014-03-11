@@ -295,10 +295,12 @@ Ext.define("e4e.dc.AbstractDc", {
 		this.mon(this, "recordChange", this.requestStateUpdate, this);
 		//
 		this.mon(this, "selectionChange", this.requestStateUpdate, this);
-		this.mon(this, "stateUpdateRequest", this.updateDcState, this, {
-			buffer : 100
-		});
-
+		this.mon(this, "stateUpdateRequest", this.updateDcState, this);
+		/*
+		 * TODO: update flags immediatly in dcActionStateManager, then buffer
+		 * only the UI component's state update
+		 *  , { buffer : 100 }
+		 */
 	},
 
 	onStore_load : function(store, records, succes, eopts) {

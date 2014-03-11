@@ -183,10 +183,9 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	},
 
 	_gotoFirstNavigationItem_ : function() {
-		try {
-			this.down("textfield").focus();
-		} catch (e) {
-
+		var f = this.down("textfield");
+		if (f) {
+			f.focus();
 		}
 	},
 
