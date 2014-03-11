@@ -164,7 +164,7 @@ e4e.base.Application = {
 	getActiveFrameInstance : function() {
 		if (this.getActiveTab()) {
 			return this.navigator
-					.getFrameInstance(this.getActiveTab().initialConfig.title);
+					.getFrameInstance(this.getActiveTab().initialConfig.fqn);
 		}
 		return null;
 	},

@@ -82,8 +82,15 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 				message : ajaxResult.response.responseText
 			});
 			return;
-		}
-		if (ajaxResult.batch) {
+		} else if (ajaxResult.operation) {
+			var err = ajaxResult.operation.error;
+			if (err) {
+				this.showError({
+					message : err.responseText
+				});
+				return;
+			}
+		} else if (ajaxResult.batch) {
 			var b = ajaxResult.batch;
 			if (b.exceptions && b.exceptions[0]) {
 				this.showError({

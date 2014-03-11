@@ -141,6 +141,7 @@ e4e.base.FrameNavigatorWithIframe = {
 					{
 						onDestroy : _odfn,
 						title : tabTtl,
+						fqn : frame,
 						id : tabID,
 						n21_iframeID : ifrID,
 						autoScroll : true,
