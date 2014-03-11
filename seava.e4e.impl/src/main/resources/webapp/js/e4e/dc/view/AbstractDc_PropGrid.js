@@ -16,6 +16,8 @@ Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 
 	// **************** Properties *****************
 
+	sortableColumns : false,
+	
 	// **************** Public API *****************
 
 	/**

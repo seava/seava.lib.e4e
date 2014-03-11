@@ -127,7 +127,15 @@ e4e.base.FrameNavigatorWithIframe = {
 				} catch (e) {
 				}
 				this.callParent();
-			}
+			};
+
+			var beforeCloseFn = function(tab, eOpts) {
+				if (window.frames[this.n21_iframeID].theFrameInstance.isDirty()) {
+
+					return confirm("Frame contains un-saved changes which will be lost.\n Would you like to close frame anyway? ");
+				}
+				return true;
+			};
 
 			var _p = new Ext.Panel(
 					{
@@ -138,6 +146,11 @@ e4e.base.FrameNavigatorWithIframe = {
 						autoScroll : true,
 						layout : 'fit',
 						closable : true,
+						listeners : {
+							beforeclose : {
+								fn : beforeCloseFn
+							}
+						},
 						html : '<div style="width:100%;height:100%;overflow: hidden;" id="div_'
 								+ frame
 								+ '" ><iframe id="'

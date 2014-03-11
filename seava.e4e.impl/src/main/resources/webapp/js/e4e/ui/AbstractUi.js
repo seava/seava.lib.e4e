@@ -394,6 +394,21 @@ Ext.define("e4e.ui.AbstractUi", {
 		}, this)
 	},
 
+	/**
+	 * Check if any of the data-controls is dirty
+	 */
+	isDirty : function() {
+		var d = false;
+		this._dcs_.each(function(item, idx, len) {
+			if (item.isDirty()) {
+				d = true;
+				return false;
+			}
+			return true;
+		}, this);
+		return d;
+	},
+
 	initComponent : function() {
 		if (getApplication().getSession().rememberViewState) {
 			Ext.state.Manager
