@@ -117,7 +117,11 @@ Ext.define("e4e.base.FileUploadWindow2", {
 						waitMsg : Main.translate("msg", "uploading"),
 						scope : this,
 						success : function(form, action) {
-							Ext.Msg.hide();
+							try {
+								Ext.Msg.hide();
+							} catch (e) {
+
+							}
 							this.close();
 							if (this._succesCallbackFn_ != null) {
 								this._succesCallbackFn_
