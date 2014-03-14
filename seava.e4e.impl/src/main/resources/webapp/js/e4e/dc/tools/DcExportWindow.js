@@ -121,7 +121,7 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 					+ "scrollbars=yes, resizable=yes,menubar=yes";
 
 			var u = url["exportdata"] + "&"
-					+ Ext.Object.toQueryStringNoEncode(_p);
+					+ Ext.Object.toQueryString(_p);
 
 			var v = window.open(u, 'Export', opts);
 			v.focus();
