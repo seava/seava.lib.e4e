@@ -29,7 +29,7 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 			selectOnFocus : true,
 			allowBlank : false
 		},
-		
+
 		buttons : [ {
 			text : Main.translate("tlbitem", "ok__lbl"),
 			formBind : true,
@@ -38,7 +38,7 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 				this.up("form").executeTask();
 			}
 		} ],
-		
+
 		items : [ {
 			name : "fld_format",
 			fieldLabel : Main.translate("cmp", "exp_format"),
@@ -61,7 +61,7 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 				boxLabel : Main.translate("cmp", "exp_col_all"),
 				inputValue : 'all'
 			} ]
-		} ],		
+		} ],
 
 		/**
 		 * Handler. Run in button scope
@@ -99,16 +99,14 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 
 			var cm = null;
 			if (val.fld_columns != "all") {
-				cm = grid.down('headercontainer')
-						.getVisibleGridColumns();				
+				cm = grid.down('headercontainer').getVisibleGridColumns();
 			} else {
-				cm = grid.down('headercontainer')
-				.getGridColumns();		
+				cm = grid.down('headercontainer').getGridColumns();
 			}
 
 			var len = cm.length;
 			var _cols = [];
-			for ( var i = 0; i < len; i++) {
+			for (var i = 0; i < len; i++) {
 				_cols[_cols.length] = {
 					name : cm[i].dataIndex,
 					title : cm[i].text.replace(",", " "),
@@ -121,8 +119,11 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 
 			var opts = "adress=yes, width=710, height=450,"
 					+ "scrollbars=yes, resizable=yes,menubar=yes";
-			var v = window.open(url["exportdata"] + "&" + Ext.urlEncode(_p),
-					'Export', opts);
+
+			var u = url["exportdata"] + "&"
+					+ Ext.Object.toQueryStringNoEncode(_p);
+
+			var v = window.open(u, 'Export', opts);
 			v.focus();
 			wdw.close();
 		}

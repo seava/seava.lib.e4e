@@ -145,7 +145,7 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 			}), Ext.apply(Main.keyBindings.dc.doDelete, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
-					this._controller_.doDeleteSelection();
+					this._controller_.doDelete();
 				},
 				scope : this
 			}), Ext.apply(Main.keyBindings.dc.doCopy, {

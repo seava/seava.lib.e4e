@@ -239,7 +239,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 					}),
 					Ext.apply(Main.keyBindings.dc.doDelete, {
 						fn : function(keyCode, e) {
-							this._controller_.doDeleteSelection();
+							this._controller_.doDelete();
 							e.stopEvent();
 						},
 						scope : this
