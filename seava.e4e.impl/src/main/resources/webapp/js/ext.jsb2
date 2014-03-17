@@ -154,7 +154,13 @@
 },{
 	"text": "DcQueryCommand.js",
 	"path": "/e4e/dc/command/"
-} ,{
+},{
+	"text": "DcClearQueryCommand.js",
+	"path": "/e4e/dc/command/"
+},{
+	"text": "DcEnterQueryCommand.js",
+	"path": "/e4e/dc/command/"
+},{
 	"text": "DcNewCommand.js",
 	"path": "/e4e/dc/command/"
 },{
@@ -174,9 +180,6 @@
 	"path": "/e4e/dc/command/"
 },{
 	"text": "DcEditOutCommand.js",
-	"path": "/e4e/dc/command/"
-},{
-	"text": "DcClearQueryCommand.js",
 	"path": "/e4e/dc/command/"
 },{
 	"text": "DcDeleteCommand.js",

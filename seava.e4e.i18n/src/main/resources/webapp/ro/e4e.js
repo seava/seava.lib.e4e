@@ -223,6 +223,8 @@ dnet.Translation = {
 		delete__tlp: "Şterge înregistrările selectate",
 		edit__lbl: "Modifică",
 		edit__tlp: "Afisează formularul de modificare",
+		enter_query__lbl: "Modifică filtru",
+		enter_query__tlp: "Modifică criteriul de filtrare curent",
 		load__lbl: "Filtrează",
 		load__tlp: "Încarcă înregistrările care corespund criteriilor de filtrare specificate",
 		new__lbl: "Crează",

@@ -223,6 +223,8 @@ dnet.Translation = {
 		delete__tlp: "Delete selected records",
 		edit__lbl: "Edit",
 		edit__tlp: "Toogle edit mode for the current record",
+		enter_query__lbl: "Set filter",
+		enter_query__tlp: "Enter query criteria",
 		load__lbl: "Load",
 		load__tlp: "Load records from database according to specified filter",
 		new__lbl: "New",

@@ -11,6 +11,7 @@ e4e.dc.DcActionsFactory = {
 
 	RUN_QUERY : "Query",
 	CLEAR_QUERY : "ClearQuery",
+	ENTER_QUERY : "EnterQuery",
 	CREATE : "New",
 	COPY : "Copy",
 	SAVE : "Save",
@@ -30,10 +31,10 @@ e4e.dc.DcActionsFactory = {
 	 * method for the meaning of each of the actions.
 	 */
 	actionNames : function() {
-		return [ this.RUN_QUERY, this.CLEAR_QUERY, this.CREATE, this.COPY,
-				this.SAVE, this.DELETE, this.CANCEL, this.EDIT_IN,
-				this.EDIT_OUT, this.PREV_REC, this.NEXT_REC, this.RELOAD_REC,
-				this.RELOAD_PAGE ];
+		return [ this.RUN_QUERY, this.CLEAR_QUERY, this.ENTER_QUERY,
+				this.CREATE, this.COPY, this.SAVE, this.DELETE, this.CANCEL,
+				this.EDIT_IN, this.EDIT_OUT, this.PREV_REC, this.NEXT_REC,
+				this.RELOAD_REC, this.RELOAD_PAGE ];
 	},
 
 	/**
@@ -85,6 +86,27 @@ e4e.dc.DcActionsFactory = {
 									.keyBindingToString(Main.keyBindings.dc.doClearQuery),
 					scope : dc,
 					handler : dc.doClearQuery
+				});
+	},
+
+	/**
+	 * Create the action to enter/modify the filter values.
+	 */
+	createEnterQueryAction : function(dc) {
+		return new Ext.Action(
+				{
+					name : "doEnterQuery",
+					ui : this.BUTTON_UI,
+					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
+							: null,
+					disabled : false,
+					text : Main.translate("tlbitem", "enter_query__lbl"),
+					tooltip : Main.translate("tlbitem", "enter_query__tlp")
+							+ " | "
+							+ Main
+									.keyBindingToString(Main.keyBindings.dc.doEnterQuery),
+					scope : dc,
+					handler : dc.doEnterQuery
 				});
 	},
 
@@ -278,8 +300,7 @@ e4e.dc.DcActionsFactory = {
 					handler : dc.doReloadRecord
 				});
 	},
-	
-	
+
 	/**
 	 * Create the action to reload the current record from server.
 	 */
@@ -297,5 +318,5 @@ e4e.dc.DcActionsFactory = {
 					handler : dc.doReloadPage
 				});
 	}
-	
+
 };

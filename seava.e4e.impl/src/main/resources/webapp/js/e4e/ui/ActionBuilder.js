@@ -117,6 +117,32 @@ Ext.define("e4e.ui.ActionBuilder", {
 	},
 
 	/**
+	 * Add clear-query action.
+	 */
+	addClearQuery : function(config) {
+		var cfg = config || {};
+		Ext.applyIf(cfg, {
+			dc : this.dc
+		});
+		var a = this.frame._getDc_(cfg.dc).actions.doClearQuery;
+		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
+		return this;
+	},
+
+	/**
+	 * Add clear-query action.
+	 */
+	addEnterQuery : function(config) {
+		var cfg = config || {};
+		Ext.applyIf(cfg, {
+			dc : this.dc
+		});
+		var a = this.frame._getDc_(cfg.dc).actions.doEnterQuery;
+		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
+		return this;
+	},
+
+	/**
 	 * Add reload-page action.
 	 */
 	addReloadPage : function(config) {
@@ -138,19 +164,6 @@ Ext.define("e4e.ui.ActionBuilder", {
 			dc : this.dc
 		});
 		var a = this.frame._getDc_(cfg.dc).actions.doReloadRec;
-		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
-		return this;
-	},
-
-	/**
-	 * Add clear-query action.
-	 */
-	addClearQuery : function(config) {
-		var cfg = config || {};
-		Ext.applyIf(cfg, {
-			dc : this.dc
-		});
-		var a = this.frame._getDc_(cfg.dc).actions.doClearQuery;
 		this.frame._tlbitms_.add(this.name + "__" + a.initialConfig.name, a);
 		return this;
 	},

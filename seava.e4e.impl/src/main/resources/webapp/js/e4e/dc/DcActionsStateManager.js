@@ -13,13 +13,13 @@ e4e.dc.DcActionsStateManager = {
 		// +dc.$className);
 		var flags = dc.dcState;
 		var names = dc.actionNames;
-		
+
 		if ((flags.hasParent && flags.parentIsNull)
 				|| (flags.hasParent && flags.parentIsNew)) {
 			this.disableAll(dc, names);
 			return;
 		}
-		for ( var i = 0, l = names.length; i < l; i++) {
+		for (var i = 0, l = names.length; i < l; i++) {
 			var n = names[i];
 			var an = "do" + n;
 			if (dc.commands[an].locked === true) {
@@ -32,7 +32,7 @@ e4e.dc.DcActionsStateManager = {
 	},
 
 	disableAll : function(dc, names) {
-		for ( var i = 0, l = names.length; i < l; i++) {
+		for (var i = 0, l = names.length; i < l; i++) {
 			var n = names[i];
 			dc.actions["do" + n].setDisabled(true);
 		}
@@ -62,6 +62,22 @@ e4e.dc.DcActionsStateManager = {
 
 	isQueryEnabled : function(dc) {
 		return !this.isQueryDisabled(dc);
+	},
+
+	isClearQueryDisabled : function(dc) {
+		return this._isClearQueryDisabled(dc.dcState);
+	},
+
+	isClearQueryEnabled : function(dc) {
+		return !this.isClearQueryDisabled(dc);
+	},
+
+	isEnterQueryDisabled : function(dc) {
+		return this._isEnterQueryDisabled(dc.dcState);
+	},
+
+	isEnterQueryEnabled : function(dc) {
+		return !this.isEnterQueryDisabled(dc);
 	},
 
 	isNewDisabled : function(dc) {
@@ -137,6 +153,14 @@ e4e.dc.DcActionsStateManager = {
 
 	_isClearQueryEnabled : function(flags) {
 		return !this._isClearQueryDisabled(flags);
+	},
+
+	_isEnterQueryDisabled : function(flags) {
+		return false;
+	},
+
+	_isEnterQueryEnabled : function(flags) {
+		return !this._isEnterQueryDisabled(flags);
 	},
 
 	_isNewDisabled : function(flags) {
@@ -216,7 +240,7 @@ e4e.dc.DcActionsStateManager = {
 	_isReloadPageEnabled : function(flags) {
 		return this._isQueryEnabled(flags);
 	},
-	
+
 	_isEditInEnabled : function(flags) {
 		!this._isEditInDisabled(flags);
 	},

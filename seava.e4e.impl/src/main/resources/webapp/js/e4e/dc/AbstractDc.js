@@ -355,7 +355,7 @@ Ext.define("e4e.dc.AbstractDc", {
 	 * 
 	 */
 	doEnterQuery : function(options) {
-		this.fireEvent("onEnterQuery", this, options);
+		this.commands.doEnterQuery.execute(options);
 	},
 
 	/**
