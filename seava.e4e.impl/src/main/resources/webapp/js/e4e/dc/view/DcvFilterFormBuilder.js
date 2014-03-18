@@ -138,6 +138,9 @@ Ext.define("e4e.dc.view.DcvFilterFormBuilder", {
 			xtype : "container",
 			id : Ext.id()
 		});
+		if (config._hasTitle_ === true) {
+			config.title = this.dcv.translate(config.name + "__ttl");
+		}
 		this.dcv._elems_.add(config.name, config);
 		return this;
 	},

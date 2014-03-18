@@ -47,6 +47,11 @@ Ext.define("e4e.ui.AbstractUi", {
 	_reports_ : null,
 
 	/**
+	 * Translations class
+	 */
+	_trl_ : null,
+
+	/**
 	 * Buttons state rules. Map with functions executed in frame context to
 	 * apply enabled/disabled visible/hidden state to a button. Usually the
 	 * framework invokes this functions whenever a state change occurs in the
@@ -423,8 +428,7 @@ Ext.define("e4e.ui.AbstractUi", {
 		} catch (e) {
 			Ext.Msg.show({
 				title : "Invalid language-pack",
-				msg : "No translation file found for " + _trlFqn
-						+ " <br> Using the default system language.",
+				msg : "No translation file found for " + _trlFqn,
 				icon : Ext.MessageBox.INFO,
 				buttons : Ext.Msg.OK
 			});

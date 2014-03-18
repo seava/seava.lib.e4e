@@ -54,6 +54,7 @@ Ext.define("e4e.dc.view.AbstractDcvFilterForm", {
 	},
 
 	initComponent : function(config) {
+		this._initTranslation_();
 		this._runElementBuilder_();
 		this.callParent(arguments);
 		this._registerListeners_();

@@ -93,6 +93,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	},
 
 	initComponent : function() {
+		this._initTranslation_();
 		this._runElementBuilder_();
 		this.callParent(arguments);
 		this._registerListeners_();

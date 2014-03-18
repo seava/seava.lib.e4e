@@ -16,6 +16,11 @@ Ext.define("e4e.dc.view.AbstractDc_Form", {
 
 	// **************** Properties *****************
 
+	/**
+	 * Translations class
+	 */
+	_trl_ : null,
+
 	// **************** Public API *****************
 
 	/**
@@ -58,7 +63,7 @@ Ext.define("e4e.dc.view.AbstractDc_Form", {
 			return;
 		}
 		var l = names.length;
-		for ( var i = 0; i < l; i++) {
+		for (var i = 0; i < l; i++) {
 			var n = names[i];
 			var b = !this._canSetEnabled_(n, model);
 			this._getElement_(n)._setDisabled_(b);
@@ -73,7 +78,7 @@ Ext.define("e4e.dc.view.AbstractDc_Form", {
 		if (!model)
 			return;
 		var fields = this.getForm().getFields();
-		for ( var i = 0, l = names.length; i < l; i++) {
+		for (var i = 0, l = names.length; i < l; i++) {
 			var n = names[i];
 			var b = this._canSetVisible_(n, model);
 			this._getElement_(n).setVisible(b);
@@ -102,7 +107,7 @@ Ext.define("e4e.dc.view.AbstractDc_Form", {
 	 * Helper method to disable the specified fields.
 	 */
 	_disableFields_ : function(fldNamesArray) {
-		for ( var i = 0, l = fldNamesArray.length; i < l; i++) {
+		for (var i = 0, l = fldNamesArray.length; i < l; i++) {
 			this._get_(fldNamesArray[i])._disable_();
 		}
 	},
@@ -141,6 +146,35 @@ Ext.define("e4e.dc.view.AbstractDc_Form", {
 			Main.translateField(this._trl_, this._controller_._trl_, item);
 		}
 		return true;
+	},
+
+	/**
+	 * Initialize translation class.
+	 */
+	_initTranslation_ : function() {
+		var _trlFqn = this.$className.replace(".ui.extjs.", ".i18n.");
+		try {
+			if (_trlFqn != this.$className) {
+				this._trl_ = Ext.create(_trlFqn);
+			}
+		} catch (e) {
+			// no translation file, ignore
+		}
+	},
+
+	/**
+	 * Translate a frame element.
+	 * 
+	 * @param {}
+	 *            key
+	 * @return {}
+	 */
+	translate : function(key) {
+		if (this._trl_ && this._trl_[key]) {
+			return this._trl_[key];
+		} else {
+			return key;
+		}
 	}
 
 });
