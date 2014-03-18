@@ -179,6 +179,20 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 		return this;
 	},
 
+	addFieldContainer : function(config) {
+		Ext.applyIf(config, {
+			xtype : 'fieldcontainer',
+			layout : 'hbox',
+			combineErrors : true,
+			defaults : {
+				flex : 1,
+				hideLabel : true
+			}
+		});
+		this.dcv._elems_.add(config.name, config);
+		return this;
+	},
+	
 	addButton : function(config) {
 		Ext.applyIf(config, {
 			id : Ext.id(),
