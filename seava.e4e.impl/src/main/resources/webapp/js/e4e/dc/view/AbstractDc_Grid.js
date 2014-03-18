@@ -103,7 +103,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	 */
 	_doImport_ : function() {
 		if (this._importWindow_ == null) {
-			this._importWindow_ = new e4e.base.FileUploadWindow2(
+			this._importWindow_ = new e4e.base.FileUploadWindow(
 					{
 						_handler_ : "dsCsvImport",
 						_fields_ : {

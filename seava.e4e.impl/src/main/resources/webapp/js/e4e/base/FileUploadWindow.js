@@ -7,7 +7,7 @@
  * to the server.
  * 
  */
-Ext.define("e4e.base.FileUploadWindow2", {
+Ext.define("e4e.base.FileUploadWindow", {
 	extend : "Ext.Window",
 
 	_description_ : null,

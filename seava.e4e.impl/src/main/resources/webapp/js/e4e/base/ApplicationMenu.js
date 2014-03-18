@@ -58,7 +58,7 @@ e4e.base.ApplicationMenu$HelpItems = [
 									text : Main.translate("appmenuitem",
 											"upload_imp__lbl"),
 									handler : function() {
-										(new e4e.base.FileUploadWindow2(
+										(new e4e.base.FileUploadWindow(
 												{
 													_handler_ : "dsCsvImport",
 													_fields_ : {

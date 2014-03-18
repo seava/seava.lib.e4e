@@ -571,7 +571,7 @@ Ext.define("e4e.ui.DcReport", {
 		}
 
 		// alert(serverUrl + "?" + qs);
-		window.open(serverUrl + "?" + qs, "Test-report",
+		window.open(serverUrl + "?" + qs, "TestReport",
 				"width=800,height=600,adressbar=true").focus();
 
 	},

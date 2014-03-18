@@ -179,7 +179,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 			scope : this,
 			handler : this._onCopy_
 		}, {
-			text : Main.translate("tlbitem", "delete_current__lbl"),
+			text : Main.translate("tlbitem", "delete__lbl"),
 			tooltip : 'Remove selected criteria',
 			scope : this,
 			handler : this._onRemove_
