@@ -381,6 +381,11 @@ Ext.define("e4e.ui.ActionBuilder", {
 			for (var i = 0, l = rc.length; i < l; i++) {
 				if (rc[i].toolbar == this.name) {
 					var fn = function(item, e) {
+
+						if (!item.queryBuilderClass) {
+							item.queryBuilderClass = "e4e.dc.tools.DcReport";
+						}
+
 						var b = Ext.ClassManager
 								.isCreated(item.queryBuilderClass);
 						if (!b) {
@@ -388,7 +393,8 @@ Ext.define("e4e.ui.ActionBuilder", {
 									+ item.queryBuilderClass + "` not found ");
 							return;
 						}
-						var dcReport = Ext.create(item.queryBuilderClass);// new
+						var dcReport = Ext.create(item.queryBuilderClass);
+
 						var rec = this._getDc_(item.dcAlias).record;
 						if (!rec) {
 							var _msg = Main.translate("msg",
@@ -546,57 +552,6 @@ Ext.define("e4e.ui.ActionBuilder", {
 				ct.getLayout().setActiveItem(1);
 			}
 		};
-	}
-
-});
-
-Ext.define("e4e.ui.DcReport", {
-	run : function(config) {
-		// var targetDc = config.dc;
-		var params = config.params;
-		var serverUrl = config.url;
-		if (config.contextPath) {
-			serverUrl += config.contextPath;
-		}
-		// config: params, url
-		// param : code, name, type, lov, value, mandatory, noEdit
-
-		var qs = "";
-		for (var i = 0, l = params.length; i < l; i++) {
-			var p = params[i];
-			if (qs != "") {
-				qs += "&";
-			}
-			qs += p.code + "=" + p.value;
-		}
-
-		// alert(serverUrl + "?" + qs);
-		window.open(serverUrl + "?" + qs, "TestReport",
-				"width=800,height=600,adressbar=true").focus();
-
-	},
-
-	applyDsFieldValues : function(params, data) {
-		for (var i = 0, l = params.length; i < l; i++) {
-			var p = params[i];
-			if (p.dsField) {
-				p.value = data[p.dsField];
-			}
-		}
-	},
-	/**
-	 * Validate the report parameters
-	 * 
-	 * @param {}
-	 *            params
-	 */
-	isValid : function(params) {
-		for (var i = 0, l = params.length; i < l; i++) {
-			var p = params[i];
-			if (!p.value && p.mandatory && !p.noEdit) {
-				return false;
-			}
-		}
 	}
 
 });
