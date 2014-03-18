@@ -190,6 +190,7 @@ dnet.Translation = {
 		dc_confirm_action: "Confirmare acţiune",
 		dc_confirm_delete_selection: "Doriţi să ștergeţi inregistrările selectate? ",
 		dirty_data_found: "Salvaţi sau anulaţi mai întai modificările făcute.",
+		dirty_data_on_frame_close: "Ecranul conţine modificări ne-salvate care se vor pierde.\n Vreţi să părăsiţi ecranul ? ",
 		grid_emptytext: "Nu s-au găsit înregistrări care să corespundă criteriilor de filtrare.",
 		initialize: "Iniţializare",
 		loading: "Încarcă",

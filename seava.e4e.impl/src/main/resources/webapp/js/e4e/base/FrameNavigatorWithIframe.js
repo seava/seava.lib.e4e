@@ -131,8 +131,8 @@ e4e.base.FrameNavigatorWithIframe = {
 
 			var beforeCloseFn = function(tab, eOpts) {
 				if (window.frames[this.n21_iframeID].theFrameInstance.isDirty()) {
-
-					return confirm("Frame contains un-saved changes which will be lost.\n Would you like to close frame anyway? ");
+					return confirm(Main.translate("msg",
+							"dirty_data_on_frame_close"));
 				}
 				return true;
 			};

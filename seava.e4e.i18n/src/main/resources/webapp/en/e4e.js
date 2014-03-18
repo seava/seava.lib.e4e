@@ -190,6 +190,7 @@ dnet.Translation = {
 		dc_confirm_action: "Confirm action",
 		dc_confirm_delete_selection: "Do you really want to delete the selected records? ",
 		dirty_data_found: "Unsaved changes found. Save your changes or discard them.",
+		dirty_data_on_frame_close: "Frame contains un-saved changes which will be lost. \n Would you like to close frame anyway? ",
 		grid_emptytext: "No records found to match the specified selection criteria.",
 		initialize: "Initializing",
 		loading: "Loading",
