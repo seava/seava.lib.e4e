@@ -224,6 +224,9 @@
 	"text": "DcContext.js",
 	"path": "/e4e/dc/"
 },{
+	"text": "DcReport.js",
+	"path": "/e4e/dc/tools/"
+},{
 	"text": "DcExportWindow.js",
 	"path": "/e4e/dc/tools/"
 },{
