@@ -249,7 +249,7 @@ Ext.define("e4e.asgn.AbstractAsgn", {
 			return;
 		}
 		var p_selected_ids = "";
-		for ( var i = 0; i < selection.length; i++) {
+		for (var i = 0; i < selection.length; i++) {
 			p_selected_ids += (i > 0) ? "," : "";
 			p_selected_ids += selection[i].data.id;
 		}
@@ -283,7 +283,7 @@ Ext.define("e4e.asgn.AbstractAsgn", {
 			return;
 		}
 		var p_selected_ids = "";
-		for ( var i = 0; i < selection.length; i++) {
+		for (var i = 0; i < selection.length; i++) {
 			p_selected_ids += (i > 0) ? "," : "";
 			p_selected_ids += selection[i].data.id;
 		}
@@ -508,26 +508,11 @@ Ext.define("e4e.asgn.AbstractAsgn", {
 	/** ********************************************** */
 
 	afterAjaxFailure : function(response, options) {
-		var msg = (response.responseText) ? response.responseText.substr(0,
-				2000) : "No error message returned from server.";
-		Ext.Msg.show({
-			title : 'HTTP:' + response.status + ' ' + response.statusText,
-			msg : msg,
-			buttons : Ext.Msg.OK,
-			scope : this,
-			icon : Ext.MessageBox.ERROR
-		});
+		Main.serverMessage(response.responseText);
 	},
 
 	proxyException : function(dataProxy, response, operation, eopts) {
-
-		Ext.Msg.show({
-			title : 'HTTP:' + response.status + ' ' + response.statusText,
-			msg : response.responseText.substr(0, 1500),
-			buttons : Ext.Msg.OK,
-			icon : Ext.MessageBox.ERROR
-		});
-
+		Main.serverMessage(response.responseText);
 	}
 
 });

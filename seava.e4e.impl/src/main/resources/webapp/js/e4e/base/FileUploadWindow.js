@@ -140,10 +140,10 @@ Ext.define("e4e.base.FileUploadWindow", {
 								Main.error("INVALID_FORM");
 								break;
 							case Ext.form.Action.CONNECT_FAILURE:
-								Main.error(action.response.responseText);
+								Main.serverMessage(action.response.responseText);
 								break;
 							case Ext.form.Action.SERVER_INVALID:
-								Main.error(action.response.responseText);
+								Main.serverMessage(action.response.responseText);
 							}
 							// this.close();
 						}

@@ -17,16 +17,15 @@ Ext.Loader.setConfig({
 	enabled : false
 });
 
-
 /**
- * May be that the result is null/undefined in IE8 -> to be checked the reason. 
+ * May be that the result is null/undefined in IE8 -> to be checked the reason.
  * Workaround from fps/wiag
  */
 Ext.override(Ext.form.action.Submit, {
 	onSuccess : function(response) {
 		var form = this.form, success = true, result = this
 				.processResponse(response);
-		// avoid undefined result  
+		// avoid undefined result
 		if (result != undefined && result != null && result !== true
 				&& !result.success) {
 			if (result.errors) {
@@ -415,7 +414,7 @@ Ext.override(Ext.grid.plugin.CellEditing, {
 		}
 
 		return editor;
-	}
+	} 
 
 });
 

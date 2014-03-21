@@ -364,6 +364,10 @@ Main = {
 	DEFAULT_THEME : "gray",
 	DEFAULT_LANGUAGE : "en",
 
+	navigationTreeMenus : null,
+
+	navigationTopMenus : null,
+
 	/**
 	 * Various global view configuration defaults
 	 * 
@@ -866,9 +870,73 @@ Main = {
 		});
 	},
 
-	navigationTreeMenus : null,
+	/**
+	 * config = {code, title, message, details }
+	 */
+	serverMessage : function(msg) {
 
-	navigationTopMenus : null,
+		var err = msg.split("\n||\n");
+		var config = {};
+
+		if (err.length == 1) {
+			config = {
+				message : err[0]
+			}
+		} else {
+			config = {
+				code : err[0],
+				title : err[1],
+				message : err[2],
+				details : err[3]
+			}
+		}
+
+		Ext.MessageBox.hide();
+
+		var cfg = config || {};
+		var c = cfg.code;
+		var t = cfg.title || "Server message"; //
+		var m = cfg.message || "No response received from server.";
+		var d = cfg.details;
+		var withDetails = true;
+
+		if (getApplication().session.client
+				&& getApplication().session.client.id) {
+			m = m.replace(getApplication().session.client.id + "-", "");
+		}
+
+		if (m.length > 2000) {
+			m = m.substr(0, 2000);
+		}
+
+		var alertCfg = {
+			title : t, // c + " / " +
+			msg : m,
+			icon : Ext.MessageBox.ERROR,
+			buttons : Ext.MessageBox.OK
+		};
+
+		if (d && d != "null") {
+			Ext.apply(alertCfg, {
+				buttons : Ext.MessageBox.OK + Ext.MessageBox.CANCEL,
+				buttonText : {
+					cancel : "Details"
+				},
+				fn : function(btnId) {
+					if (btnId == "cancel") {
+						Ext.Msg.show({
+							title : c + " / " + t,
+							msg : d,
+							icon : Ext.MessageBox.ERROR,
+							buttons : Ext.MessageBox.OK
+						});
+					}
+				}
+			});
+		}
+
+		Ext.Msg.show(alertCfg);
+	},
 
 	/**
 	 * Return a textual representation of the given keyboard shortcut

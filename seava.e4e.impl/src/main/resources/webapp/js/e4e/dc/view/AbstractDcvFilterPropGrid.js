@@ -113,6 +113,21 @@ Ext.define("e4e.dc.view.AbstractDcvFilterPropGrid",
 						this._onFilterValueChanged_, this);
 
 				this.mon(this, "edit", this._onEdit_, this);
+
+				var cmd = ctrl.commands.doQuery;
+				if (cmd) {
+					var fn = function() {
+						if (this._shouldValidate_() && !this.isValid()) {
+							ctrl.error(Main.msg.INVALID_FILTER, "msg");
+							return false;
+						} else {
+							return true;
+						}
+					};
+					cmd.beforeExecute = Ext.Function.createInterceptor(
+							cmd.beforeExecute, fn, this, -1);
+				}
+
 			},
 
 			_gotoFirstNavigationItem_ : function() {

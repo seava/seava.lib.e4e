@@ -47,7 +47,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 	 * @type Ext.data.Model
 	 */
 	recordModel : null,
-	
+
 	recordModelFqn : null,
 	/**
 	 * Parameters model signature - record constructor.
@@ -126,7 +126,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 		if (this._dataProviderName_ == null) {
 			if (Ext.isFunction(this.recordModel)) {
 				this.recordModelFqn = this.recordModel.$className;
-			}  
+			}
 			this._dataProviderName_ = this.recordModelFqn.substring(
 					this.recordModelFqn.lastIndexOf('.') + 1,
 					this.recordModelFqn.length);
@@ -215,7 +215,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 			return;
 		}
 		if (this.retFieldMapping != null) {
-			for ( var i = this.retFieldMapping.length - 1; i >= 0; i--) {
+			for (var i = this.retFieldMapping.length - 1; i >= 0; i--) {
 
 				var retDataIndex = null;
 				var nv = null;
@@ -248,7 +248,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 		if (this.retFieldMapping != null) {
 			var nv, ov, isParam, rawv = this.getRawValue();
 
-			for ( var i = this.retFieldMapping.length - 1; i >= 0; i--) {
+			for (var i = this.retFieldMapping.length - 1; i >= 0; i--) {
 
 				var retDataIndex = null;
 				isParam = !Ext.isEmpty(this.retFieldMapping[i]["dsParam"]);
@@ -345,7 +345,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 		}
 		if (this.filterFieldMapping != null) {
 			var len = this.filterFieldMapping.length;
-			for ( var i = 0; i < len; i++) {
+			for (var i = 0; i < len; i++) {
 				var isLovMemberParam = !Ext
 						.isEmpty(this.filterFieldMapping[i]["lovParam"]);
 				var _val = null;
@@ -386,28 +386,11 @@ Ext.define("e4e.lov.AbstractCombo", {
 	 * Show errors to user. TODO: Externalize it as command.
 	 */
 	showAjaxErrors : function(response, options) {
-		var msg, withDetails = false;
+		var msg = null;
 		if (response.responseText) {
-			if (response.responseText.length > 2000) {
-				msg = response.responseText.substr(0, 2000);
-				withDetails = true;
-			} else {
-				msg = response.responseText;
-			}
-		} else {
-			msg = "No response received from server.";
+			msg = response.responseText;
 		}
-		var alertCfg = {
-			msg : msg,
-			scope : this,
-			icon : Ext.MessageBox.ERROR,
-			buttons : Ext.MessageBox.OK
-		}
-		if (withDetails) {
-			alertCfg.buttons['cancel'] = 'Details';
-			alertCfg['detailedMessage'] = response.responseText;
-		}
-		Ext.Msg.show(alertCfg);
+		Main.serverMessage(msg);
 	},
 
 	// **************************************************
@@ -477,9 +460,10 @@ Ext.define("e4e.lov.AbstractCombo", {
 		// ignore query related keyboard shortcuts
 		if (dcv._dcViewType_ == "filter-form"
 				|| dcv._dcViewType_ == "filter-propgrid") {
-			btc = [ kbs.doEnterQuery, kbs.doClearQuery, kbs.doQuery, kbs.doEditOut ];
+			btc = [ kbs.doEnterQuery, kbs.doClearQuery, kbs.doQuery,
+					kbs.doEditOut ];
 			var l = btc.length;
-			for ( var i = 0; i < l; i++) {
+			for (var i = 0; i < l; i++) {
 				var b = btc[i];
 				if (key == b.key && e.shiftKey == b.shift
 						&& e.ctrlKey == b.ctrl && e.altKey == b.alt) {
@@ -495,7 +479,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 					kbs.doEditOut, kbs.nextRec, kbs.prevRec, kbs.nextPage,
 					kbs.prevPage ];
 			var l = btc.length;
-			for ( var i = 0; i < l; i++) {
+			for (var i = 0; i < l; i++) {
 				var b = btc[i];
 				if (key == b.key && e.shiftKey == b.shift
 						&& e.ctrlKey == b.ctrl && e.altKey == b.alt) {

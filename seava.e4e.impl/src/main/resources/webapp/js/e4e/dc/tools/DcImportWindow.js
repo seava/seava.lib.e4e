@@ -55,9 +55,8 @@ Ext.define("e4e.dc.tools.DcImportWindow", {
 							Main.info(Main.translate("cmp", "imp_dp_success"));
 							this.up("window").close();
 						},
-						failure : function(form, action) {
-							Ext.Msg.hide();
-							Main.error(action.response.responseText);
+						failure : function(form, action) {							 
+							Main.serverMessage(action.response.responseText);
 						},
 						scope : this
 					});

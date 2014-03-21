@@ -9,6 +9,11 @@
 Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 	extend : "Ext.grid.property.Grid",
 
+	/**
+	 * Flag which marks
+	 */
+	_isValid_ : true,
+
 	mixins : {
 		elemBuilder : "e4e.base.Abstract_View",
 		dcViewSupport : "e4e.dc.view.AbstractDc_View"
@@ -66,15 +71,20 @@ Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 		}
 	},
 
-	/**
-	 * Generic validation method which displays an message box for the user.
-	 */
-	_isValid_ : function() {
-		if (this.getForm().isValid()) {
-			return true;
-		} else {
-			this._controller_.error(Main.msg.INVALID_FORM, "msg");
-			return false;
+	isValid : function() {
+		this._elems_.each(this._validateElem_, this);
+		return this._isValid_;
+	},
+
+	_validateElem_ : function(item, idx, len) {
+		if (item.allowBlank === false) {
+			var s = this.source;
+			var p = (item.dataIndex) ? item.dataIndex : item.paramIndex;
+			var v = s[p];
+			if (v == undefined || v == "" || v == null) {
+				this._isValid_ = false;
+				return false;
+			}
 		}
 	},
 
@@ -88,6 +98,12 @@ Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 		item["_dcView_"] = this;
 		if (item.fieldLabel == undefined) {
 			Main.translateField(this._trl_, this._controller_._trl_, item);
+			if (item.allowBlank === false) {
+				item.fieldLabel = item.fieldLabel + item.labelSeparator;
+				if (item.editorInstance) {
+					item.editorInstance.allowBlank = false;
+				}
+			}
 		}
 		return true;
 	},

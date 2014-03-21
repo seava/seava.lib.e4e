@@ -72,7 +72,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				noUpdate : config.noUpdate,
 				allowBlank : ((config.allowBlank === false) ? false : true)
 			}
-		}
+		} 
 		this.applySharedConfig(config);
 		return this;
 	},
@@ -199,6 +199,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				name : "createdAt",
 				dataIndex : "createdAt",
 				hidden : true,
+				noEdit : true,
 				width : 140,
 				_mask_ : Masks.DATETIMESEC
 			});
@@ -209,6 +210,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				name : "modifiedAt",
 				dataIndex : "modifiedAt",
 				hidden : true,
+				noEdit : true,
 				width : 140,
 				_mask_ : Masks.DATETIMESEC
 			});
@@ -219,6 +221,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				name : "createdBy",
 				dataIndex : "createdBy",
 				hidden : true,
+				noEdit : true,
 				width : 100
 			});
 		}
@@ -228,6 +231,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				name : "modifiedBy",
 				dataIndex : "modifiedBy",
 				hidden : true,
+				noEdit : true,
 				width : 100
 			});
 		}
@@ -237,6 +241,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				name : "id",
 				dataIndex : "id",
 				hidden : true,
+				noEdit : true,
 				width : 100
 			});
 		}
@@ -246,6 +251,7 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 				name : "refid",
 				dataIndex : "refid",
 				hidden : true,
+				noEdit : true,
 				width : 100
 			});
 		}

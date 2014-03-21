@@ -45,61 +45,27 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 	},
 
 	/**
-	 * details = { title, message }
-	 */
-	showError : function(config) {
-		var cfg = config || {};
-		var t = cfg.title || "Server message";
-		var m = cfg.message || "No response received from server.";
-		var d = m;
-		var withDetails = false;
-
-		if (m.length > 2000) {
-			m = m.substr(0, 2000);
-			withDetails = true;
-		}
-		var alertCfg = {
-			title : t,
-			msg : m,
-			scope : this,
-			icon : Ext.MessageBox.ERROR,
-			buttons : Ext.MessageBox.OK
-		}
-		if (withDetails) {
-			alertCfg.buttons['cancel'] = 'Details';
-			alertCfg['detailedMessage'] = d;
-		}
-		Ext.MessageBox.hide();
-		Ext.Msg.show(alertCfg);
-	},
-
-	/**
 	 * Show Ajax errors
 	 */
 	showAjaxErrors : function(ajaxResult) {
+		var msg = null;
+
 		if (ajaxResult.response) {
-			this.showError({
-				message : ajaxResult.response.responseText
-			});
-			return;
+			msg = ajaxResult.response.responseText;
 		} else if (ajaxResult.operation) {
 			var err = ajaxResult.operation.error;
 			if (err) {
-				this.showError({
-					message : err.responseText
-				});
-				return;
+				msg = err.responseText;
 			}
 		} else if (ajaxResult.batch) {
 			var b = ajaxResult.batch;
 			if (b.exceptions && b.exceptions[0]) {
-				this.showError({
-					message : b.exceptions[0].error.responseText
-				});
-				return;
+				msg = b.exceptions[0].error.responseText;
 			}
 		}
-		this.showError({});
-	}
+		Main.serverMessage(msg);
+	},
+
+	
 
 });

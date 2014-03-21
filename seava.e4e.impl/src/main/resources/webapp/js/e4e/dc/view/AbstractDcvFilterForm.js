@@ -104,18 +104,15 @@ Ext.define("e4e.dc.view.AbstractDcvFilterForm", {
 		if (cmd) {
 			var fn = function() {
 				if (this._shouldValidate_() && !this.getForm().isValid()) {
-					this._controller_.error(Main.msg.INVALID_FILTER, "msg");
+					ctrl.error(Main.msg.INVALID_FILTER, "msg");
 					return false;
 				} else {
 					return true;
 				}
 			};
-
 			cmd.beforeExecute = Ext.Function.createInterceptor(
 					cmd.beforeExecute, fn, this, -1);
-
 		}
-
 	},
 
 	_gotoFirstNavigationItem_ : function() {

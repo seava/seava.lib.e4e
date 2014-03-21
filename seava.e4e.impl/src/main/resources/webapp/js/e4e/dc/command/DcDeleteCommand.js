@@ -3,7 +3,7 @@
  * Use is subject to license terms.
  */
 Ext.define("e4e.dc.command.DcDeleteCommand", {
-	extend : "e4e.dc.command.AbstractDcSyncCommand",
+	extend : "e4e.dc.command.AbstractDcAsyncCommand",
 
 	dcApiMethod : e4e.dc.DcActionsFactory.DELETE,
 
@@ -32,7 +32,8 @@ Ext.define("e4e.dc.command.DcDeleteCommand", {
 
 	onAjaxSuccess : function(batch, options) {
 		this.callParent(arguments);
-		this.dc.requestStateUpdate();
+		//this.dc.requestStateUpdate();
+		this.dc.doDefaultSelection();
 		this.dc.fireEvent("afterDoCommitSuccess", this.dc, options.options);
 	},
 
