@@ -159,9 +159,18 @@ Ext.define("e4e.dc.view.DcvFilterFormBuilder", {
 		return this;
 	},
 
+	addButton : function(config) {
+		Ext.applyIf(config, {
+			id : Ext.id(),
+			xtype : "button"
+		});
+		this.dcv._elems_.add(config.name, config);
+		return this;
+	},
+
 	addChildrenTo : function(c, list) {
 		var items = this.dcv._elems_.get(c)["items"] || [];
-		for ( var i = 0, len = list.length; i < len; i++) {
+		for (var i = 0, len = list.length; i < len; i++) {
 			items[items.length] = this.dcv._elems_.get(list[i]);
 		}
 		this.dcv._elems_.get(c)["items"] = items;
