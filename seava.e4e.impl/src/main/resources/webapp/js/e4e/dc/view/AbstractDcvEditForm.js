@@ -255,7 +255,14 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			fields.each(function(field) {
 				if (field.dataIndex) {
 					field.suspendEvents();
-					field.setValue(record.get(field.dataIndex));
+					if (field._isLov_) {
+						var fs = field.forceSelection ;
+						field.forceSelection = false;
+						field.setValue(record.get(field.dataIndex));
+						field.forceSelection = fs;
+					} else {
+						field.setValue(record.get(field.dataIndex));
+					}					
 					if (trackResetOnLoad) {
 						field.resetOriginalValue();
 					}

@@ -81,7 +81,7 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 
 	addLov : function(config) {
 		Ext.applyIf(config, {
-			_validateListValue_ : true
+			forceSelection : true
 		});
 		this.applyModelUpdater(config);
 		this.applySharedConfig(config);

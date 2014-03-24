@@ -134,7 +134,10 @@ Ext.define("e4e.dc.view.DcvEditableGridBuilder", {
 		return this;
 	},
 
-	addLov : function(config) {
+	addLov : function(config) {		
+		Ext.applyIf(config.editor, {
+			forceSelection : true
+		});
 		this.applySharedConfig(config);
 		return this;
 	},

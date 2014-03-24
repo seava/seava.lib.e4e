@@ -106,10 +106,17 @@ Ext.define("e4e.dc.view.AbstractDc_Form", {
 	/**
 	 * Helper method to disable the specified fields.
 	 */
-	_disableFields_ : function(fldNamesArray) {
-		for (var i = 0, l = fldNamesArray.length; i < l; i++) {
-			this._get_(fldNamesArray[i])._disable_();
+	_disableElements_ : function(elemNamesArray) {
+		for (var i = 0, l = elemNamesArray.length; i < l; i++) {
+			this._get_(elemNamesArray[i])._disable_();
 		}
+	},
+
+	/**
+	 * Deprecated
+	 */
+	_disableFields_ : function(fldNamesArray) {
+		this._disableElements_(fldNamesArray);
 	},
 
 	/**

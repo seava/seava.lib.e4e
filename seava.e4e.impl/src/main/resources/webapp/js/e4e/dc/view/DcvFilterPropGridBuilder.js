@@ -81,6 +81,8 @@ Ext.define("e4e.dc.view.DcvFilterPropGridBuilder", {
 	addCombo : function(config) {
 		if (!config.editor) {
 			config.editor = {};
+			config.editor.store = config.store;
+			config.editor.selectOnFocus = (config.selectOnFocus===false)?false:true;
 		}
 		var e = config.editor;
 

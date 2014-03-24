@@ -34,6 +34,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 	_editFrame_ : null,
 	openFrame : null,
 	_isLov_ : true,
+	_onFocusValue_ : null,
 
 	/**
 	 * Data-control view type this field belongs to. Injected by the
@@ -100,6 +101,10 @@ Ext.define("e4e.lov.AbstractCombo", {
 			};
 		}
 		this.on("select", this.assertValue, this);
+
+		this.on("focus", function() {
+			this._onFocusValue_ = this.getRawValue();
+		}, this);
 
 		this.callParent(arguments);
 	},
@@ -172,6 +177,32 @@ Ext.define("e4e.lov.AbstractCombo", {
 		});
 	},
 
+	_getTargetRecord_ : function() {
+		var drec = null;
+		var dcv = this._dcView_;
+
+		if (this.inEditor && dcv._dcViewType_ != "edit-propgrid"
+				&& dcv._dcViewType_ != "filter-propgrid") {
+			if (dcv && dcv._dcViewType_ == "bulk-edit-field") {
+				/*
+				 * is a bulk editor for one ds field in a property grid
+				 */
+				drec = dcv.getSource();
+			} else {
+				drec = this._targetRecord_;
+			}
+		} else {
+			if (dcv._dcViewType_ == "edit-form"
+					|| dcv._dcViewType_ == "edit-propgrid") {
+				drec = dcv._controller_.getRecord();
+			} else if (dcv._dcViewType_ == "filter-form"
+					|| dcv._dcViewType_ == "filter-propgrid") {
+				drec = dcv._controller_.getFilter();
+			}
+		}
+		return drec;
+	},
+
 	/**
 	 * Map fields from the combo-record received as argument (crec) to the
 	 * target record according to fieldMappings
@@ -181,31 +212,32 @@ Ext.define("e4e.lov.AbstractCombo", {
 	 */
 	_mapReturnFields_ : function(crec) {
 		var dcv = this._dcView_;
-		var mrec = null;
+		var drec = null;
 		var targetIsFilter = false;
+
 		if (this.inEditor && dcv._dcViewType_ != "edit-propgrid"
 				&& dcv._dcViewType_ != "filter-propgrid") {
 			if (dcv && dcv._dcViewType_ == "bulk-edit-field") {
 				/*
 				 * is a bulk editor for one ds field in a property grid
 				 */
-				mrec = dcv.getSource();
-				this._mapReturnFieldsExecuteBulkEdit_(crec, mrec);
+				drec = dcv.getSource();
+				this._mapReturnFieldsExecuteBulkEdit_(crec, drec);
 			} else {
-				mrec = this._targetRecord_;
-				this._mapReturnFieldsExecute_(crec, mrec);
+				drec = this._targetRecord_;
+				this._mapReturnFieldsExecute_(crec, drec);
 			}
 		} else {
 			if (dcv._dcViewType_ == "edit-form"
 					|| dcv._dcViewType_ == "edit-propgrid") {
-				mrec = dcv._controller_.getRecord();
+				drec = dcv._controller_.getRecord();
 			}
 			if (dcv._dcViewType_ == "filter-form"
 					|| dcv._dcViewType_ == "filter-propgrid") {
-				mrec = dcv._controller_.getFilter();
+				drec = dcv._controller_.getFilter();
 				targetIsFilter = true;
 			}
-			this._mapReturnFieldsExecute_(crec, mrec, dcv._controller_
+			this._mapReturnFieldsExecute_(crec, drec, dcv._controller_
 					.getParams(), targetIsFilter);
 		}
 	},
@@ -239,10 +271,14 @@ Ext.define("e4e.lov.AbstractCombo", {
 	},
 
 	/**
-	 * Params: crec: combo selected record
+	 * Params:<br>
+	 * crec: combo selected record <br>
+	 * drec - Controller data-record. <br>
+	 * The current record or current filter based on the view-type context <br>
+	 * prec - Controller params record
 	 */
-	_mapReturnFieldsExecute_ : function(crec, mrec, prec, targetIsFilter) {
-		if (!mrec) {
+	_mapReturnFieldsExecute_ : function(crec, drec, prec, targetIsFilter) {
+		if (!drec) {
 			return;
 		}
 		if (this.retFieldMapping != null) {
@@ -257,7 +293,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 					ov = prec.get(retDataIndex);
 				} else {
 					retDataIndex = this.retFieldMapping[i]["dsField"];
-					ov = mrec.get(retDataIndex);
+					ov = drec.get(retDataIndex);
 				}
 
 				if (crec && crec.data) {
@@ -271,7 +307,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 								this._dcView_._controller_.setFilterValue(
 										retDataIndex, nv);
 							} else {
-								mrec.set(retDataIndex, nv);
+								drec.set(retDataIndex, nv);
 							}
 						}
 					}
@@ -291,7 +327,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 									this._dcView_._controller_.setFilterValue(
 											retDataIndex, rawv);
 								} else {
-									mrec.set(retDataIndex, rawv);
+									drec.set(retDataIndex, rawv);
 								}
 							}
 						}
@@ -306,7 +342,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 									this._dcView_._controller_.setFilterValue(
 											retDataIndex, null);
 								} else {
-									mrec.set(retDataIndex, null);
+									drec.set(retDataIndex, null);
 								}
 							}
 						}
@@ -318,29 +354,32 @@ Ext.define("e4e.lov.AbstractCombo", {
 
 	_mapFilterFields_ : function(bp) {
 
-		var mrec = null;
+		var drec = null;
 		var dcv = this._dcView_;
 		var prec = dcv._controller_.getParams();
 
 		if (this.inEditor) {
-			mrec = this._targetRecord_;
-			this._mapFilterFieldsExecute_(bp, mrec, prec);
+			drec = this._targetRecord_;
+			this._mapFilterFieldsExecute_(bp, drec, prec);
 		} else {
 			if (dcv._dcViewType_ == "edit-form") {
-				mrec = dcv._controller_.getRecord();
+				drec = dcv._controller_.getRecord();
 			}
 			if (dcv._dcViewType_ == "filter-form") {
-				mrec = dcv._controller_.getFilter();
+				drec = dcv._controller_.getFilter();
 			}
-			this._mapFilterFieldsExecute_(bp, mrec, prec);
+			this._mapFilterFieldsExecute_(bp, drec, prec);
 		}
 	},
 
 	/**
 	 * Parameters: bp: base params for the store
+	 * 
+	 * drec - Controller data-record. The current record or current filter based
+	 * on the view-type context prec - Controller params record
 	 */
-	_mapFilterFieldsExecute_ : function(bp, mrec, prec) {
-		if (!mrec) {
+	_mapFilterFieldsExecute_ : function(bp, drec, prec) {
+		if (!drec) {
 			return;
 		}
 		if (this.filterFieldMapping != null) {
@@ -356,7 +395,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 					if (!Ext.isEmpty(this.filterFieldMapping[i]["dsParam"])) {
 						_val = prec.get(this.filterFieldMapping[i]["dsParam"])
 					} else {
-						_val = mrec.get(this.filterFieldMapping[i]["dsField"])
+						_val = drec.get(this.filterFieldMapping[i]["dsField"])
 					}
 				}
 
@@ -420,34 +459,38 @@ Ext.define("e4e.lov.AbstractCombo", {
 
 		rec = this.findRecord(this.displayField, val);
 
-		if (!rec && this.forceSelection) {
-			this.setRawValue("");
-			if (val.length > 0 && val != this.emptyText) {
-
-				this.applyEmptyText();
-			} else {
-				this.clearValue();
+		if (rec) {
+			this._mapReturnFields_(rec);
+			if (val == rec.get(this.displayField)
+					&& this.value == rec.get(this.valueField)) {
+				return;
 			}
-			this._mapReturnFields_(null);
+			val = rec.get(this.valueField || this.displayField);
 
-		} else {
-			if (rec) {
-				this._mapReturnFields_(rec);
-				if (val == rec.get(this.displayField)
-						&& this.value == rec.get(this.valueField)) {
-					return;
-				}
-				val = rec.get(this.valueField || this.displayField);
-			} else {
-				if (val != this.value) {
-					this._mapReturnFields_(null);
-				}
-			}
-			if (this.getValue() != val) {
+			if (this.getRawValue() != val) {
 				this.setValue(val);
 			}
+		} else {
+			if (this.forceSelection) {
+
+				if (val != this._onFocusValue_) {
+
+					this.setRawValue(null);
+					if (val.length > 0 && val != this.emptyText) {
+						this.applyEmptyText();
+					} else {
+						this.clearValue();
+					}
+					this._mapReturnFields_(null);
+
+				}
+			}
 		}
-		// me.collapse();
+
+		if (this.isExpanded) {
+			this.collapse();
+		}
+
 	},
 
 	onKeyUp : function(e, t) {
