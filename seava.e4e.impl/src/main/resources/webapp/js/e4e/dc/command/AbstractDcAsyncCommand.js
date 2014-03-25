@@ -64,8 +64,6 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 			}
 		}
 		Main.serverMessage(msg);
-	},
-
-	
+	}
 
 });
