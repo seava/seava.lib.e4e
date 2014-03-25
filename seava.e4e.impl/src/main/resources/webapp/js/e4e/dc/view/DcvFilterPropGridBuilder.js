@@ -109,7 +109,7 @@ Ext.define("e4e.dc.view.DcvFilterPropGridBuilder", {
 		});
 		var yesNoStore = Main.createBooleanStore();
 		config.editorInstance = Ext.create('Ext.form.field.ComboBox', Ext
-				.apply(config.editor || {}, {
+				.apply(config.editor, {
 					queryMode : "local",
 					valueField : "bv",
 					displayField : "tv",

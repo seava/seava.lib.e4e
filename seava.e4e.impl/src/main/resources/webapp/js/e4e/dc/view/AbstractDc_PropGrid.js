@@ -72,6 +72,7 @@ Ext.define("e4e.dc.view.AbstractDc_PropGrid", {
 	},
 
 	isValid : function() {
+		this._isValid_ = true;
 		this._elems_.each(this._validateElem_, this);
 		return this._isValid_;
 	},

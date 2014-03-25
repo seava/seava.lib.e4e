@@ -322,7 +322,14 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 						if (field.getValue() != nv) {
 							if (op == "reject"
 									|| !(field.hasFocus && field.isDirty)) {
-								field.setValue(nv);
+								if (field._isLov_) {
+									var fs = field.forceSelection ;
+									field.forceSelection = false;
+									field.setValue(nv);
+									field.forceSelection = fs;
+								} else {
+									field.setValue(nv);
+								}									
 							}
 						}
 					}
@@ -334,7 +341,14 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 						if (field.getValue() != nv) {
 							if (op == "reject"
 									|| !(field.hasFocus && field.isDirty)) {
-								field.setValue(nv);
+								if (field._isLov_) {
+									var fs = field.forceSelection ;
+									field.forceSelection = false;
+									field.setValue(nv);
+									field.forceSelection = fs;
+								} else {
+									field.setValue(nv);
+								}
 							}
 						}
 					}
