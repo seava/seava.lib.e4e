@@ -484,6 +484,16 @@ Ext.define("e4e.lov.AbstractCombo", {
 					this._mapReturnFields_(null);
 
 				}
+			} else {
+				if (Ext.isEmpty(val)) {
+					this.setRawValue(null);
+					if (val.length > 0 && val != this.emptyText) {
+						this.applyEmptyText();
+					} else {
+						this.clearValue();
+					}
+					this._mapReturnFields_(null);
+				}
 			}
 		}
 
