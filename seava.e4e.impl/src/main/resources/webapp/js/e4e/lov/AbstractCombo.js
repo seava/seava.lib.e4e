@@ -360,7 +360,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 
 		if (this.inEditor) {
 			drec = this._targetRecord_;
-			this._mapFilterFieldsExecute_(bp, drec, prec);
+			return this._mapFilterFieldsExecute_(bp, drec, prec);
 		} else {
 			if (dcv._dcViewType_ == "edit-form") {
 				drec = dcv._controller_.getRecord();
@@ -368,7 +368,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 			if (dcv._dcViewType_ == "filter-form") {
 				drec = dcv._controller_.getFilter();
 			}
-			this._mapFilterFieldsExecute_(bp, drec, prec);
+			return this._mapFilterFieldsExecute_(bp, drec, prec);
 		}
 	},
 
@@ -399,8 +399,17 @@ Ext.define("e4e.lov.AbstractCombo", {
 					}
 				}
 
-				if (_val == null) {
+				if (Ext.isEmpty(_val)) {
 					_val = "";
+					if (this.filterFieldMapping[i]["notNull"] === true) {						 
+						if (this._dcView_) {
+							this._dcView_._controller_
+									.info("Select the context value for this list of values field.");
+							return false;
+						} else {
+							alert("Select the context value for this list of values field.");
+						}
+					}
 				}
 
 				if (isLovMemberParam) {
@@ -442,7 +451,9 @@ Ext.define("e4e.lov.AbstractCombo", {
 		bp[this.displayField] = queryString + "*";
 
 		if (this.filterFieldMapping != null) {
-			this._mapFilterFields_(bp);
+			if (this._mapFilterFields_(bp) === false) {
+				return false;
+			}
 			this.queryCaching = false;
 		}
 		extraParams[Main.requestParam.FILTER] = Ext.encode(bp);
