@@ -3,9 +3,22 @@
 String.prototype.endsWith = function(suffix) {
 	return this.indexOf(suffix, this.length - suffix.length) !== -1;
 };
+
 String.prototype.toFirstUpper = function() {
 	return this.substring(0, 1).toUpperCase() + this.substring(1, this.length);
 };
+
+if (!Array.prototype.indexOf) {
+	Array.prototype.indexOf = function(obj, start) {
+		for (var i = (start || 0), j = this.length; i < j; i++) {
+			if (this[i] === obj) {
+				return i;
+			}
+		}
+		return -1;
+	}
+}
+
 /* ==================== Extjs overrides ======================== */
 
 Ext.Ajax.timeout = 1000 * 60 * 60;
@@ -414,7 +427,7 @@ Ext.override(Ext.grid.plugin.CellEditing, {
 		}
 
 		return editor;
-	} 
+	}
 
 });
 
