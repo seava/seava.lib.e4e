@@ -33,6 +33,12 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 	 */
 	_enforceMultiEditDc_ : true,
 
+	/**
+	 * Helper property to identify this dc-view type as filter property
+	 * grid.
+	 */
+	_dcViewType_ : "edit-grid",
+	
 	// **************** Public API *****************
 
 	/**
