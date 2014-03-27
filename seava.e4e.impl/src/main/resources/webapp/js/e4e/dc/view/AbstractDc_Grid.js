@@ -49,7 +49,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	 * Flag to switch on/off chart.
 	 */
 	_noChart_ : true,
-	
+
 	/**
 	 * Flag to switch on/off custom layout management.
 	 */
@@ -177,27 +177,23 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 		}
 		this._chartWindow_.show();
 	},
-	
+
 	/**
 	 * Show the advanced sort window
 	 */
 	_doSort_ : function() {
-		this._sortWindow_ = new e4e.dc.tools.DcSortWindow({
+		new e4e.dc.tools.DcSortWindow({
 			_grid_ : this
-		});
-		this._sortWindow_.show();
+		}).show();
 	},
 
 	/**
 	 * Show the advanced filter window
 	 */
 	_doFilter_ : function() {
-		if (this._filterWindow_ == null) {
-			this._filterWindow_ = new e4e.dc.tools.DcFilterWindow({
-				_grid_ : this
-			});
-		}
-		this._filterWindow_.show();
+		new e4e.dc.tools.DcFilterWindow({
+			_grid_ : this
+		}).show();		 
 	},
 
 	/**
@@ -223,11 +219,11 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	deferRowRender : true,
 	// enableLocking : true,
 	loadMask : {
-		msg : Main.translate("msg", "loading") + "..." 
+		msg : Main.translate("msg", "loading") + "..."
 	},
 	viewConfig : {
 		loadMask : {
-			msg : Main.translate("msg", "loading") + "..." 
+			msg : Main.translate("msg", "loading") + "..."
 		},
 		enableTextSelection : true,
 		stripeRows : true,
@@ -308,8 +304,8 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 			if (bbitems.length > 0) {
 				cfg["bbar"]["items"] = {
-					text: "Tools",
-					menu: bbitems
+					text : "Tools",
+					menu : bbitems
 				};
 			}
 		} else {
@@ -376,7 +372,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 			var ctrlSel = this._controller_.getSelectedRecords();
 			if (ctrlSel.length > 0) {
 				var newSel = [];
-				for ( var i = 0, l = ctrlSel.length; i < l; i++) {
+				for (var i = 0, l = ctrlSel.length; i < l; i++) {
 					var r = store
 							.getById(ctrlSel[i].get(ctrlSel[i].idProperty));
 					if (r != null) {
@@ -425,7 +421,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 			bbitems.push("-");
 			bbitems.push(this._elems_.get("_btnPrint_"));
 		}
-		
+
 		if (!this._noChart_) {
 			bbitems.push("-");
 			bbitems.push(this._elems_.get("_btnChart_"));
@@ -434,7 +430,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnImportCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "imp__tlp"),
 			handler : this._doImport_,
@@ -444,7 +440,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnExportCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			disabled : true,
 			text : Main.translate("dcvgrid", "exp__tlp"),
@@ -455,7 +451,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnFilterCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "filter__tlp"),
 			handler : this._doFilter_,
@@ -465,7 +461,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnSortCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "sort__tlp"),
 			handler : this._doSort_,
@@ -475,7 +471,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnPrintCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			disabled : true,
 			text : Main.translate("dcvgrid", "print__tlp"),
@@ -483,11 +479,10 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 			scope : this
 		};
 	},
-	
-	
+
 	_getBtnChartCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			disabled : true,
 			text : Main.translate("dcvgrid", "chart__tlp"),
@@ -498,7 +493,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnLayoutCfg_ : function() {
 		return c = {
-			//xtype : "button",
+			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "layout__tlp"),
 			handler : this._doLayoutManager_,
@@ -530,7 +525,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 		var cm = this.headerCt;
 		var cols = cm.items.items;
 
-		for ( var i = 0, len = cols.length; i < len; i++) {
+		for (var i = 0, len = cols.length; i < len; i++) {
 			var c = cols[i];
 			colStates.push({
 				n : c.name,
@@ -559,11 +554,11 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 		var cols = cm.items.items;
 		var col = null;
 
-		for ( var i = 0, slen = sCols.length; i < slen; i++) {
+		for (var i = 0, slen = sCols.length; i < slen; i++) {
 			var sCol = sCols[i];
 			var colIndex = -1;
 
-			for ( var j = 0, len = cols.length; j < len; j++) {
+			for (var j = 0, len = cols.length; j < len; j++) {
 				if (cols[j].name == sCol.n) {
 					colIndex = j;
 					col = cols[j];
@@ -591,33 +586,11 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_selectionHandler_ : function(sm, selected, options) {
 		var gridSel = this.getSelectionModel().getSelection();
-		// var dcSel = this._controller_.selectedRecords;
 		var ctrl = this._controller_;
 		ctrl.setSelectedRecords(gridSel, {
 			fromGrid : true,
 			grid : this
 		});
-		// if (gridSel.length <= 1) {
-		// if (gridSel.length == 1) {
-		// ctrl.setRecord(gridSel[0], {
-		// fromGrid : true,
-		// grid : this
-		// });
-		// } else {
-		// ctrl.setRecord(null, {
-		// fromGrid : true,
-		// grid : this
-		// });
-		// }
-		// }
-		// if (gridSel.length > 1) {
-		// if (ctrl.record == null || gridSel.indexOf(ctrl.record) < 0) {
-		// ctrl.setRecord(gridSel[0], {
-		// fromGrid : true,
-		// grid : this
-		// });
-		// }
-		// }
 	},
 
 	/**

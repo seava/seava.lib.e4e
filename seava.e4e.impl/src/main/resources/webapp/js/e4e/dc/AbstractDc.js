@@ -298,8 +298,7 @@ Ext.define("e4e.dc.AbstractDc", {
 		this.mon(this, "stateUpdateRequest", this.updateDcState, this);
 		/*
 		 * TODO: update flags immediatly in dcActionStateManager, then buffer
-		 * only the UI component's state update
-		 *  , { buffer : 100 }
+		 * only the UI component's state update , { buffer : 100 }
 		 */
 	},
 
@@ -958,6 +957,14 @@ Ext.define("e4e.dc.AbstractDc", {
 			f.endEdit();
 		}
 		return f;
+	},
+
+	/**
+	 * Get the translation for the specified model field.
+	 * Delegate to the translator in Main
+	 */
+	translateModelField : function(f) {
+		return Main.translateModelField(this._trl_, f);
 	},
 
 	/* ********************************************************** */

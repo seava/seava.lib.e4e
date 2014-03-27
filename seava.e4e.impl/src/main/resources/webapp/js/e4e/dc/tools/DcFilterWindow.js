@@ -32,7 +32,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 			border : true,
 			width : 500,
 			// height:200,
-			closeAction : "hide",
+			closeAction : "destroy",
 			closable : true,
 			constrain : true,
 			layout : "fit",
@@ -105,11 +105,14 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	_buildElements_ : function() {
 
 		var af = this._grid_._controller_.advancedFilter;
+		var dc = this._grid_._controller_;
+
 		var _items = [];
 		if (af != null && Ext.isArray(af)) {
 			for (var i = 0, len = af.length; i < len; i++) {
 				var r = {
 					field : af[i].fieldName,
+					title : dc.translateModelField(af[i].fieldName),
 					operation : af[i].operation,
 					value1 : af[i].value1,
 					value2 : af[i].value2
@@ -190,13 +193,13 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	 * Build the filter-grid columns.
 	 */
 	_buildFilterGridColumns_ : function() {
-		var _data = [];		 
+		var _data = [];
 		var _trl = this._grid_._controller_._trl_;
-		
+
 		this._grid_._controller_.filter.fields.each(function(item, idx, len) {
 			if (!item.name.endsWith("_From") && !item.name.endsWith("_To")) {
 				var _n = item.name;
-				var _t = Main.translateModelField(_trl, _n);				 
+				var _t = Main.translateModelField(_trl, _n);
 				_data[_data.length] = {
 					name : _n,
 					title : _t,

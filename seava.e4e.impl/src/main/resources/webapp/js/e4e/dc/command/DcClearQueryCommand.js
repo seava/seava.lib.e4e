@@ -9,7 +9,8 @@ Ext.define("e4e.dc.command.DcClearQueryCommand", {
 	
 	onExecute : function(options) {
 		var dc = this.dc;
-
+		dc.advancedFilter = null;
+		
 		for ( var k in dc.filter.data) {
 			dc.setFilterValue(k, null, false, "clearQuery");
 		}
