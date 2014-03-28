@@ -112,7 +112,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 	},
 
 	_onFocus_ : function() {
-		if (this.inEditor) {
+		if (this._dcView_ && this._dcView_._dcViewType_ == "edit-grid") {
 			var c = this.column.dataIndex;
 			this._onFocusValue_ = this._targetRecord_.data[c];
 		} else {
