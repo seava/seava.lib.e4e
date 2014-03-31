@@ -77,8 +77,8 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 	_updateModel : function(target, source, ctrl) {
 		var dirty = target.dirty;
 		target.beginEdit();
-		for ( var p in source.data) {
-			target.set(p, source.data[p]);
+		for ( var p in source) {
+			target.set(p, source[p]);
 		}
 		target.endEdit();
 		if (!dirty) {
