@@ -102,29 +102,22 @@ Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 		var r = Ext.decode(response.responseText);
 
 		if (r.success) {
-			var records = dc.store.proxy.reader.readRecords(r.data).records;
+			var _rr = dc.store.proxy.reader.readRecords([ r.data ]);
+			var records = _rr.records;
 			var srcRecords = options.options.sourceRecords;
-
+			// records
 			for ( var iSource in srcRecords) {
 				var srcRec = srcRecords[iSource];
-
-				var dirty = srcRec.dirty;
-				srcRec.beginEdit();
-
 				for ( var iResult in records) {
 					var rec = records[iResult];
-
 					if (srcRec.getId() == rec.getId()) {
-						for ( var p in rec.data) {
-							srcRec.set(p, rec.data[p]);
-						}
+						this._updateModel(srcRecords, rec);
 					}
 				}
-
-				srcRec.endEdit();
-				if (!dirty) {
-					srcRec.commit();
-				}
+			}
+			// params
+			if (_rr.params) {
+				this._updateModel(dc.params, _rr.params[0]);
 			}
 		}
 

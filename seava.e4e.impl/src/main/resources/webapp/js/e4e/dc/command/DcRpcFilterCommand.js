@@ -90,6 +90,18 @@ Ext.define("e4e.dc.command.DcRpcFilterCommand", {
 		}
 		var o = options.options || {}, name = o.name, s = o || {};
 		var dc = this.dc;
+		var r = Ext.decode(response.responseText);
+
+		if (r.success) {
+			var _rr = dc.store.proxy.reader.readRecords([ r.data ]);
+			// filter
+			this._updateModel(dc.filter, _rr.records[0]);
+			// params
+			if (_rr.params) {
+				this._updateModel(dc.params, _rr.params[0]);
+			}
+		}
+
 		if (s.callbacks && s.callbacks.successFn) {
 			s.callbacks.successFn.call(s.callbacks.successScope || dc, dc,
 					response, name, options);

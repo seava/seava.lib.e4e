@@ -95,16 +95,12 @@ Ext.define("e4e.dc.command.DcRpcDataCommand", {
 		var r = Ext.decode(response.responseText);
 
 		if (r.success) {
-			var rec = dc.store.proxy.reader.readRecords([ r.data ]).records[0];
-			var srcRec = options.options.sourceRec;
-			var dirty = srcRec.dirty;
-			srcRec.beginEdit();
-			for ( var p in rec.data) {
-				srcRec.set(p, rec.data[p]);
-			}
-			srcRec.endEdit();
-			if (!dirty) {
-				srcRec.commit();
+			var _rr = dc.store.proxy.reader.readRecords([ r.data ]);
+			// record
+			this._updateModel(options.options.sourceRec, _rr.records[0]);
+			// params
+			if (_rr.params) {
+				this._updateModel(dc.params, _rr.params[0]);
 			}
 		}
 
@@ -144,7 +140,7 @@ Ext.define("e4e.dc.command.DcRpcDataCommand", {
 			}
 		}
 		var o = options.options || {}, serviceName = o.name, s = o || {};
-		var dc = this.dc;		 
+		var dc = this.dc;
 		Main.serverMessage(response.responseText);
 		if (s.callbacks && s.callbacks.failureFn) {
 			s.callbacks.failureFn.call(s.callbacks.failureScope || dc, dc,

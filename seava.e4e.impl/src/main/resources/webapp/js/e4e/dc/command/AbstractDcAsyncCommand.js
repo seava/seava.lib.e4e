@@ -64,6 +64,26 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 			}
 		}
 		Main.serverMessage(msg);
+	},
+
+	/**
+	 * Private helper function to update values of the given target model (can
+	 * be the current filter, current record or the params instance ) with
+	 * values returned from server after an AJAX call passed in the source
+	 * argument
+	 * 
+	 * ctrl: Behavior control flags
+	 */
+	_updateModel : function(target, source, ctrl) {
+		var dirty = target.dirty;
+		target.beginEdit();
+		for ( var p in source.data) {
+			target.set(p, source.data[p]);
+		}
+		target.endEdit();
+		if (!dirty) {
+			target.commit();
+		}
 	}
 
 });
