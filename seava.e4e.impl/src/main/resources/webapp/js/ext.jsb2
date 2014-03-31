@@ -203,6 +203,9 @@
 	"text": "DcRpcDataListCommand.js",
 	"path": "/e4e/dc/command/"
 },{
+	"text": "DcRpcIdListCommand.js",
+	"path": "/e4e/dc/command/"
+},{
 	"text": "DcRpcFilterCommand.js",
 	"path": "/e4e/dc/command/"
 },{

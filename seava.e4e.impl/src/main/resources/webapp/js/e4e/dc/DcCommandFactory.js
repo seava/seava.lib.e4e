@@ -6,6 +6,7 @@ e4e.dc.DcCommandFactory = {
 
 	RPC_DATA : "RpcData",
 	RPC_DATALIST : "RpcDataList",
+	RPC_IDLIST : "RpcIdList",
 	RPC_FILTER : "RpcFilter",
 
 	/**
@@ -13,7 +14,7 @@ e4e.dc.DcCommandFactory = {
 	 * are internal DC commands or not managed as actions.
 	 */
 	commandNames : function() {
-		return [ this.RPC_DATA, this.RPC_DATALIST, this.RPC_FILTER ];
+		return [ this.RPC_DATA, this.RPC_DATALIST,this.RPC_IDLIST, this.RPC_FILTER ];
 	},
 
 	/**

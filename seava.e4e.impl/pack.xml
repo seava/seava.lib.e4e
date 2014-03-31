@@ -51,7 +51,7 @@
 			<filelist dir="${sourcePathJsCore}/dc/tools" files="DcReport.js,DcBulkEditWindow.js,DcFilterWindow.js,DcImportWindow.js,DcExportWindow.js,DcChartWindow.js,DcPrintWindow.js,DcSortWindow.js,DcGridLayoutWindow.js" />
 			<filelist dir="${sourcePathJsCore}/dc/command" files="AbstractDcCommand.js,AbstractDcAsyncCommand.js,AbstractDcSyncCommand.js" />
 			<filelist dir="${sourcePathJsCore}/dc/command" files="DcQueryCommand.js,DcNewCommand.js,DcCopyCommand.js,DcSaveCommand.js,DcCancelCommand.js,DcEditInCommand.js,DcEditOutCommand.js" />
-			<filelist dir="${sourcePathJsCore}/dc/command" files="DcClearQueryCommand.js,DcEnterQueryCommand.js,DcDeleteCommand.js,DcReloadRecCommand.js,DcReloadPageCommand.js,DcPrevRecCommand.js,DcNextRecCommand.js,DcRpcDataCommand.js,DcRpcDataListCommand.js,DcRpcFilterCommand.js" />
+			<filelist dir="${sourcePathJsCore}/dc/command" files="DcClearQueryCommand.js,DcEnterQueryCommand.js,DcDeleteCommand.js,DcReloadRecCommand.js,DcReloadPageCommand.js,DcPrevRecCommand.js,DcNextRecCommand.js,DcRpcDataCommand.js,DcRpcDataListCommand.js,DcRpcIdListCommand.js,DcRpcFilterCommand.js" />
 
 			<filelist dir="${sourcePathJsCore}/ui" files="FrameBuilder.js,ActionBuilder.js,FrameButtonStateManager.js,AbstractUi.js" />
 			<filelist dir="${sourcePathJsCore}/dc" files="DcActionsStateManager.js,DcContext.js" />
