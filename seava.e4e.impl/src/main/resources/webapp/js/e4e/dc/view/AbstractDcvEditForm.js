@@ -256,13 +256,13 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				if (field.dataIndex) {
 					field.suspendEvents();
 					if (field._isLov_) {
-						var fs = field.forceSelection ;
+						var fs = field.forceSelection;
 						field.forceSelection = false;
 						field.setValue(record.get(field.dataIndex));
 						field.forceSelection = fs;
 					} else {
 						field.setValue(record.get(field.dataIndex));
-					}					
+					}
 					if (trackResetOnLoad) {
 						field.resetOriginalValue();
 					}
@@ -320,16 +320,28 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 					if (field) {
 						var nv = record.data[field.dataIndex];
 						if (field.getValue() != nv) {
-							if (op == "reject"
-									|| !(field.hasFocus && field.isDirty)) {
+							if (op == "reject") {
+								field.suspendEvents();
 								if (field._isLov_) {
-									var fs = field.forceSelection ;
+									var fs = field.forceSelection;
 									field.forceSelection = false;
 									field.setValue(nv);
 									field.forceSelection = fs;
 								} else {
 									field.setValue(nv);
-								}									
+								}
+								field.resumeEvents();
+							} else {
+								if (!(field.hasFocus && field.isDirty)) {
+									if (field._isLov_) {
+										var fs = field.forceSelection;
+										field.forceSelection = false;
+										field.setValue(nv);
+										field.forceSelection = fs;
+									} else {
+										field.setValue(nv);
+									}
+								}
 							}
 						}
 					}
@@ -339,15 +351,27 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 					if (field.dataIndex) {
 						var nv = record.data[field.dataIndex];
 						if (field.getValue() != nv) {
-							if (op == "reject"
-									|| !(field.hasFocus && field.isDirty)) {
+							if (op == "reject") {
+								field.suspendEvents();
 								if (field._isLov_) {
-									var fs = field.forceSelection ;
+									var fs = field.forceSelection;
 									field.forceSelection = false;
 									field.setValue(nv);
 									field.forceSelection = fs;
 								} else {
 									field.setValue(nv);
+								}
+								field.resumeEvents();
+							} else {
+								if (!(field.hasFocus && field.isDirty)) {
+									if (field._isLov_) {
+										var fs = field.forceSelection;
+										field.forceSelection = false;
+										field.setValue(nv);
+										field.forceSelection = fs;
+									} else {
+										field.setValue(nv);
+									}
 								}
 							}
 						}
