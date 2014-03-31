@@ -116,8 +116,8 @@ Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 				}
 			}
 			// params
-			if (_rr.params) {
-				this._updateModel(dc.params, _rr.params[0]);
+			if (r.params) {
+				this._updateModel(dc.params, r.params);
 			}
 		}
 
