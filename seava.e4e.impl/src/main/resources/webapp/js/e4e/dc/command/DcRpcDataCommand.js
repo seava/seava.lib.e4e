@@ -94,10 +94,9 @@ Ext.define("e4e.dc.command.DcRpcDataCommand", {
 		var dc = this.dc;
 		var r = Ext.decode(response.responseText);
 
-		if (r.success) {
-			var _rr = dc.store.proxy.reader.readRecords([ r.data ]);
+		if (r.success) {			 
 			// record
-			this._updateModel(options.options.sourceRec, _rr.records[0]);
+			this._updateModel(options.options.sourceRec, r.data);
 			// params
 			if (r.params) {
 				this._updateModel(dc.params, r.params);

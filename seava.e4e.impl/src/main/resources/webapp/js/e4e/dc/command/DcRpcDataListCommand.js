@@ -111,7 +111,7 @@ Ext.define("e4e.dc.command.DcRpcDataListCommand", {
 				for ( var iResult in records) {
 					var rec = records[iResult];
 					if (srcRec.getId() == rec.getId()) {
-						this._updateModel(srcRecords, rec);
+						this._updateModel(srcRecords, rec.data);
 					}
 				}
 			}

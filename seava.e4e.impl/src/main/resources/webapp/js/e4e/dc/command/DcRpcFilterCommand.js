@@ -93,9 +93,8 @@ Ext.define("e4e.dc.command.DcRpcFilterCommand", {
 		var r = Ext.decode(response.responseText);
 
 		if (r.success) {
-			var _rr = dc.store.proxy.reader.readRecords([ r.data ]);
 			// filter
-			this._updateModel(dc.filter, _rr.records[0]);
+			this._updateModel(dc.filter, r.data);
 			// params
 			if (r.params) {
 				this._updateModel(dc.params, r.params);
