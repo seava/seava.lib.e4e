@@ -94,10 +94,10 @@ Ext.define("e4e.dc.command.DcRpcFilterCommand", {
 
 		if (r.success) {
 			// filter
-			this._updateModel(dc.filter, r.data);
+			this._updateModel(dc.filter, r.data, {targetType:"filter"});
 			// params
 			if (r.params) {
-				this._updateModel(dc.params, r.params);
+				this._updateModel(dc.params, r.params, {targetType:"params"});
 			}
 		}
 

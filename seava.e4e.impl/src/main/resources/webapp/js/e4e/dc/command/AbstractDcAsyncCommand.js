@@ -77,8 +77,18 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 	_updateModel : function(target, source, ctrl) {
 		var dirty = target.dirty;
 		target.beginEdit();
-		for ( var p in source) {
-			target.set(p, source[p]);
+		if (ctrl && ctrl.targetType == "filter") {
+			for ( var p in source) {
+				this.dc.setFilterValue(p, source[p]);
+			}
+		} else if (ctrl && ctrl.targetType == "params") {
+			for ( var p in source) {
+				target.setParamValue(p, source[p]);
+			}
+		} else {
+			for ( var p in source) {
+				target.set(p, source[p]);
+			}
 		}
 		target.endEdit();
 		if (!dirty) {

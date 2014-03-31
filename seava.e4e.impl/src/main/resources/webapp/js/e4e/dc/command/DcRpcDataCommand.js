@@ -99,7 +99,7 @@ Ext.define("e4e.dc.command.DcRpcDataCommand", {
 			this._updateModel(options.options.sourceRec, r.data);
 			// params
 			if (r.params) {
-				this._updateModel(dc.params, r.params);
+				this._updateModel(dc.params, r.params, {targetType:"params"});
 			}
 		}
 
