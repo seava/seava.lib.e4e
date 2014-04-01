@@ -25,6 +25,7 @@ Ext.define("e4e.dc.command.DcQueryCommand", {
 					records : records,
 					response : operation.response,
 					operation : operation,
+					options : options,
 					success : success
 				});
 			},

@@ -1,12 +1,42 @@
 /* ==================== general javascript overrides ======================== */
 
-String.prototype.endsWith = function(suffix) {
-	return this.indexOf(suffix, this.length - suffix.length) !== -1;
-};
+// string.endsWith
+if (!String.prototype.endsWith) {
+	String.prototype.endsWith = function(suffix) {
+		return this.indexOf(suffix, this.length - suffix.length) !== -1;
+	};
+}
 
-String.prototype.toFirstUpper = function() {
-	return this.substring(0, 1).toUpperCase() + this.substring(1, this.length);
-};
+// string.toFirstUpper
+
+if (!String.prototype.toFirstUpper) {
+	String.prototype.toFirstUpper = function() {
+		return this.substring(0, 1).toUpperCase()
+				+ this.substring(1, this.length);
+	};
+}
+
+// string.trim
+
+if (!String.prototype.trim) {
+	String.prototype.trim = function() {
+		return this.replace(/^\s+|\s+$/g, "");
+	}
+}
+
+if (!String.prototype.ltrim) {
+	String.prototype.ltrim = function() {
+		return this.replace(/^\s+/, "");
+	}
+}
+
+if (!String.prototype.rtrim) {
+	String.prototype.rtrim = function() {
+		return this.replace(/\s+$/, "");
+	}
+}
+
+// array.indexOf
 
 if (!Array.prototype.indexOf) {
 	Array.prototype.indexOf = function(obj, start) {

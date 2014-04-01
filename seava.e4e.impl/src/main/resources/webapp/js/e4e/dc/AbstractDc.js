@@ -960,8 +960,8 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	/**
-	 * Get the translation for the specified model field.
-	 * Delegate to the translator in Main
+	 * Get the translation for the specified model field. Delegate to the
+	 * translator in Main
 	 */
 	translateModelField : function(f) {
 		return Main.translateModelField(this._trl_, f);

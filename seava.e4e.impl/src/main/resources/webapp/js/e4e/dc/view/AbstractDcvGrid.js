@@ -40,13 +40,12 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 				listeners : {
 					"selectionchange" : {
 						scope : this,
-						fn : this._selectionHandler_,
-						buffer : 200
+						fn : this._selectionHandler_ 
+						//buffer : 200
 					},
 					"beforedeselect" : {
 						scope : this,
 						fn : function(sm, record, index, eopts) {
-
 							if (record == this._controller_.record
 									&& !this._controller_.dcState
 											.isRecordChangeAllowed()) {
@@ -84,13 +83,19 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "selectionChange", this._onController_selectionChange,
 				this);
+//		this.mon(ctrl, "afterDoQuerySuccess", function(ajaxResult) {
+//			if (!(ajaxResult.options && ajaxResult.options.initiator == "dcContext")) {
+//				this._gotoFirstNavigationItem_();
+//			}
+//		}, this);
+		
 		this.mon(store, "load", this._onStore_load_, this);
-
 	},
 
 	_gotoFirstNavigationItem_ : function() {
 		var v = this.getView();
-		v.focusRow(v.getSelectionModel().getLastSelected());
+		//v.focusRow(v.getSelectionModel().getLastSelected());
+		v.focus();
 	},
 
 	_registerKeyBindings_ : function() {
@@ -163,14 +168,12 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 				scope : this
 			}), Ext.apply(Main.keyBindings.dc.nextPage, {
 				fn : function(keyCode, e) {
-					// console.log("AbstractDcvGrid.nextPage");
 					e.stopEvent();
 					this._controller_.nextPage();
 				},
 				scope : this
 			}), Ext.apply(Main.keyBindings.dc.prevPage, {
 				fn : function(keyCode, e) {
-					// console.log("AbstractDcvGrid.prevPage");
 					e.stopEvent();
 					this._controller_.previousPage();
 				},

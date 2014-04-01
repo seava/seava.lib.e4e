@@ -83,7 +83,7 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 			}
 		} else if (ctrl && ctrl.targetType == "params") {
 			for ( var p in source) {
-				target.setParamValue(p, source[p]);
+				this.dc.setParamValue(p, source[p]);
 			}
 		} else {
 			for ( var p in source) {

@@ -116,16 +116,16 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 		// acquire first time focus
 
-		if (this._controller_.record && this._controller_.record.phantom
-				&& this._acquireFocusInsert_) {
-			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
-					.delay(200);
-		}
-		if (this._controller_.record && !this._controller_.record.phantom
-				&& this._acquireFocusUpdate_) {
-			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
-					.delay(200);
-		}
+//		if (this._controller_.record && this._controller_.record.phantom
+//				&& this._acquireFocusInsert_) {
+//			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
+//					.delay(200);
+//		}
+//		if (this._controller_.record && !this._controller_.record.phantom
+//				&& this._acquireFocusUpdate_) {
+//			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
+//					.delay(200);
+//		}
 	},
 
 	beforeDestroy : function() {
@@ -163,7 +163,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 		// store listeners
 
-		this.mon(store, "datachanged", this._onStore_datachanged_, this);
+		//this.mon(store, "datachanged", this._onStore_datachanged_, this);
 		this.mon(store, "update", this._onStore_update_, this);
 
 		if (this._controller_.commands.doSave) {
@@ -190,20 +190,12 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 		}
 	},
 
-	// /**
-	// * If it is not a multiEdit data-control, is very likely editing is done
-	// * with such an edit form. After save, refocus the first textfield.
-	// */
-	// _onStore_write_ : function(store, operation, eopts) {
-	// this.down(" textfield").focus();
-	// },
-
-	/**
-	 * Update the bound record when the store data is changed.
-	 */
-	_onStore_datachanged_ : function(store, eopts) {
-		this._updateBound_(this._controller_.getRecord(), null, null);
-	},
+//	/**
+//	 * Update the bound record when the store data is changed.
+//	 */
+//	_onStore_datachanged_ : function(store, eopts) {
+//		this._updateBound_(this._controller_.getRecord(), null, null);
+//	},
 
 	/**
 	 * Update the bound record when the store data is updated.
@@ -238,8 +230,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 * Bind the current record of the data-control to the form.
 	 * 
 	 */
-	_onBind_ : function(record) {
-
+	_onBind_ : function(record) {		 
 		if (record) {
 			if (this.disabled) {
 				this.enable();
@@ -253,22 +244,8 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			var fields = this.getForm().getFields();
 			var trackResetOnLoad = this.getForm().trackResetOnLoad;
 			fields.each(function(field) {
-				if (field.dataIndex) {
-					field.suspendEvents();
-					if (field._isLov_) {
-						var fs = field.forceSelection;
-						field.forceSelection = false;
-						field.setValue(record.get(field.dataIndex));
-						field.forceSelection = fs;
-					} else {
-						field.setValue(record.get(field.dataIndex));
-					}
-					if (trackResetOnLoad) {
-						field.resetOriginalValue();
-					}
-					field.resumeEvents();
-				}
-			});
+				this._onBindField_(field, record, trackResetOnLoad);
+			}, this);
 			this.getForm()._record = record;
 			this._applyStates_(record);
 			this.getForm().isValid();
@@ -276,27 +253,48 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 		this._afterBind_(record);
 	},
 
+	_onBindField_ : function(field, record, trackResetOnLoad) {
+		if (field.dataIndex) {
+			field.setRawValue(record.get(field.dataIndex));
+			if (trackResetOnLoad) {
+				field.resetOriginalValue();
+			}
+		}
+
+		/*
+		 * if (field.dataIndex) { field.suspendEvents(); if (field._isLov_) {
+		 * var fs = field.forceSelection; field.forceSelection = false;
+		 * field.setValue(record.get(field.dataIndex)); field.forceSelection =
+		 * fs; } else { field.setValue(record.get(field.dataIndex)); } if
+		 * (trackResetOnLoad) { field.resetOriginalValue(); }
+		 * field.resumeEvents(); }
+		 */
+	},
+
 	/**
 	 * Un-bind the record from the form.
 	 */
 	_onUnbind_ : function(record) {
-		if (this._images_ != null) {
-			for (var i = 0, l = this._images_.length; i < l; i++) {
-				var img = this._getElement_(this._images_[i]);
-				img.setSrc("");
+		var _r = this.getForm()._record;		
+		if (_r) {
+			if (this._images_ != null) {
+				for (var i = 0, l = this._images_.length; i < l; i++) {
+					var img = this._getElement_(this._images_[i]);
+					img.setSrc("");
+				}
 			}
-		}
-		this.getForm().getFields().each(function(field) {
-			if (field.dataIndex) {
-				field.setRawValue(null);
-				field.clearInvalid();
+			this.getForm().getFields().each(function(field) {
+				if (field.dataIndex) {
+					field.setRawValue(null);
+					field.clearInvalid();
+				}			
+			});
+			if (!this.disabled) {
+				this.disable();
 			}
-			// field._disable_();
-		});
-		if (!this.disabled) {
-			this.disable();
-		}
-
+			this.getForm()._record = null;
+		}		
+		
 		this._afterUnbind_(record);
 	},
 
@@ -317,66 +315,36 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				for (var i = 0; i < l; i++) {
 					var field = this._findFieldByDataIndex(fields,
 							modFieldNames[i]);
-					if (field) {
-						var nv = record.data[field.dataIndex];
-						if (field.getValue() != nv) {
-							if (op == "reject") {
-								field.suspendEvents();
-								if (field._isLov_) {
-									var fs = field.forceSelection;
-									field.forceSelection = false;
-									field.setValue(nv);
-									field.forceSelection = fs;
-								} else {
-									field.setValue(nv);
-								}
-								field.resumeEvents();
-							} else {
-								if (!(field.hasFocus && field.isDirty)) {
-									if (field._isLov_) {
-										var fs = field.forceSelection;
-										field.forceSelection = false;
-										field.setValue(nv);
-										field.forceSelection = fs;
-									} else {
-										field.setValue(nv);
-									}
-								}
-							}
-						}
-					}
+					this._updateBoundField_(field, record, op);
 				}
 			} else {
 				fields.each(function(field) {
-					if (field.dataIndex) {
-						var nv = record.data[field.dataIndex];
-						if (field.getValue() != nv) {
-							if (op == "reject") {
-								field.suspendEvents();
-								if (field._isLov_) {
-									var fs = field.forceSelection;
-									field.forceSelection = false;
-									field.setValue(nv);
-									field.forceSelection = fs;
-								} else {
-									field.setValue(nv);
-								}
-								field.resumeEvents();
-							} else {
-								if (!(field.hasFocus && field.isDirty)) {
-									if (field._isLov_) {
-										var fs = field.forceSelection;
-										field.forceSelection = false;
-										field.setValue(nv);
-										field.forceSelection = fs;
-									} else {
-										field.setValue(nv);
-									}
-								}
-							}
-						}
+					this._updateBoundField_(field, record, op);
+				}, this);
+			}
+		}
+	},
+
+	_updateBoundField_ : function(field, record, op) {
+		if (field && field.dataIndex) {
+			var nv = record.data[field.dataIndex];
+			// if it is a cancel changes operation blindly reset the raw value
+			// of the field
+			// Otherwise go through the real setValue to allow to trigger change
+			// events
+			if (op == "reject") {
+				field.setRawValue(nv);
+			} else {
+				if (!(field.hasFocus && field.isDirty)) {
+					if (field._isLov_) {
+						var fs = field.forceSelection;
+						field.forceSelection = false;
+						field.setValue(nv);
+						field.forceSelection = fs;
+					} else {
+						field.setValue(nv);
 					}
-				});
+				}
 			}
 		}
 	},

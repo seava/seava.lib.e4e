@@ -148,8 +148,8 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 				listeners : {
 					"selectionchange" : {
 						scope : this,
-						fn : this._selectionHandler_,
-						buffer : 50
+						fn : this._selectionHandler_//,
+						//buffer : 50
 					}
 				},
 				"beforedeselect" : {
@@ -191,11 +191,17 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 		this.mon(store, "load", this._onStore_load_, this);
 		this.mon(store, "write", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
+//		this.mon(ctrl, "afterDoQuerySuccess", function(ajaxResult) {
+//			if (!(ajaxResult.options && ajaxResult.options.initiator == "dcContext")) {
+//				this._gotoFirstNavigationItem_();
+//			}
+//		}, this);
 	},
 
 	_gotoFirstNavigationItem_ : function() {
 		var v = this.getView();
-		v.focusRow(v.getSelectionModel().getLastSelected());
+		//v.focusRow(v.getSelectionModel().getLastSelected());
+		v.focus();
 	},
 
 	_afterEdit_ : function(editor, e, eOpts) {

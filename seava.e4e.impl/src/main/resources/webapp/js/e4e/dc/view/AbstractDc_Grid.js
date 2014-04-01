@@ -193,7 +193,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	_doFilter_ : function() {
 		new e4e.dc.tools.DcFilterWindow({
 			_grid_ : this
-		}).show();		 
+		}).show();
 	},
 
 	/**
@@ -324,9 +324,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	 */
 	_onController_selectionChange : function(evnt) {
 		var s = evnt.dc.getSelectedRecords();
-		// console.log("Abstractdcvgrid. onController_selectionChange
-		// sel.len =
-		// " + s.length );
 		if (evnt.eOpts && evnt.eOpts.fromGrid === true
 				&& evnt.eOpts.grid === this) {
 			return;
@@ -341,7 +338,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 	/**
 	 * Handler for the data-control's store load event.
 	 */
-	_onStore_load_ : function(store, operation, eopts) {
+	_onStore_load_ : function(store, records, successful, eOpts) {
 		if (!this._noExport_) {
 			if (store.getCount() > 0) {
 				this._get_("_btnExport_").enable();
@@ -363,6 +360,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 				this._get_("_btnChart_").disable();
 			}
 		}
+
 		/*
 		 * restore the selected records from the controller. Select first if
 		 * record from store if controller has no selection or the current store
@@ -430,7 +428,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnImportCfg_ : function() {
 		return c = {
-			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "imp__tlp"),
 			handler : this._doImport_,
@@ -440,7 +437,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnExportCfg_ : function() {
 		return c = {
-			// xtype : "button",
 			id : Ext.id(),
 			disabled : true,
 			text : Main.translate("dcvgrid", "exp__tlp"),
@@ -451,7 +447,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnFilterCfg_ : function() {
 		return c = {
-			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "filter__tlp"),
 			handler : this._doFilter_,
@@ -461,7 +456,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnSortCfg_ : function() {
 		return c = {
-			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "sort__tlp"),
 			handler : this._doSort_,
@@ -471,7 +465,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnPrintCfg_ : function() {
 		return c = {
-			// xtype : "button",
 			id : Ext.id(),
 			disabled : true,
 			text : Main.translate("dcvgrid", "print__tlp"),
@@ -482,7 +475,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnChartCfg_ : function() {
 		return c = {
-			// xtype : "button",
 			id : Ext.id(),
 			disabled : true,
 			text : Main.translate("dcvgrid", "chart__tlp"),
@@ -493,7 +485,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 	_getBtnLayoutCfg_ : function() {
 		return c = {
-			// xtype : "button",
 			id : Ext.id(),
 			text : Main.translate("dcvgrid", "layout__tlp"),
 			handler : this._doLayoutManager_,

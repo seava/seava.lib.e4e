@@ -120,7 +120,7 @@ Ext.define("e4e.dc.DcContext", {
 		this._updateCtxData_();
 
 		this.doQueryTask = new Ext.util.DelayedTask(function() {
-			this.childDc.doQuery();
+			this.childDc.doQuery({initiator:"dcContext"});
 		}, this);
 
 		this.parentDc.mon(this.parentDc, "recordChange", function() {

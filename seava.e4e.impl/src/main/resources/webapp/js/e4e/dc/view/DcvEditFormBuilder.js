@@ -316,6 +316,7 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 		if (!r)
 			return;
 		var rv = r.get(f.dataIndex);
+		nv = f.getValue();
 		if (Ext.isDate(rv)) {
 			var rd = Ext.Date.parse(Ext.Date.format(rv, f.format), f.format);
 			if (!r.isEqual(rd, nv)) {
