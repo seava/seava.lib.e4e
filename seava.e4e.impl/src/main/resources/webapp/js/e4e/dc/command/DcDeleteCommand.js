@@ -20,8 +20,13 @@ Ext.define("e4e.dc.command.DcDeleteCommand", {
 		dc.store.remove(dc.getSelectedRecords());
 		if (!dc.multiEdit) {
 			dc.store.sync({
-				success : this.onAjaxSuccess,
-				failure : this.onAjaxFailure,
+				callback : function(batch, options) {
+					this.onAjaxResult({
+						batch : batch,
+						options : options,
+						success : !batch.hasException
+					});
+				},
 				scope : this,
 				options : options
 			});
@@ -30,11 +35,11 @@ Ext.define("e4e.dc.command.DcDeleteCommand", {
 		}
 	},
 
-	onAjaxSuccess : function(batch, options) {
+	onAjaxSuccess : function(ajaxResult) {
 		this.callParent(arguments);
-		//this.dc.requestStateUpdate();
 		this.dc.doDefaultSelection();
-		this.dc.fireEvent("afterDoCommitSuccess", this.dc, options.options);
+		this.dc.fireEvent("afterDoCommitSuccess", this.dc,
+				ajaxResult.options.options);
 	},
 
 	isActionAllowed : function() {
