@@ -120,7 +120,6 @@ Ext.define("e4e.dc.DcState", {
 		}
 
 		if (runManager) {
-			// console.log("DcState.run for " + dc.$className);
 			e4e.dc.DcActionsStateManager.applyStates(dc);
 		}
 		return runManager;

@@ -255,7 +255,12 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 	_onBindField_ : function(field, record, trackResetOnLoad) {
 		if (field.dataIndex) {
-			field.setRawValue(record.get(field.dataIndex));
+			var _v = record.get(field.dataIndex);
+			if (field.formatDate) {
+				field.setRawValue(field.formatDate(_v));
+			} else {
+				field.setRawValue(_v);
+			}			
 			if (trackResetOnLoad) {
 				field.resetOriginalValue();
 			}
