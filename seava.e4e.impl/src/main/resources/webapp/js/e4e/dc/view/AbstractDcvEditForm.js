@@ -116,16 +116,16 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 		// acquire first time focus
 
-//		if (this._controller_.record && this._controller_.record.phantom
-//				&& this._acquireFocusInsert_) {
-//			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
-//					.delay(200);
-//		}
-//		if (this._controller_.record && !this._controller_.record.phantom
-//				&& this._acquireFocusUpdate_) {
-//			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
-//					.delay(200);
-//		}
+		// if (this._controller_.record && this._controller_.record.phantom
+		// && this._acquireFocusInsert_) {
+		// (new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
+		// .delay(200);
+		// }
+		// if (this._controller_.record && !this._controller_.record.phantom
+		// && this._acquireFocusUpdate_) {
+		// (new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
+		// .delay(200);
+		// }
 	},
 
 	beforeDestroy : function() {
@@ -163,7 +163,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 		// store listeners
 
-		//this.mon(store, "datachanged", this._onStore_datachanged_, this);
+		// this.mon(store, "datachanged", this._onStore_datachanged_, this);
 		this.mon(store, "update", this._onStore_update_, this);
 
 		if (this._controller_.commands.doSave) {
@@ -190,12 +190,12 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 		}
 	},
 
-//	/**
-//	 * Update the bound record when the store data is changed.
-//	 */
-//	_onStore_datachanged_ : function(store, eopts) {
-//		this._updateBound_(this._controller_.getRecord(), null, null);
-//	},
+	// /**
+	// * Update the bound record when the store data is changed.
+	// */
+	// _onStore_datachanged_ : function(store, eopts) {
+	// this._updateBound_(this._controller_.getRecord(), null, null);
+	// },
 
 	/**
 	 * Update the bound record when the store data is updated.
@@ -230,7 +230,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 * Bind the current record of the data-control to the form.
 	 * 
 	 */
-	_onBind_ : function(record) {		 
+	_onBind_ : function(record) {
 		if (record) {
 			if (this.disabled) {
 				this.enable();
@@ -260,7 +260,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				field.setRawValue(field.formatDate(_v));
 			} else {
 				field.setRawValue(_v);
-			}			
+			}
 			if (trackResetOnLoad) {
 				field.resetOriginalValue();
 			}
@@ -280,7 +280,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 * Un-bind the record from the form.
 	 */
 	_onUnbind_ : function(record) {
-		var _r = this.getForm()._record;		
+		var _r = this.getForm()._record;
 		if (_r) {
 			if (this._images_ != null) {
 				for (var i = 0, l = this._images_.length; i < l; i++) {
@@ -292,14 +292,14 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				if (field.dataIndex) {
 					field.setRawValue(null);
 					field.clearInvalid();
-				}			
+				}
 			});
 			if (!this.disabled) {
 				this.disable();
 			}
 			this.getForm()._record = null;
-		}		
-		
+		}
+
 		this._afterUnbind_(record);
 	},
 
@@ -338,7 +338,11 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			// Otherwise go through the real setValue to allow to trigger change
 			// events
 			if (op == "reject") {
-				field.setRawValue(nv);
+				if (field.formatDate) {
+					field.setRawValue(field.formatDate(nv));
+				} else {
+					field.setRawValue(nv);
+				}
 			} else {
 				if (!(field.hasFocus && field.isDirty)) {
 					if (field._isLov_) {
