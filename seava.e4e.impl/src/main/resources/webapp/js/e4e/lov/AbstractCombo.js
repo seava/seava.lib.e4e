@@ -193,10 +193,12 @@ Ext.define("e4e.lov.AbstractCombo", {
 	_getTargetRecord_ : function() {
 		var drec = null;
 		var dcv = this._dcView_;
-
-		if (this.inEditor && dcv._dcViewType_ != "edit-propgrid"
-				&& dcv._dcViewType_ != "filter-propgrid") {
-			if (dcv && dcv._dcViewType_ == "bulk-edit-field") {
+		var vt = dcv._dcViewType_;
+		var ctrl = dcv._controller_;
+		
+		if (this.inEditor && vt != "edit-propgrid"
+				&& vt != "filter-propgrid") {
+			if (dcv && vt == "bulk-edit-field") {
 				/*
 				 * is a bulk editor for one ds field in a property grid
 				 */
@@ -205,12 +207,12 @@ Ext.define("e4e.lov.AbstractCombo", {
 				drec = this._targetRecord_;
 			}
 		} else {
-			if (dcv._dcViewType_ == "edit-form"
-					|| dcv._dcViewType_ == "edit-propgrid") {
-				drec = dcv._controller_.getRecord();
-			} else if (dcv._dcViewType_ == "filter-form"
-					|| dcv._dcViewType_ == "filter-propgrid") {
-				drec = dcv._controller_.getFilter();
+			if (vt == "edit-form"
+					|| vt == "edit-propgrid") {
+				drec = ctrl.getRecord();
+			} else if (vt == "filter-form"
+					|| vt == "filter-propgrid") {
+				drec = ctrl.getFilter();
 			}
 		}
 		return drec;
@@ -225,12 +227,15 @@ Ext.define("e4e.lov.AbstractCombo", {
 	 */
 	_mapReturnFields_ : function(crec) {
 		var dcv = this._dcView_;
+		var vt = dcv._dcViewType_;
+		var ctrl = dcv._controller_;
 		var drec = null;
+		var prec = ctrl.getParams();
 		var targetIsFilter = false;
 
-		if (this.inEditor && dcv._dcViewType_ != "edit-propgrid"
-				&& dcv._dcViewType_ != "filter-propgrid") {
-			if (dcv && dcv._dcViewType_ == "bulk-edit-field") {
+		if (this.inEditor && vt != "edit-propgrid"
+				&& vt != "filter-propgrid") {
+			if (dcv && vt == "bulk-edit-field") {
 				/*
 				 * is a bulk editor for one ds field in a property grid
 				 */
@@ -238,48 +243,19 @@ Ext.define("e4e.lov.AbstractCombo", {
 				this._mapReturnFieldsExecuteBulkEdit_(crec, drec);
 			} else {
 				drec = this._targetRecord_;
-				this._mapReturnFieldsExecute_(crec, drec);
+				this._mapReturnFieldsExecute_(crec, drec, prec);
 			}
 		} else {
-			if (dcv._dcViewType_ == "edit-form"
-					|| dcv._dcViewType_ == "edit-propgrid") {
-				drec = dcv._controller_.getRecord();
+			if (vt == "edit-form"
+					|| vt == "edit-propgrid") {
+				drec = ctrl.getRecord();
 			}
-			if (dcv._dcViewType_ == "filter-form"
-					|| dcv._dcViewType_ == "filter-propgrid") {
-				drec = dcv._controller_.getFilter();
+			if (vt == "filter-form"
+					|| vt == "filter-propgrid") {
+				drec = ctrl.getFilter();
 				targetIsFilter = true;
 			}
-			this._mapReturnFieldsExecute_(crec, drec, dcv._controller_
-					.getParams(), targetIsFilter);
-		}
-	},
-
-	_mapReturnFieldsExecuteBulkEdit_ : function(crec, recdata) {
-		if (!recdata) {
-			return;
-		}
-		if (this.retFieldMapping != null) {
-			for (var i = this.retFieldMapping.length - 1; i >= 0; i--) {
-
-				var retDataIndex = null;
-				var nv = null;
-				isParam = !Ext.isEmpty(this.retFieldMapping[i]["dsParam"]);
-				if (isParam) {
-					retDataIndex = this.retFieldMapping[i]["dsParam"];
-					ov = prec.get(retDataIndex);
-				} else {
-					retDataIndex = this.retFieldMapping[i]["dsField"];
-					ov = recdata[retDataIndex];
-				}
-
-				if (crec && crec.data) {
-					nv = crec.data[this.retFieldMapping[i]["lovField"]];
-					recdata[retDataIndex] = nv;
-				} else {
-
-				}
-			}
+			this._mapReturnFieldsExecute_(crec, drec, prec, targetIsFilter);
 		}
 	},
 
@@ -365,20 +341,49 @@ Ext.define("e4e.lov.AbstractCombo", {
 		}
 	},
 
+	_mapReturnFieldsExecuteBulkEdit_ : function(crec, recdata) {
+		if (!recdata) {
+			return;
+		}
+		if (this.retFieldMapping != null) {
+			for (var i = this.retFieldMapping.length - 1; i >= 0; i--) {
+
+				var retDataIndex = null;
+				var nv = null;
+				isParam = !Ext.isEmpty(this.retFieldMapping[i]["dsParam"]);
+				if (isParam) {
+					retDataIndex = this.retFieldMapping[i]["dsParam"];
+					ov = prec.get(retDataIndex);
+				} else {
+					retDataIndex = this.retFieldMapping[i]["dsField"];
+					ov = recdata[retDataIndex];
+				}
+
+				if (crec && crec.data) {
+					nv = crec.data[this.retFieldMapping[i]["lovField"]];
+					recdata[retDataIndex] = nv;
+				} else {
+
+				}
+			}
+		}
+	},
+
 	_mapFilterFields_ : function(bp) {
 
 		var drec = null;
 		var dcv = this._dcView_;
+		var vt = dcv._dcViewType_;
 		var prec = dcv._controller_.getParams();
 
 		if (this.inEditor) {
 			drec = this._targetRecord_;
 			return this._mapFilterFieldsExecute_(bp, drec, prec);
 		} else {
-			if (dcv._dcViewType_ == "edit-form") {
+			if (vt == "edit-form") {
 				drec = dcv._controller_.getRecord();
 			}
-			if (dcv._dcViewType_ == "filter-form") {
+			if (vt == "filter-form") {
 				drec = dcv._controller_.getFilter();
 			}
 			return this._mapFilterFieldsExecute_(bp, drec, prec);
@@ -538,15 +543,17 @@ Ext.define("e4e.lov.AbstractCombo", {
 	},
 
 	onKeyUp : function(e, t) {
+		
 		var key = e.getKey();
 		var kbs = Main.keyBindings.dc;
 		var dcv = this._dcView_;
+		var vt = dcv._dcViewType_;
 		// bindigs to check
 		var btc = null;
 
 		// ignore query related keyboard shortcuts
-		if (dcv._dcViewType_ == "filter-form"
-				|| dcv._dcViewType_ == "filter-propgrid") {
+		if (vt == "filter-form"
+				|| vt == "filter-propgrid") {
 			btc = [ kbs.doEnterQuery, kbs.doClearQuery, kbs.doQuery,
 					kbs.doEditOut ];
 			var l = btc.length;
@@ -560,8 +567,8 @@ Ext.define("e4e.lov.AbstractCombo", {
 		}
 
 		// ignore edit related keyboard shortcuts
-		if (dcv._dcViewType_ == "edit-form"
-				|| dcv._dcViewType_ == "edit-propgrid") {
+		if (vt == "edit-form"
+				|| vt == "edit-propgrid") {
 			btc = [ kbs.doNew, kbs.doCopy, kbs.doCancel, kbs.doSave,
 					kbs.doEditOut, kbs.nextRec, kbs.prevRec, kbs.nextPage,
 					kbs.prevPage ];
