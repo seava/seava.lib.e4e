@@ -55,7 +55,14 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	 * additional logic. If it returns false the execution is stopped.
 	 */
 	beforeExecute : function(options) {
-		return true;
+		if (this.dcApiMethod != null) {
+			var m = this.dc["beforeDo" + this.dcApiMethod];
+			if (m != undefined && Ext.isFunction(m)) {
+				return m.call(this.dc, options);
+			}			 
+		} else {
+			return true;
+		}		
 	},
 
 	/**

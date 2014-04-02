@@ -7,10 +7,6 @@ Ext.define("e4e.dc.command.DcReloadPageCommand", {
 
 	dcApiMethod : e4e.dc.DcActionsFactory.RELOAD_PAGE,
 
-	beforeExecute : function() {
-		return true;
-	},
-
 	onExecute : function(options) {
 		var dc = this.dc.store.reload();
 	},

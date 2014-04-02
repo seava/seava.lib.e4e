@@ -14,20 +14,7 @@ Ext.define("e4e.dc.command.DcSaveCommand", {
 			' `{fieldTitle}` </span>', '<span class="error">{message}</span>',
 			'</li></tpl></ul>' ]),
 
-	beforeExecute : function() {
-		var dc = this.dc;
-		if (!dc.multiEdit) {
-			return this.isValid(dc.getRecord());
-		} else {
-			if (!this.isValid(dc.store.getUpdatedRecords())) {
-				return false;
-			}
-			if (!this.isValid(dc.store.getAllNewRecords())) {
-				return false;
-			}
-			return true;
-		}
-	},
+ 
 
 	onExecute : function(options) {
 		if (this.dc.params != null) {
@@ -51,7 +38,8 @@ Ext.define("e4e.dc.command.DcSaveCommand", {
 	onAjaxSuccess : function(ajaxResult) {
 		this.callParent(arguments);
 		this.dc.requestStateUpdate();
-		this.dc.fireEvent("afterDoCommitSuccess", this.dc, ajaxResult.options.options);
+		this.dc.fireEvent("afterDoCommitSuccess", this.dc,
+				ajaxResult.options.options);
 	},
 
 	isActionAllowed : function() {
@@ -59,6 +47,23 @@ Ext.define("e4e.dc.command.DcSaveCommand", {
 			this.dc.info(Main.msg.DC_SAVE_NOT_ALLOWED, "msg");
 			return false;
 		}
+				
+		var res = true;
+		var dc = this.dc;
+		if (!dc.multiEdit) {
+			res = this.isValid(dc.getRecord());
+		} else {
+			if (!this.isValid(dc.store.getUpdatedRecords())) {
+				res = false;
+			} 
+			if (!this.isValid(dc.store.getAllNewRecords())) {
+				res = false;
+			}
+		}
+		if (!res) {
+			this.dc.info(Main.msg.INVALID_FORM, "msg");
+			return false;
+		} 		
 		return true;
 	},
 

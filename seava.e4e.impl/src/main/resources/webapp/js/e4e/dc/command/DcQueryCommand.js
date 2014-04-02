@@ -7,13 +7,7 @@ Ext.define("e4e.dc.command.DcQueryCommand", {
 
 	dcApiMethod : e4e.dc.DcActionsFactory.RUN_QUERY,
 
-	beforeExecute : function() {
-		var dc = this.dc;
-		if (!dc.filter.isValid()) {
-			this.dc.error(Main.msg.INVALID_FILTER, "msg");
-			return;
-		}
-	},
+ 
 
 	onExecute : function(options) {
 		var dc = this.dc;
@@ -40,6 +34,12 @@ Ext.define("e4e.dc.command.DcQueryCommand", {
 			this.dc.warning(Main.msg.DC_QUERY_NOT_ALLOWED, "msg");
 			return false;
 		}
-		return true;
+		var res = true;
+		var dc = this.dc;
+		if (!dc.filter.isValid()) {
+			this.dc.error(Main.msg.INVALID_FILTER, "msg");
+			res = false;
+		}		
+		return res;
 	}
 });

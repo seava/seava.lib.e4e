@@ -7,14 +7,6 @@ Ext.define("e4e.dc.command.DcReloadRecCommand", {
 
 	dcApiMethod : e4e.dc.DcActionsFactory.RELOAD_REC,
 
-	beforeExecute : function() {
-		var r = this.dc.getRecord();
-		if (!r || r.phantom || !r.data.id) {
-			return false;
-		}
-		return true;
-	},
-
 	onExecute : function(options) {
 		var dc = this.dc;
 		Ext.Ajax.request({
