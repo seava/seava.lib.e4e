@@ -25,23 +25,24 @@ Ext.define("e4e.dc.command.AbstractDcAsyncCommand", {
 	onAjaxSuccess : function(ajaxResult) {
 		Ext.Msg.hide();
 		var _m = "afterDo" + this.dcApiMethod + "Success";
-		var m = this.dc[_m];
+		var dc = this.dc;
+		var m = dc[_m];
 		if (m != undefined && Ext.isFunction(m)) {
-			m.call(this.dc, ajaxResult);
+			m.call(dc, ajaxResult);
 		}
-		this.dc.fireEvent(_m, ajaxResult);
+		dc.fireEvent(_m, dc, ajaxResult);
 	},
 
 	onAjaxFailure : function(ajaxResult) {
 		Ext.Msg.hide();
 		var _m = "afterDo" + this.dcApiMethod + "Failure";
+		var dc = this.dc;
 		this.showAjaxErrors(ajaxResult);
-		var m = this.dc[_m];
+		var m = dc[_m];
 		if (m != undefined && Ext.isFunction(m)) {
-			m.call(this.dc);
+			m.call(dc);
 		}
-		this.dc.fireEvent("afterDo" + this.dcApiMethod + "Success", this.dc,
-				ajaxResult);
+		dc.fireEvent(_m, dc, ajaxResult);
 	},
 
 	/**
