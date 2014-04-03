@@ -382,7 +382,7 @@ Ext.override(Ext.grid.plugin.CellEditing, {
 		}
 	},
 
-	_isEditAllowed_ : function(record, column, field) {
+	_isEditAllowed_ : function(record, column, field, grid) {
 		if (field && field.noEdit) {
 			return false;
 		}
@@ -390,6 +390,13 @@ Ext.override(Ext.grid.plugin.CellEditing, {
 			return false;
 		} else if (field && field.noInsert === true && record.phantom) {
 			return false;
+		} else if (field._enableFn_) {
+			var fn = field._enableFn_;
+			if (grid != null) {
+				return fn.call(grid, grid._controller_, record, column, field);
+			} else {
+				return fn.call(this, null, record, column, field);
+			}
 		}
 		return true;
 	},
@@ -436,9 +443,16 @@ Ext.override(Ext.grid.plugin.CellEditing, {
 
 		var editor = this.callParent(arguments);
 
-		var editAllowed = this._isEditAllowed_(record, column, editor.field
-				|| editor);
-		if (editor && !editAllowed) {
+		var editAllowed = true;
+		if (me.grid) {
+			editAllowed = this._isEditAllowed_(record, column, editor.field
+					|| editor, me.grid);
+		} else {
+			editAllowed = this._isEditAllowed_(record, column, editor.field
+					|| editor, null);
+		}
+
+		if (editor && editAllowed === false) {
 			return false;
 		}
 

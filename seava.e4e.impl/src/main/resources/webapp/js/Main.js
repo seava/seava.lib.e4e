@@ -378,7 +378,8 @@ Main = {
 		DATE_COL_WIDTH : 80,
 		DISABLE_AS_READONLY : true,
 		USE_TOOLBAR_ICONS : false,
-		USE_BUTTON_ICONS : false
+		USE_BUTTON_ICONS : false,
+		GRID_EDITOR_CHANGE_EVT_BUFFER: 350
 	},
 
 	/**
