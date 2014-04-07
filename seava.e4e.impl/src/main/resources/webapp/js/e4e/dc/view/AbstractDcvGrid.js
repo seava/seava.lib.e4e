@@ -85,6 +85,13 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 		// When edit-out requested, focus this grid view. It's very likely that
 		// coming from an editor, the user wants to get to the list.
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
+		this.mon(ctrl, "afterDoQuerySuccess", function(dc, ajaxResult) {
+			var o = ajaxResult.options;
+			if(!o || o.initiator != "dcContext") {
+				this._gotoFirstNavigationItem_();
+			}
+			
+		}, this);
 		this.mon(ctrl, "selectionChange", this._onController_selectionChange,
 				this);
 		this.mon(store, "load", this._onStore_load_, this);

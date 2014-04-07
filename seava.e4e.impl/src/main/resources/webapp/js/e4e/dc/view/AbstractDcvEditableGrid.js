@@ -189,6 +189,13 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 		this.mon(store, "load", this._onStore_load_, this);
 		this.mon(store, "write", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
+		this.mon(ctrl, "afterDoQuerySuccess", function(dc, ajaxResult) {
+			var o = ajaxResult.options;
+			if(!o || o.initiator != "dcContext") {
+				this._gotoFirstNavigationItem_();
+			}
+			
+		}, this);
 	},
 
 	_afterEdit_ : function(editor, e, eOpts) {

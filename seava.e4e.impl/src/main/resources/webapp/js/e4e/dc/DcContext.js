@@ -125,6 +125,12 @@ Ext.define("e4e.dc.DcContext", {
 			});
 		}, this);
 
+		this.parentDc.mon(this.parentDc, "onEditIn", function() {
+			if (this.parentDc.trackEditMode) {
+				this.doQueryTask.delay(this.autoFetchDelay);
+			}
+		}, this);
+
 		this.parentDc.mon(this.parentDc, "recordChange", function() {
 			this._updateCtxData_("recordChange");
 		}, this);
