@@ -325,11 +325,11 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 			}
 		}
 	},
-	
+
 	/**
 	 * Handler for the data-control selectionChange event.
 	 */
-	_onController_selectionChange : function(evnt) {		
+	_onController_selectionChange : function(evnt) {
 		if (evnt.eOpts && evnt.eOpts.fromGrid === true
 				&& evnt.eOpts.grid === this) {
 			return;
@@ -365,9 +365,7 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 				this._get_("_btnChart_").disable();
 			}
 		}
- 
-		return; 
-		
+		return;
 	},
 
 	/**

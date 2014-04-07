@@ -27,16 +27,6 @@ Ext.define("e4e.dc.command.DcQueryCommand", {
 		});
 	},
 
-	onAjaxSuccess : function(ajaxResult) {
-		this.callParent(arguments);
-		// if the query is not initiated through a dc-link call
-		// the editOut command to focus the list
-		var o = ajaxResult.options
-		if (!o || o.initiator != "dcContext") {
-			this.dc.doEditOut();
-		}
-	},
-
 	isActionAllowed : function() {
 		if (e4e.dc.DcActionsStateManager.isQueryDisabled(this.dc)) {
 			this.dc.warning(Main.msg.DC_QUERY_NOT_ALLOWED, "msg");
