@@ -379,7 +379,7 @@ Main = {
 		DISABLE_AS_READONLY : true,
 		USE_TOOLBAR_ICONS : false,
 		USE_BUTTON_ICONS : false,
-		GRID_EDITOR_CHANGE_EVT_BUFFER: 350
+		GRID_EDITOR_CHANGE_EVT_BUFFER : 350
 	},
 
 	/**
@@ -935,142 +935,7 @@ Main = {
 				}
 			});
 		}
-
 		Ext.Msg.show(alertCfg);
-	},
-
-	/**
-	 * Return a textual representation of the given keyboard shortcut
-	 * definition.
-	 */
-	keyBindingToString : function(b) {
-		var r = "";
-		if (b.ctrl) {
-			r += "Ctrl "
-		}
-		if (b.shift) {
-			r += "Shift "
-		}
-		if (b.alt) {
-			r += "Alt "
-		}
-		r += b.keyText;
-		return r;
-	},
-
-	/**
-	 * Global keyboard shortcuts
-	 */
-	keyBindings : {
-		dc : {
-			doNew : {
-				keyText : "F2",
-				key : Ext.EventObject.F2,
-				ctrl : false,
-				shift : false,
-				alt : false
-			},
-			doCopy : {
-				keyText : "F3",
-				key : Ext.EventObject.F3,
-				ctrl : false,
-				shift : false,
-				alt : false
-			},
-			doDelete : {
-				keyText : "F4",
-				key : Ext.EventObject.F4,
-				ctrl : false,
-				shift : false,
-				alt : false
-			},
-			doCancel : {
-				keyText : "Z",
-				key : Ext.EventObject.Z,
-				ctrl : true,
-				shift : true,
-				alt : false
-			},
-			doEnterQuery : {
-				keyText : "F7",
-				key : Ext.EventObject.F7,
-				ctrl : false,
-				shift : false,
-				alt : false
-			},
-			doClearQuery : {
-				keyText : "F7",
-				key : Ext.EventObject.F7,
-				ctrl : false,
-				shift : true,
-				alt : false
-			},
-			doQuery : {
-				keyText : "F8",
-				key : Ext.EventObject.F8,
-				ctrl : false,
-				shift : false,
-				alt : false
-			},
-			doSave : {
-				keyText : "F10",
-				key : Ext.EventObject.F10,
-				ctrl : false,
-				shift : false,
-				alt : false
-			},
-			doEditIn : {
-				keyText : "Enter",
-				key : Ext.EventObject.ENTER,
-				ctrl : true,
-				shift : false,
-				alt : false
-			},
-			doEditOut : {
-				keyText : "Q",
-				key : Ext.EventObject.Q,
-				ctrl : true,
-				shift : true,
-				alt : false
-			},
-			nextRec : {
-				keyText : "Down",
-				key : Ext.EventObject.DOWN,
-				ctrl : true,
-				shift : false,
-				alt : false
-			},
-			prevRec : {
-				keyText : "Up",
-				key : Ext.EventObject.UP,
-				ctrl : true,
-				shift : false,
-				alt : false
-			},
-			nextPage : {
-				keyText : "Down",
-				key : Ext.EventObject.DOWN,
-				ctrl : false,
-				shift : false,
-				alt : true
-			},
-			prevPage : {
-				keyText : "Up",
-				key : Ext.EventObject.UP,
-				ctrl : false,
-				shift : false,
-				alt : true
-			}
-		},
-
-		app : {
-			gotoNextTab : {
-				keyText : "T",
-				key : Ext.EventObject.T,
-				ctrl : true,
-				shift : true,
-				alt : false
-			}
-		}
 	}
+
 };

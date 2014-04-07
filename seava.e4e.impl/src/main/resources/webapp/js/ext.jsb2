@@ -259,6 +259,9 @@
 },{
 	"text": "KeyboardShortcutsWindow.js",
 	"path": "/e4e/base/"
+},{
+	"text": "KeyBindings.js",
+	"path": "/e4e/base/"
 }
 
 

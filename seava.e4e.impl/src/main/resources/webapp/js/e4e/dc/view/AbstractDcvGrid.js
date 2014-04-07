@@ -12,6 +12,11 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 	 */
 	_builder_ : null,
 
+	/**
+	 * Helper property to identify this dc-view type as read-only grid
+	 */
+	_dcViewType_ : "grid",
+
 	// **************** Public API *****************
 
 	/**
@@ -40,8 +45,7 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 				listeners : {
 					"selectionchange" : {
 						scope : this,
-						fn : this._selectionHandler_ 
-						//buffer : 200
+						fn : this._selectionHandler_
 					},
 					"beforedeselect" : {
 						scope : this,
@@ -83,19 +87,7 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "selectionChange", this._onController_selectionChange,
 				this);
-//		this.mon(ctrl, "afterDoQuerySuccess", function(ajaxResult) {
-//			if (!(ajaxResult.options && ajaxResult.options.initiator == "dcContext")) {
-//				this._gotoFirstNavigationItem_();
-//			}
-//		}, this);
-		
 		this.mon(store, "load", this._onStore_load_, this);
-	},
-
-	_gotoFirstNavigationItem_ : function() {
-		var v = this.getView();
-		//v.focusRow(v.getSelectionModel().getLastSelected());
-		v.focus();
 	},
 
 	_registerKeyBindings_ : function() {
@@ -110,69 +102,69 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 				// event.index = index;
 				return event;
 			},
-			binding : [ Ext.apply(Main.keyBindings.dc.doEnterQuery, {
+			binding : [ Ext.apply(KeyBindings.values.dc.doEnterQuery, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doEnterQuery();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doClearQuery, {
+			}), Ext.apply(KeyBindings.values.dc.doClearQuery, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doClearQuery();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doQuery, {
+			}), Ext.apply(KeyBindings.values.dc.doQuery, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doQuery();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doNew, {
+			}), Ext.apply(KeyBindings.values.dc.doNew, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doNew();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doCancel, {
+			}), Ext.apply(KeyBindings.values.dc.doCancel, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doCancel();
 					this.view.focus();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doSave, {
+			}), Ext.apply(KeyBindings.values.dc.doSave, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doSave();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doDelete, {
+			}), Ext.apply(KeyBindings.values.dc.doDelete, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doDelete();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doCopy, {
+			}), Ext.apply(KeyBindings.values.dc.doCopy, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doCopy();
 					this._controller_.doEditIn();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doEditIn, {
+			}), Ext.apply(KeyBindings.values.dc.doEditIn, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doEditIn();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.nextPage, {
+			}), Ext.apply(KeyBindings.values.dc.nextPage, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.nextPage();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.prevPage, {
+			}), Ext.apply(KeyBindings.values.dc.prevPage, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.previousPage();

@@ -62,7 +62,7 @@ e4e.dc.DcActionsFactory = {
 			disabled : false,
 			text : Main.translate("tlbitem", "load__lbl"),
 			tooltip : Main.translate("tlbitem", "load__tlp") + " | "
-					+ Main.keyBindingToString(Main.keyBindings.dc.doQuery),
+					+ KeyBindings.toString(KeyBindings.values.dc.doQuery),
 			scope : dc,
 			handler : dc.doQuery
 		});
@@ -72,42 +72,36 @@ e4e.dc.DcActionsFactory = {
 	 * Create the action to clear the filter values.
 	 */
 	createClearQueryAction : function(dc) {
-		return new Ext.Action(
-				{
-					name : "doClearQuery",
-					ui : this.BUTTON_UI,
-					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
-							: null,
-					disabled : false,
-					text : Main.translate("tlbitem", "clear_query__lbl"),
-					tooltip : Main.translate("tlbitem", "clear_query__tlp")
-							+ " | "
-							+ Main
-									.keyBindingToString(Main.keyBindings.dc.doClearQuery),
-					scope : dc,
-					handler : dc.doClearQuery
-				});
+		return new Ext.Action({
+			name : "doClearQuery",
+			ui : this.BUTTON_UI,
+			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
+					: null,
+			disabled : false,
+			text : Main.translate("tlbitem", "clear_query__lbl"),
+			tooltip : Main.translate("tlbitem", "clear_query__tlp") + " | "
+					+ KeyBindings.toString(KeyBindings.values.dc.doClearQuery),
+			scope : dc,
+			handler : dc.doClearQuery
+		});
 	},
 
 	/**
 	 * Create the action to enter/modify the filter values.
 	 */
 	createEnterQueryAction : function(dc) {
-		return new Ext.Action(
-				{
-					name : "doEnterQuery",
-					ui : this.BUTTON_UI,
-					iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
-							: null,
-					disabled : false,
-					text : Main.translate("tlbitem", "enter_query__lbl"),
-					tooltip : Main.translate("tlbitem", "enter_query__tlp")
-							+ " | "
-							+ Main
-									.keyBindingToString(Main.keyBindings.dc.doEnterQuery),
-					scope : dc,
-					handler : dc.doEnterQuery
-				});
+		return new Ext.Action({
+			name : "doEnterQuery",
+			ui : this.BUTTON_UI,
+			iconCls : (Main.viewConfig.USE_TOOLBAR_ICONS) ? "icon-action-fetch"
+					: null,
+			disabled : false,
+			text : Main.translate("tlbitem", "enter_query__lbl"),
+			tooltip : Main.translate("tlbitem", "enter_query__tlp") + " | "
+					+ KeyBindings.toString(KeyBindings.values.dc.doEnterQuery),
+			scope : dc,
+			handler : dc.doEnterQuery
+		});
 	},
 
 	/**
@@ -122,7 +116,7 @@ e4e.dc.DcActionsFactory = {
 			disabled : false,
 			text : Main.translate("tlbitem", "new__lbl"),
 			tooltip : Main.translate("tlbitem", "new__tlp") + " | "
-					+ Main.keyBindingToString(Main.keyBindings.dc.doNew),
+					+ KeyBindings.toString(KeyBindings.values.dc.doNew),
 			scope : dc,
 			handler : dc.doNew
 		});
@@ -140,7 +134,7 @@ e4e.dc.DcActionsFactory = {
 			disabled : true,
 			text : Main.translate("tlbitem", "copy__lbl"),
 			tooltip : Main.translate("tlbitem", "copy__tlp") + " | "
-					+ Main.keyBindingToString(Main.keyBindings.dc.doCopy),
+					+ KeyBindings.toString(KeyBindings.values.dc.doCopy),
 			scope : dc,
 			handler : dc.doCopy
 		});
@@ -158,7 +152,7 @@ e4e.dc.DcActionsFactory = {
 			disabled : true,
 			text : Main.translate("tlbitem", "save__lbl"),
 			tooltip : Main.translate("tlbitem", "save__tlp") + " | "
-					+ Main.keyBindingToString(Main.keyBindings.dc.doSave),
+					+ KeyBindings.toString(KeyBindings.values.dc.doSave),
 			scope : dc,
 			handler : dc.doSave
 		});
@@ -178,8 +172,8 @@ e4e.dc.DcActionsFactory = {
 					text : Main.translate("tlbitem", "delete__lbl"),
 					tooltip : Main.translate("tlbitem", "delete__tlp")
 							+ " | "
-							+ Main
-									.keyBindingToString(Main.keyBindings.dc.doDelete),
+							+ KeyBindings
+									.toString(KeyBindings.values.dc.doDelete),
 					scope : dc,
 					handler : dc.doDelete
 				});
@@ -199,8 +193,8 @@ e4e.dc.DcActionsFactory = {
 					text : Main.translate("tlbitem", "cancel__lbl"),
 					tooltip : Main.translate("tlbitem", "cancel__tlp")
 							+ " | "
-							+ Main
-									.keyBindingToString(Main.keyBindings.dc.doCancel),
+							+ KeyBindings
+									.toString(KeyBindings.values.dc.doCancel),
 					scope : dc,
 					handler : dc.doCancel
 				});
@@ -218,7 +212,7 @@ e4e.dc.DcActionsFactory = {
 			disabled : true,
 			text : Main.translate("tlbitem", "edit__lbl"),
 			tooltip : Main.translate("tlbitem", "edit__tlp") + " | "
-					+ Main.keyBindingToString(Main.keyBindings.dc.doEditIn),
+					+ KeyBindings.toString(KeyBindings.values.dc.doEditIn),
 			scope : dc,
 			handler : dc.doEditIn
 		});
@@ -236,7 +230,7 @@ e4e.dc.DcActionsFactory = {
 			disabled : false,
 			text : Main.translate("tlbitem", "back__lbl"),
 			tooltip : Main.translate("tlbitem", "back__tlp") + " | "
-					+ Main.keyBindingToString(Main.keyBindings.dc.doEditOut),
+					+ KeyBindings.toString(KeyBindings.values.dc.doEditOut),
 			scope : dc,
 			handler : dc.doEditOut
 		});
@@ -257,8 +251,8 @@ e4e.dc.DcActionsFactory = {
 					text : "<",
 					tooltip : Main.translate("tlbitem", "prev_rec__tlp")
 							+ " | "
-							+ Main
-									.keyBindingToString(Main.keyBindings.dc.prevRec),
+							+ KeyBindings
+									.toString(KeyBindings.values.dc.prevRec),
 					scope : dc,
 					handler : dc.setPreviousAsCurrent
 				});
@@ -277,7 +271,7 @@ e4e.dc.DcActionsFactory = {
 			disabled : false,
 			text : ">",
 			tooltip : Main.translate("tlbitem", "next_rec__tlp") + " | "
-					+ Main.keyBindingToString(Main.keyBindings.dc.nextRec),
+					+ KeyBindings.toString(KeyBindings.values.dc.nextRec),
 			scope : dc,
 			handler : dc.setNextAsCurrent
 		});

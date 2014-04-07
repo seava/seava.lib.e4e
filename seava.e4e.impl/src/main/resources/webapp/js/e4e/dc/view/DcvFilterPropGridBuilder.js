@@ -64,16 +64,14 @@ Ext.define("e4e.dc.view.DcvFilterPropGridBuilder", {
 	addLov : function(config) {
 		if (config.editor) {
 			try {
-				config.editorInstance = Ext.create(config.editor._fqn_, Ext.apply(
-						config.editor, {
-							selectOnFocus : true
-						}));
+				config.editorInstance = Ext.create(config.editor._fqn_,
+						config.editor);
 				config._default_ = "";
 			} catch (e) {
-				alert('Cannot create LOV editor from xtype `' + config.editor._fqn_
-						+ '`');
+				alert('Cannot create LOV editor from xtype `'
+						+ config.editor._fqn_ + '`');
 			}
-		}		
+		}
 		this.applySharedConfig(config);
 		return this;
 	},
@@ -82,7 +80,11 @@ Ext.define("e4e.dc.view.DcvFilterPropGridBuilder", {
 		if (!config.editor) {
 			config.editor = {};
 			config.editor.store = config.store;
-			config.editor.selectOnFocus = (config.selectOnFocus===false)?false:true;
+			if (config.selectOnFocus === false) {
+				config.editor.selectOnFocus = false;
+			} else {
+				config.editor.selectOnFocus = true;
+			}
 		}
 		var e = config.editor;
 
@@ -133,9 +135,19 @@ Ext.define("e4e.dc.view.DcvFilterPropGridBuilder", {
 		Ext.applyIf(config, {
 			id : Ext.id()
 		});
-		if (config.editorInstance ) {
+		if (config.editorInstance) {
 			config.editorInstance._dcView_ = this.dcv;
-		}		
+			config.editorInstance.selectOnFocus = true;
+			config.editorInstance.enableKeyEvents = true;
+			config.editorInstance.addManagedListener(config.editorInstance, "keydown", function(f,e,eOpts) {
+				if (KeyBindings.keyEventBelongsToKeyBindings(e)) {
+					e.stopEvent();
+				}
+			});
+			
+			
+			
+		}
 		if (config.allowBlank === false) {
 			config.labelSeparator = "*";
 		}

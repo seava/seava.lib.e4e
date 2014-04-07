@@ -540,7 +540,7 @@ Ext.define("e4e.ui.AbstractUi", {
 			processEvent : function(event, source, options) {
 				return event;
 			},
-			binding : [ Ext.apply(Main.keyBindings.app.gotoNextTab, {
+			binding : [ Ext.apply(KeyBindings.values.app.gotoNextTab, {
 				fn : function(keyCode, e) {
 					getApplication().gotoNextTab();
 					e.stopEvent();

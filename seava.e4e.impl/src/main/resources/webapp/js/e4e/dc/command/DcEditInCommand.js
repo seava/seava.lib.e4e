@@ -8,6 +8,10 @@ Ext.define("e4e.dc.command.DcEditInCommand", {
 	dcApiMethod : e4e.dc.DcActionsFactory.EDIT_IN,
 	
 	onExecute : function(options) {
-		this.dc.fireEvent("onEditIn", this, options);
+		var dc = this.dc;
+		if (dc.trackEditMode) {
+			dc.isEditMode = true;
+		}
+		dc.fireEvent("onEditIn", dc, options);
 	}
 });

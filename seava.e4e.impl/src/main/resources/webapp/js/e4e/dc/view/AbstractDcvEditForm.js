@@ -106,26 +106,30 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 */
 	afterRender : function() {
 		this.callParent(arguments);
-		if (this._controller_ && this._controller_.getRecord()) {
-			this._onBind_(this._controller_.getRecord());
-		} else {
-			this._onUnbind_(null);
-		}
+		this._syncBinding_();
 		this._bindParams_();
 		this._registerKeyBindings_();
 
 		// acquire first time focus
 
-		// if (this._controller_.record && this._controller_.record.phantom
-		// && this._acquireFocusInsert_) {
-		// (new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
-		// .delay(200);
-		// }
-		// if (this._controller_.record && !this._controller_.record.phantom
-		// && this._acquireFocusUpdate_) {
-		// (new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
-		// .delay(200);
-		// }
+		if (this._controller_.record && this._controller_.record.phantom
+				&& this._acquireFocusInsert_) {
+			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
+					.delay(200);
+		}
+		if (this._controller_.record && !this._controller_.record.phantom
+				&& this._acquireFocusUpdate_) {
+			(new Ext.util.DelayedTask(this._gotoFirstNavigationItem_, this))
+					.delay(200);
+		}
+	},
+
+	_syncBinding_ : function() {
+		if (this._controller_ && this._controller_.getRecord()) {
+			this._onBind_(this._controller_.getRecord());
+		} else {
+			this._onUnbind_(null);
+		}
 	},
 
 	beforeDestroy : function() {
@@ -145,6 +149,9 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 		// controller listeners
 
+		this.mon(ctrl, "onEditIn", function() {
+			this._syncBinding_();
+		}, this);
 		this.mon(ctrl, "recordChange", this._onController_recordChange_, this);
 		this.mon(ctrl, "recordReload", this._onController_recordReload_, this);
 		this.mon(ctrl, "readOnlyChanged", function() {
@@ -163,7 +170,6 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 		// store listeners
 
-		// this.mon(store, "datachanged", this._onStore_datachanged_, this);
 		this.mon(store, "update", this._onStore_update_, this);
 
 		if (this._controller_.commands.doSave) {
@@ -189,13 +195,6 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			f.focus();
 		}
 	},
-
-	// /**
-	// * Update the bound record when the store data is changed.
-	// */
-	// _onStore_datachanged_ : function(store, eopts) {
-	// this._updateBound_(this._controller_.getRecord(), null, null);
-	// },
 
 	/**
 	 * Update the bound record when the store data is updated.
@@ -226,11 +225,16 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			this._applyStates_(r);
 		}
 	},
+
 	/**
 	 * Bind the current record of the data-control to the form.
 	 * 
 	 */
 	_onBind_ : function(record) {
+		var ctrl = this._controller_;
+		if (ctrl.trackEditMode && !ctrl.isEditMode) {
+			return;
+		}
 		if (record) {
 			if (this.disabled) {
 				this.enable();
@@ -258,6 +262,10 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			var _v = record.get(field.dataIndex);
 			if (field.formatDate) {
 				field.setRawValue(field.formatDate(_v));
+			} else if (field.isCheckbox === true) {
+				field.suspendEvents();
+				field.setValue(_v);				
+				field.resumeEvents();
 			} else {
 				field.setRawValue(_v);
 			}
@@ -265,21 +273,16 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				field.resetOriginalValue();
 			}
 		}
-
-		/*
-		 * if (field.dataIndex) { field.suspendEvents(); if (field._isLov_) {
-		 * var fs = field.forceSelection; field.forceSelection = false;
-		 * field.setValue(record.get(field.dataIndex)); field.forceSelection =
-		 * fs; } else { field.setValue(record.get(field.dataIndex)); } if
-		 * (trackResetOnLoad) { field.resetOriginalValue(); }
-		 * field.resumeEvents(); }
-		 */
 	},
 
 	/**
 	 * Un-bind the record from the form.
 	 */
 	_onUnbind_ : function(record) {
+		var ctrl = this._controller_;
+		if (ctrl.trackEditMode && !ctrl.isEditMode) {
+			return;
+		}
 		var _r = this.getForm()._record;
 		if (_r) {
 			if (this._images_ != null) {
@@ -312,6 +315,10 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 * 
 	 */
 	_updateBound_ : function(record, op, modFieldNames) {
+		var ctrl = this._controller_;
+		if (ctrl.trackEditMode && !ctrl.isEditMode) {
+			return;
+		}
 		var msg = "null";
 		if (record) {
 			var fields = this.getForm().getFields();
@@ -343,6 +350,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				} else {
 					field.setRawValue(nv);
 				}
+				field.clearInvalid();
 			} else {
 				if (!(field.hasFocus && field.isDirty)) {
 					if (field._isLov_) {
@@ -434,14 +442,6 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 
 	},
 
-	// /**
-	// * Replaced by the _applyStates_ method. Kept only for backward
-	// * compatibility but will be removed. Please update your code.
-	// */
-	// _applyContextRules_ : function(record) {
-	// this._applyStates_(record);
-	// },
-
 	_doDisableWhenDcIsReadOnly_ : function() {
 		if (this._shouldDisableWhenDcIsReadOnly_
 				&& this._controller_.isReadOnly()) {
@@ -473,75 +473,105 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			processEvent : function(event, source, options) {
 				return event;
 			},
-			binding : [ Ext.apply(Main.keyBindings.dc.doQuery, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.doQuery();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doNew, {
-				fn : function(keyCode, e) {
-					// console.log("AbstractDcvEditForm.doNew");
-					e.stopEvent();
-					this._controller_.doNew();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doCancel, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.doCancel();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doSave, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.doSave();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doCopy, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.doCopy();
-					this._controller_.doEditIn();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doEditIn, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.doEditIn();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doEditOut, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.doEditOut();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.nextRec, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.setNextAsCurrent();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.prevRec, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.setPreviousAsCurrent();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.nextPage, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.nextPage();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.prevPage, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.previousPage();
-				},
-				scope : this
-			}) ]
+			binding : [
+					Ext.apply(KeyBindings.values.dc.doNew, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.doNew();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.doCancel, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.doCancel();
+							if (this._controller_.record == null) {
+								this.focus();
+							}
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.doSave, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.doSave();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.doCopy, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.doCopy();
+							this._controller_.doEditIn();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.doEditOut, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.doEditOut();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.nextRec, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.setNextAsCurrent();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.prevRec, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.setPreviousAsCurrent();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.nextPage, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.nextPage();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.prevPage, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.previousPage();
+						},
+						scope : this
+					}),
+
+					Ext.apply(KeyBindings.values.dc.doEnterQuery, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							if (!this._controller_.trackEditMode
+									|| !this._controller_.isEditMode) {
+								this._controller_.doEnterQuery();
+							}
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.doClearQuery, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							if (!this._controller_.trackEditMode
+									|| !this._controller_.isEditMode) {
+								this._controller_.doClearQuery();
+							}
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.doQuery, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							if (!this._controller_.trackEditMode
+									|| !this._controller_.isEditMode) {
+								this._controller_.doQuery();
+							}
+						},
+						scope : this
+					}) ]
 		});
 	}
 

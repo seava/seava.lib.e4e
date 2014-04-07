@@ -21,7 +21,7 @@ Ext.define("e4e.dc.command.DcNextRecCommand", {
 			if (++crtIdx >= dc.selectedRecords.length) {
 				this.dc.info(Main.msg.AT_LAST_RECORD, "msg");
 			} else {
-				dc.setRecord(dc.selectedRecords[crtIdx]);
+				dc.setRecord(dc.selectedRecords[crtIdx], false);
 			}
 		}
 	},

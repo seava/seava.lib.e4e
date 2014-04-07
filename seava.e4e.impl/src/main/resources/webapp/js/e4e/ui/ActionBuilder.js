@@ -286,10 +286,14 @@ Ext.define("e4e.ui.ActionBuilder", {
 						ct.getLayout().setActiveItem(cmp);
 					} else {
 						_cmp = this._getElementConfig_(cfg.showView).id;
-						ct.getLayout().setActiveItem(_cmp);
+						if (_cmp) {
+							ct.getLayout().setActiveItem(_cmp);
+						}
 					}
 				} else {
-					ct.getLayout().setActiveItem(1);
+					if (ct.query('> ')[1]) {
+						ct.getLayout().setActiveItem(1);
+					}
 				}
 
 			};

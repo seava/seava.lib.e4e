@@ -307,15 +307,13 @@ Ext.override(Ext.Editor, {
 		var me = this, key = event.getKey(), complete = me.completeOnEnter
 				&& key == event.ENTER, cancel = me.cancelOnEsc
 				&& key == event.ESC;
-
-		var editPrev = (key == event.UP && event.ctrlKey);
-		var editNext = (key == event.DOWN && event.ctrlKey);
-
-		complete = complete || editPrev || editNext;
+  
+		complete = complete  ;
 
 		if (field._isLov_ && field.isExpanded === true) {
 			complete = false;
 		}
+ 
 		if (complete || cancel) {
 			event.stopEvent();
 			// Must defer this slightly to prevent exiting edit mode before the
@@ -335,22 +333,7 @@ Ext.override(Ext.Editor, {
 						}
 						field.triggerBlur(event);
 					}
-					// TODO: move this part to the navigation
-					if (editNext) {
-						if (_col && _col._dcView_) {
-							var sm = _col._dcView_.getSelectionModel();
-							sm.selectNext();
-							_col._dcView_.getPlugin("cellEditingPlugin")
-									.startEdit(sm.getSelection()[0], _col);
-						}
-					} else if (editPrev) {
-						if (_col && _col._dcView_) {
-							var sm = _col._dcView_.getSelectionModel();
-							sm.selectPrevious();
-							_col._dcView_.getPlugin("cellEditingPlugin")
-									.startEdit(sm.getSelection()[0], _col);
-						}
-					}
+ 
 				} else {
 					me.cancelEdit();
 					if (field.triggerBlur) {
@@ -377,6 +360,9 @@ Ext.override(Ext.grid.plugin.CellEditing, {
 	 * @return {Boolean}
 	 */
 	beforeEdit : function(context) {
+		if (context.store && context.store.isLoading()) {
+			return false;
+		}
 		if (context.grid && context.grid.beforeEdit) {
 			return context.grid.beforeEdit(context);
 		}

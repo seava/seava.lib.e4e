@@ -177,34 +177,28 @@ Ext.define("e4e.dc.view.AbstractDcvFilterForm", {
 			processEvent : function(event, source, options) {
 				return event;
 			},
-			binding : [ Ext.apply(Main.keyBindings.dc.doClearQuery, {
+			binding : [ Ext.apply(KeyBindings.values.dc.doEnterQuery, {
+				fn : function(keyCode, e) {
+					e.stopEvent();					
+					this._controller_.doEnterQuery();
+				},
+				scope : this
+			}), Ext.apply(KeyBindings.values.dc.doClearQuery, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doClearQuery();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doQuery, {
+			}), Ext.apply(KeyBindings.values.dc.doQuery, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doQuery();
 				},
 				scope : this
-			}), Ext.apply(Main.keyBindings.dc.doEditOut, {
+			}), Ext.apply(KeyBindings.values.dc.doEditOut, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doEditOut();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.nextPage, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.store.nextPage();
-				},
-				scope : this
-			}), Ext.apply(Main.keyBindings.dc.prevPage, {
-				fn : function(keyCode, e) {
-					e.stopEvent();
-					this._controller_.store.previousPage();
 				},
 				scope : this
 			}) ]

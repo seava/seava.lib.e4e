@@ -96,7 +96,7 @@ Ext.define("e4e.dc.DcContext", {
 	constructor : function(config) {
 		config = config || {};
 		if (!config || !config.relation || !config.parentDc) {
-			alert ( "DCCONTEXT_INVALID_SETUP" );
+			alert("DCCONTEXT_INVALID_SETUP");
 		}
 
 		Ext.apply(this, config);
@@ -108,7 +108,7 @@ Ext.define("e4e.dc.DcContext", {
 			this.relation["fetchMode"] = "auto";
 		}
 
-		//this.addEvents("dataContextChanged");
+		// this.addEvents("dataContextChanged");
 
 		this.mixins.observable.constructor.call(this);
 		this._setup_();
@@ -120,7 +120,9 @@ Ext.define("e4e.dc.DcContext", {
 		this._updateCtxData_();
 
 		this.doQueryTask = new Ext.util.DelayedTask(function() {
-			this.childDc.doQuery({initiator:"dcContext"});
+			this.childDc.doQuery({
+				initiator : "dcContext"
+			});
 		}, this);
 
 		this.parentDc.mon(this.parentDc, "recordChange", function() {
@@ -130,7 +132,7 @@ Ext.define("e4e.dc.DcContext", {
 		this.parentDc.mon(this.parentDc, "statusChange", function() {
 			this.childDc.requestStateUpdate();
 		}, this);
-		
+
 		this.childDc.mon(this.childDc, "stateUpdatePerformed", function() {
 			this.parentDc.requestStateUpdate();
 		}, this);
@@ -166,7 +168,7 @@ Ext.define("e4e.dc.DcContext", {
 		var ov = null;
 		var isChildParam = false;
 
-		for ( var i = 0; i < l; i++) {
+		for (var i = 0; i < l; i++) {
 			var _newCtxObj = {
 				type : "field",
 				name : "",
@@ -219,15 +221,18 @@ Ext.define("e4e.dc.DcContext", {
 
 		if (changed) {
 
-			this.childDc.setRecord(null);
+			var _child = this.childDc;
+			var _parent = this.parentDc;
 
-			this.childDc.store.loadData([], false);
+			_child.setRecord(null);
 
-			//this.fireEvent("dataContextChanged", this);
+			_child.store.loadData([], false);
 
-			if (this.relation.fetchMode == "auto" && this.parentDc.getRecord()
-					&& !this.parentDc.getRecord().phantom) {
+			// this.fireEvent("dataContextChanged", this);
 
+			if (this.relation.fetchMode == "auto" && _parent.getRecord()
+					&& !_parent.getRecord().phantom
+					&& (!_parent.trackEditMode || _parent.isEditMode)) {
 				this.doQueryTask.delay(this.autoFetchDelay);
 			}
 		}
@@ -241,7 +246,7 @@ Ext.define("e4e.dc.DcContext", {
 		var cf = this.childDc.filter;
 		var cp = this.childDc.params;
 		cf.beginEdit();
-		for ( var i = 0, l = this.ctxData.length; i < l; i++) {
+		for (var i = 0, l = this.ctxData.length; i < l; i++) {
 			var _cd = this.ctxData[i];
 			if (_cd.noFilter !== true) {
 				if (_cd.type == "param") {
@@ -255,7 +260,7 @@ Ext.define("e4e.dc.DcContext", {
 	},
 
 	_applyContextData_ : function(model, isParamType) {
-		for ( var i = 0, l = this.ctxData.length; i < l; i++) {
+		for (var i = 0, l = this.ctxData.length; i < l; i++) {
 			var _cd = this.ctxData[i];
 			if (isParamType !== true && _cd.type == "field") {
 				model.data[_cd.name] = _cd.value;

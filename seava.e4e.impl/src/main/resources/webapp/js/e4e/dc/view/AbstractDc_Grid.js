@@ -274,13 +274,6 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 
 		this._columns_.each(this._postProcessColumn_, this);
 		this._endDefine_();
-
-		/*
-		 * disable default selection handler in controller let it be triggered
-		 * from here
-		 */
-		this._controller_.afterStoreLoadDoDefaultSelection = false;
-
 	},
 
 	/**
@@ -319,19 +312,31 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 		return cfg;
 	},
 
+	_gotoFirstNavigationItem_ : function() {
+		var v = this.getView();
+		if (this._controller_.record != null) {
+			v.focusRow(this._controller_.record);
+		} else {
+			this._controller_.restoreSelection();
+			if (this._controller_.record != null) {
+				v.focusRow(this._controller_.record);
+			} else {
+				v.focus();
+			}
+		}
+	},
+	
 	/**
 	 * Handler for the data-control selectionChange event.
 	 */
-	_onController_selectionChange : function(evnt) {
-		var s = evnt.dc.getSelectedRecords();
+	_onController_selectionChange : function(evnt) {		
 		if (evnt.eOpts && evnt.eOpts.fromGrid === true
 				&& evnt.eOpts.grid === this) {
 			return;
 		}
+		var s = evnt.dc.getSelectedRecords();
 		if (s !== this.getSelectionModel().getSelection()) {
-			this.getSelectionModel().suspendEvents();
-			this.getSelectionModel().select(s, false);
-			this.getSelectionModel().resumeEvents();
+			this.getSelectionModel().select(s, false, true);
 		}
 	},
 
@@ -360,32 +365,9 @@ Ext.define("e4e.dc.view.AbstractDc_Grid", {
 				this._get_("_btnChart_").disable();
 			}
 		}
-
-		/*
-		 * restore the selected records from the controller. Select first if
-		 * record from store if controller has no selection or the current store
-		 * doesn't contain any of the previous selection
-		 */
-		if (store.getCount() > 0) {
-			var ctrlSel = this._controller_.getSelectedRecords();
-			if (ctrlSel.length > 0) {
-				var newSel = [];
-				for (var i = 0, l = ctrlSel.length; i < l; i++) {
-					var r = store
-							.getById(ctrlSel[i].get(ctrlSel[i].idProperty));
-					if (r != null) {
-						newSel[newSel.length] = r;
-					}
-				}
-				if (newSel.length > 0) {
-					this._controller_.setSelectedRecords(newSel);
-				} else {
-					this.selModel.select(0);
-				}
-			} else {
-				this.selModel.select(0);
-			}
-		}
+ 
+		return; 
+		
 	},
 
 	/**

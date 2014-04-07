@@ -37,6 +37,10 @@ Ext.define("e4e.dc.AbstractDc", {
 	 */
 	multiEdit : false,
 
+	trackEditMode : false,
+
+	isEditMode : false,
+
 	/**
 	 * Filter model instance. Has the same signature as the data model instance
 	 * 
@@ -129,8 +133,7 @@ Ext.define("e4e.dc.AbstractDc", {
 	/**
 	 * Should apply a default selection on store load ?
 	 */
-	afterStoreLoadDoDefaultSelection : true,
-
+	// afterStoreLoadDoDefaultSelection : true,
 	/**
 	 * Local reference to the data-source store.
 	 * 
@@ -287,9 +290,9 @@ Ext.define("e4e.dc.AbstractDc", {
 						this);
 
 		/* after the store is loaded apply an initial selection */
-		if (this.afterStoreLoadDoDefaultSelection) {
-			this.mon(this.store, "load", this.onStore_load, this);
-		}
+		// if (this.afterStoreLoadDoDefaultSelection) {
+		this.mon(this.store, "load", this.onStore_load, this);
+		// }
 
 		/* invoke the action state update whenever necessary */
 		this.mon(this, "recordChange", this.requestStateUpdate, this);
@@ -303,8 +306,37 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	onStore_load : function(store, records, succes, eopts) {
-		if (this.afterStoreLoadDoDefaultSelection) {
-			this.doDefaultSelection();
+		this.restoreSelection();
+		this.requestStateUpdate();
+	},
+
+	/**
+	 * Default initial selection
+	 */
+	restoreSelection : function() {
+		var newSel = null;
+		var s = this.store;
+		if (s.getCount() > 0) {
+			newSel = [];
+			var sr = this.getSelectedRecords();
+			if (sr.length > 0) {
+				for (var i = 0, l = sr.length; i < l; i++) {
+					var r = s.getById(sr[i].get(sr[i].idProperty));
+					if (r != null) {
+						newSel[newSel.length] = r;
+					}
+				}
+			}
+
+			if (newSel.length == 0) {
+				newSel = [ s.getAt(0) ];
+			}
+		}
+
+		if (newSel == null) {
+			this.setRecord(null);
+		} else {
+			this.setSelectedRecords(newSel);
 		}
 	},
 
@@ -603,17 +635,6 @@ Ext.define("e4e.dc.AbstractDc", {
 	isDirty : function() {
 		return this.isCurrentRecordDirty() || this.isStoreDirty()
 				|| this.isAnyChildDirty();
-	},
-
-	/**
-	 * Default initial selection
-	 */
-	doDefaultSelection : function() {
-		if (this.store.getCount() > 0) {
-			this.setRecord(this.store.getAt(0), true);
-		} else {
-			this.setRecord(null);
-		}
 	},
 
 	/**

@@ -33,6 +33,9 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 
 	addCheckbox : function(config) {
 		config.xtype = "checkbox";
+		config.value = false;
+		config.checked = false;
+		config.uncheckedValue = false;
 		this.applyModelUpdater(config);
 		this.applySharedConfig(config);
 		return this;
@@ -192,7 +195,7 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 		this.dcv._elems_.add(config.name, config);
 		return this;
 	},
-	
+
 	addButton : function(config) {
 		Ext.applyIf(config, {
 			id : Ext.id(),

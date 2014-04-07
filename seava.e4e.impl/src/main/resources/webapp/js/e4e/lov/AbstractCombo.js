@@ -545,7 +545,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 	onKeyUp : function(e, t) {
 		
 		var key = e.getKey();
-		var kbs = Main.keyBindings.dc;
+		var kbs = KeyBindings.values.dc;
 		var dcv = this._dcView_;
 		var vt = dcv._dcViewType_;
 		// bindigs to check
@@ -561,7 +561,9 @@ Ext.define("e4e.lov.AbstractCombo", {
 				var b = btc[i];
 				if (key == b.key && e.shiftKey == b.shift
 						&& e.ctrlKey == b.ctrl && e.altKey == b.alt) {
-					return;
+					e.stopEvent();
+					//console.log("AbstractCombo.onKeyUp : " + key);
+					return ;					
 				}
 			}
 		}

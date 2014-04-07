@@ -30,8 +30,8 @@ Ext.define("e4e.base.KeyboardShortcutsWindow", {
 
 		this.tpl = new Ext.XTemplate(_t);
 		var kb = [];
-		for ( var k in Main.keyBindings.dc) {
-			var b = Main.keyBindings.dc[k];
+		for ( var k in KeyBindings.values.dc) {
+			var b = KeyBindings.values.dc[k];
 			var txt = (b.ctrl) ? "Ctrl-" : "";
 			txt += (b.alt) ? "Alt-" : "";
 			txt += (b.shift) ? "Shift-" : "";
