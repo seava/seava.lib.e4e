@@ -70,6 +70,7 @@ Ext.define("e4e.dc.AbstractDc", {
 	recordModel : null,
 
 	recordModel : "",
+	
 	/**
 	 * Filter model signature - filter constructor. Defaults to recordModel if
 	 * not specified.
@@ -120,20 +121,14 @@ Ext.define("e4e.dc.AbstractDc", {
 	 */
 	parent : null,
 
-	/**
-	 * Array with form-views registered to data-binding.
-	 */
-	bindedFormViews : null,
-
-	/**
-	 * Array with filter-views registered to data-binding.
-	 */
-	bindedFilterViews : null,
+ 
+ 
 
 	/**
 	 * Should apply a default selection on store load ?
 	 */
-	// afterStoreLoadDoDefaultSelection : true,
+	afterStoreLoadDoDefaultSelection : true,
+
 	/**
 	 * Local reference to the data-source store.
 	 * 
@@ -290,9 +285,7 @@ Ext.define("e4e.dc.AbstractDc", {
 						this);
 
 		/* after the store is loaded apply an initial selection */
-		// if (this.afterStoreLoadDoDefaultSelection) {
 		this.mon(this.store, "load", this.onStore_load, this);
-		// }
 
 		/* invoke the action state update whenever necessary */
 		this.mon(this, "recordChange", this.requestStateUpdate, this);
@@ -326,10 +319,12 @@ Ext.define("e4e.dc.AbstractDc", {
 						newSel[newSel.length] = r;
 					}
 				}
-			}
+			} 
 
 			if (newSel.length == 0) {
-				newSel = [ s.getAt(0) ];
+				if (this.afterStoreLoadDoDefaultSelection) {
+					newSel = [ s.getAt(0) ];
+				}
 			}
 		}
 
