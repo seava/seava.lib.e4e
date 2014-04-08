@@ -13,6 +13,7 @@ Ext.define("e4e.dc.command.DcQueryCommand", {
 		Ext.apply(dc.store.proxy.extraParams, _p);
 		dc.store.load({
 			callback : function(records, operation, success) {
+
 				this.onAjaxResult({
 					records : records,
 					response : operation.response,
@@ -25,6 +26,10 @@ Ext.define("e4e.dc.command.DcQueryCommand", {
 			options : options,
 			page : 1
 		});
+		// the paging doesn't get refreshed as the store doesn't update its
+		// currentPage. Force it here, hopefully will be fixed
+		// TODO: check me on Extjs upgrade!
+		this.dc.store.currentPage = 1;
 	},
 
 	isActionAllowed : function() {

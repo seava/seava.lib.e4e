@@ -307,13 +307,13 @@ Ext.override(Ext.Editor, {
 		var me = this, key = event.getKey(), complete = me.completeOnEnter
 				&& key == event.ENTER, cancel = me.cancelOnEsc
 				&& key == event.ESC;
-  
-		complete = complete  ;
+
+		complete = complete;
 
 		if (field._isLov_ && field.isExpanded === true) {
 			complete = false;
 		}
- 
+
 		if (complete || cancel) {
 			event.stopEvent();
 			// Must defer this slightly to prevent exiting edit mode before the
@@ -333,7 +333,7 @@ Ext.override(Ext.Editor, {
 						}
 						field.triggerBlur(event);
 					}
- 
+
 				} else {
 					me.cancelEdit();
 					if (field.triggerBlur) {
