@@ -149,7 +149,7 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 				},
 				failure : function(response) {
 					Ext.Msg.hide();
-					Main.message(response.responseText);
+					Main.serverMessage(response.responseText);
 				}
 			});
 			return;

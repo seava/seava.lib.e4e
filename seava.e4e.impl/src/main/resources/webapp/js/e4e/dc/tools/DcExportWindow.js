@@ -133,7 +133,7 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 				},
 				failure : function(response) {
 					Ext.Msg.hide();
-					Main.message(response.responseText);
+					Main.serverMessage(response.responseText);
 				}
 			});
 			return;
