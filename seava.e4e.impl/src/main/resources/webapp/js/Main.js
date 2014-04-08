@@ -13,6 +13,7 @@ if (typeof Constants === 'undefined') {
 		DATA_FORMAT_JSON : "json",
 		DATA_FORMAT_XML : "xml",
 		DATA_FORMAT_PDF : "pdf",
+		
 		/**
 		 * Request parameter names
 		 */
@@ -30,6 +31,8 @@ if (typeof Constants === 'undefined') {
 		REQUEST_PARAM_ORDERBY : "orderBy",
 		REQUEST_PARAM_SERVICE_NAME_PARAM : "rpcName",
 		REQUEST_PARAM_EXPORT_INFO : "export_info",
+		REQUEST_PARAM_EXPORT_DOWNLOAD : "download",
+		
 		/**
 		 * Data-source actions
 		 */
@@ -257,6 +260,13 @@ Main = {
 	 * @type String
 	 */
 	urlUpload : null,
+
+	/**
+	 * URL for file upload.
+	 * 
+	 * @type String
+	 */
+	urlDownload : null,
 
 	/**
 	 * URL where the static resources are served from for the core framework

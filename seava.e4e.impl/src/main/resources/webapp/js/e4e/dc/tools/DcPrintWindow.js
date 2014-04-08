@@ -29,7 +29,7 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 			selectOnFocus : true,
 			allowBlank : false
 		},
-		
+
 		buttons : [ {
 			text : Main.translate("tlbitem", "ok__lbl"),
 			formBind : true,
@@ -38,11 +38,11 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 				this.up("form").executeTask();
 			}
 		} ],
-		
+
 		items : [ {
 			name : "fld_format",
 			fieldLabel : Main.translate("cmp", "print_format"),
-			xtype : "combo",			 
+			xtype : "combo",
 			forceSelection : true,
 			triggerAction : "all",
 			store : [ "html" ],
@@ -63,7 +63,7 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 			triggerAction : "all",
 			store : [ "portrait", "landscape" ],
 			value : "portrait"
-		} ],		
+		} ],
 
 		/**
 		 * Handler. Run in button scope
@@ -103,7 +103,7 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 
 			var cm = grid.down("headercontainer").getVisibleGridColumns();
 			var len = cm.length;
-			for ( var i = 0; i < len; i++) {
+			for (var i = 0; i < len; i++) {
 				_cols[_cols.length] = {
 					name : cm[i].dataIndex,
 					title : cm[i].text.replace(",", " "),
@@ -128,17 +128,31 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 			_exp.filter = _filters;
 
 			_p[Main.requestParam.EXPORT_INFO] = Ext.encode(_exp);
+			_p["download"] = false;
 
-			var _wv = 720;
+			Ext.Msg.progress(Main.translate("msg", "working"));
+			var _wv = 750;
 			if (val.fld_layout == "landscape") {
 				_wv = 1024;
 			}
-			var opts = "adress=yes, width=" + _wv + ", height=450,"
-					+ "scrollbars=yes, resizable=yes,menubar=yes";
-			var v = window.open(url["print"] + "&" + Ext.urlEncode(_p),
-					"Print", opts);
-			v.focus();
-			wdw.close();
+			Ext.Ajax.request({
+				url : url["print"],
+				params : _p,
+				success : function(response) {
+					Ext.Msg.hide();
+					var r = Ext.decode(response.responseText);
+					var opts = "adress=yes, width=" + _wv + ", height=550,"
+							+ "scrollbars=yes, resizable=yes, menubar=yes";
+					var v = window.open(Main.urlDownload + "/" + r.file,
+							'Print', opts);
+					v.focus();
+				},
+				failure : function(response) {
+					Ext.Msg.hide();
+					Main.message(response.responseText);
+				}
+			});
+			return;
 		}
 	}
 

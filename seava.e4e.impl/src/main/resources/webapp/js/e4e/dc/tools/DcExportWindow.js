@@ -116,16 +116,27 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 			}
 			_exp.columns = _cols;
 			_p[Main.requestParam.EXPORT_INFO] = Ext.encode(_exp);
+			_p["download"] = false;
 
-			var opts = "adress=yes, width=710, height=450,"
-					+ "scrollbars=yes, resizable=yes,menubar=yes";
-
-			var u = url["exportdata"] + "&"
-					+ Ext.Object.toQueryString(_p);
-
-			var v = window.open(u, 'Export', opts);
-			v.focus();
-			wdw.close();
+			Ext.Msg.progress(Main.translate("msg", "working"));
+			Ext.Ajax.request({
+				url : url["exportdata"],
+				params : _p,
+				success : function(response) {
+					Ext.Msg.hide();
+					var r = Ext.decode(response.responseText);
+					var opts = "adress=yes, width=710, height=450,"
+							+ "scrollbars=yes, resizable=yes, menubar=yes";
+					var v = window.open(Main.urlDownload + "/" + r.file,
+							'Export', opts);
+					v.focus();
+				},
+				failure : function(response) {
+					Ext.Msg.hide();
+					Main.message(response.responseText);
+				}
+			});
+			return;
 		}
 	}
 
