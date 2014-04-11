@@ -10,6 +10,9 @@ Ext.define('e4e.ui.FrameBuilder$TocModel', {
 	}, {
 		name : 'title',
 		type : 'string'
+	}, {
+		name : 'dc',
+		type : 'string'
 	} ]
 });
 
@@ -187,9 +190,11 @@ Ext.define("e4e.ui.FrameBuilder", {
 	addToc : function(canvases) {
 		var data = [];
 		for (var i = 0; i < canvases.length; i++) {
+			var c = canvases[i].split(":");
 			data[i] = {
-				"name" : canvases[i],
-				"title" : this.frame.translate(canvases[i] + "__ttl")
+				"name" : c[0],
+				"dc" : c[1],
+				"title" : this.frame.translate(c[0] + "__ttl")
 			};
 		}
 		var store = Ext.create('Ext.data.Store', {
@@ -225,13 +230,14 @@ Ext.define("e4e.ui.FrameBuilder", {
 				selModel : {
 					mode : "SINGLE",
 					listeners : {
-
 						"selectionchange" : {
 							scope : this.frame,
 							fn : function(sm, selected, options) {
 								if (this._getElement_("main").rendered) {
+									var _d = selected[0].data;
 									this._showStackedViewElement_("main",
-											selected[0].data.name);
+											_d.name);
+									this._rootDc_ = _d.dc;
 								}
 							}
 						}

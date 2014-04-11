@@ -22,6 +22,13 @@ Ext.define("e4e.ui.AbstractUi", {
 	_dcs_ : null,
 
 	/**
+	 * Data-control code which is treated as the current root dc. Used mainly
+	 * when keyboard shortcut invoked from the main application context on the
+	 * current frame, to delegate the action to be executed.
+	 */
+	_rootDc_ : null,
+
+	/**
 	 * Toolbar definitions map
 	 */
 	_tlbs_ : null,
@@ -115,8 +122,11 @@ Ext.define("e4e.ui.AbstractUi", {
 	 * 
 	 */
 	_getRootDc_ : function() {
-		// TODO: check for top level dc and if there are more than 1
-		return this._dcs_.getAt(0);
+		if (this._rootDc_) {
+			return this._dcs_.get(this._rootDc_);
+		} else {
+			return this._dcs_.getAt(0);
+		}
 	},
 
 	/**
