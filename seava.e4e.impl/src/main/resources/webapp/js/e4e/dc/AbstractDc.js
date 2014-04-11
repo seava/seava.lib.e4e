@@ -70,7 +70,7 @@ Ext.define("e4e.dc.AbstractDc", {
 	recordModel : null,
 
 	recordModel : "",
-	
+
 	/**
 	 * Filter model signature - filter constructor. Defaults to recordModel if
 	 * not specified.
@@ -120,9 +120,6 @@ Ext.define("e4e.dc.AbstractDc", {
 	 * @type e4e.dc.AbstractDc
 	 */
 	parent : null,
-
- 
- 
 
 	/**
 	 * Should apply a default selection on store load ?
@@ -319,7 +316,7 @@ Ext.define("e4e.dc.AbstractDc", {
 						newSel[newSel.length] = r;
 					}
 				}
-			} 
+			}
 
 			if (newSel.length == 0) {
 				if (this.afterStoreLoadDoDefaultSelection) {
@@ -332,6 +329,12 @@ Ext.define("e4e.dc.AbstractDc", {
 			this.setRecord(null);
 		} else {
 			this.setSelectedRecords(newSel);
+		}
+	},
+
+	doDefaultSelection : function() {
+		if (this.store.length > 0) {
+			this.setSelectedRecords(this.store.getAt(0));
 		}
 	},
 
