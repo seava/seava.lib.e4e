@@ -55,14 +55,12 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	 * additional logic. If it returns false the execution is stopped.
 	 */
 	beforeExecute : function(options) {
-		if (this.dcApiMethod != null) {
-			var m = this.dc["beforeDo" + this.dcApiMethod];
-			if (m != undefined && Ext.isFunction(m)) {
-				return m.call(this.dc, options);
-			}			 
+		var m = this.dc["beforeDo" + this.dcApiMethod];
+		if (m != undefined && Ext.isFunction(m)) {
+			return m.call(this.dc, options);
 		} else {
 			return true;
-		}		
+		}
 	},
 
 	/**
@@ -72,21 +70,27 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	 * call available here. Provide callbacks for such situations.
 	 */
 	afterExecute : function(options) {
-		if (this.dcApiMethod != null) {
-			var m = this.dc["afterDo" + this.dcApiMethod];
-			if (m != undefined && Ext.isFunction(m)) {
-				m.call(this.dc, options);
-			}
-
-			this.dc.fireEvent("afterDo" + this.dcApiMethod, this.dc, options);
+		var m = this.dc["afterDo" + this.dcApiMethod];
+		if (m != undefined && Ext.isFunction(m)) {
+			m.call(this.dc, options);
 		}
+		this.dc.fireEvent("afterDo" + this.dcApiMethod, this.dc, options);
 	},
 
 	/**
 	 * Provide whatever extra-logic to check if the command can be executed.
 	 */
 	canExecute : function(options) {
-		return true;
+		var m = this.dc["canDo" + this.dcApiMethod];
+		if (m != undefined) {
+			if (Ext.isFunction(m)) {
+				return m.call(this.dc, options);
+			} else {
+				return m;
+			}
+		} else {
+			return true;
+		}
 	},
 
 	/**
@@ -119,13 +123,19 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 	execute : function(options) {
 		try {
 			options = options || {};
+
+			if (!this.canExecute(options)) {
+				this.dc.info(Main.msg.DC_ACTION_NOT_ALLOWED, "msg");
+				return;
+			}
+
 			if (!this.isActionAllowed(options)) {
 				return;
 			}
 
 			/*
-			 * workaround to enable createInterceptor return false beeing
-			 * handled correctly Seems that returnValue=false in
+			 * workaround to enable createInterceptor return false being handled
+			 * correctly Seems that returnValue=false in
 			 * Ext.Function.createInterceptor returns null not the specified
 			 * false Used by AbstractDcvForm to inject its own form validation
 			 * result.
