@@ -477,6 +477,13 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	/**
+	 * Call a server side RPC with a list of id's
+	 */
+	doRpcIdList : function(options) {
+		this.commands.doRpcIdList.execute(options);
+	},
+
+	/**
 	 * Set the previous available record as current record.
 	 */
 	setPreviousAsCurrent : function(options) {
