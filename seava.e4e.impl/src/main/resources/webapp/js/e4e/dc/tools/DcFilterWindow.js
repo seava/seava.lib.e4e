@@ -28,7 +28,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	initComponent : function(config) {
 		this._buildElements_();
 		var cfg = {
-			title : Main.translate("dcvgrid", "filter_title"),
+			title : Main.translate("dcFilter", "title"),
 			border : true,
 			width : 500,
 			// height:200,
@@ -155,12 +155,14 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	 */
 	_buildButtons_ : function() {
 		return [ {
-			text : Main.translate("dcvgrid", "filter_apply"),
+			text : Main.translate("dcFilter", "apply__lbl"),
+			tooltip : Main.translate("dcFilter", "apply__tlp"),
 			// iconCls : "icon-action-filter",
 			scope : this,
 			handler : this._onApply_
 		}, {
-			text : Main.translate("dcvgrid", "filter_clear"),
+			text : Main.translate("dcFilter", "clear__lbl"),
+			tooltip : Main.translate("dcFilter", "clear__tlp"),
 			// iconCls : "icon-action-rollback",
 			scope : this,
 			handler : this._onClear_
@@ -172,18 +174,18 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 	 */
 	_buildFilterGridActions_ : function() {
 		return [ {
-			text : Main.translate("tlbitem", "new__lbl"),
-			tooltip : 'Add new filter criteria',
+			text : Main.translate("dcFilter", "new__lbl"),
+			tooltip : Main.translate("dcFilter", "new__tlp"),
 			scope : this,
 			handler : this._onAdd_
 		}, {
-			text : Main.translate("tlbitem", "copy__lbl"),
-			tooltip : 'Copy selected criteria',
+			text : Main.translate("dcFilter", "copy__lbl"),
+			tooltip : Main.translate("dcFilter", "copy__tlp"),
 			scope : this,
 			handler : this._onCopy_
 		}, {
-			text : Main.translate("tlbitem", "delete__lbl"),
-			tooltip : 'Remove selected criteria',
+			text : Main.translate("dcFilter", "delete__lbl"),
+			tooltip : Main.translate("dcFilter", "delete__tlp"),
 			scope : this,
 			handler : this._onRemove_
 		} ]
@@ -215,7 +217,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 
 		return [
 				{
-					text : "Field",
+					text : Main.translate("dcFilter", "field"),
 					dataIndex : "title",
 					width : 150,
 					editor : {
@@ -229,7 +231,7 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 					}
 				},
 				{
-					text : "Operation",
+					text : Main.translate("dcFilter", "op"),
 					dataIndex : "operation",
 					editor : {
 						xtype : "combo",
@@ -240,14 +242,14 @@ Ext.define("e4e.dc.tools.DcFilterWindow", {
 								"not like", "in", "not in", "between" ]
 					}
 				}, {
-					text : "Value 1",
+					text : Main.translate("dcFilter", "val1"),
 					dataIndex : "value1",
 					editor : {
 						xtype : "textfield",
 						selectOnFocus : true
 					}
 				}, {
-					text : "Value 2",
+					text : Main.translate("dcFilter", "val2"),
 					dataIndex : "value2",
 					editor : {
 						xtype : "textfield",

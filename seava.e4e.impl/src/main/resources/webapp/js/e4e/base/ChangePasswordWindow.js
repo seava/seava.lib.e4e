@@ -5,7 +5,7 @@
 Ext.define("e4e.base.ChangePasswordWindow", {
 
 	extend : "Ext.Window",
-	title : Main.translate("cmp", "chpswd_title"),
+	title : Main.translate("changePswd", "title"),
 	border : true,
 	width : 400,
 	resizable : false,
@@ -43,7 +43,7 @@ Ext.define("e4e.base.ChangePasswordWindow", {
 
 		items : [ {
 			name : "pswd",
-			fieldLabel : Main.translate("cmp", "chpswd_pswd"),
+			fieldLabel : Main.translate("changePswd", "pswd"),
 			listeners : {
 				change : {
 					scope : this,
@@ -52,7 +52,7 @@ Ext.define("e4e.base.ChangePasswordWindow", {
 			}
 		}, {
 			name : "pswd1",
-			fieldLabel : Main.translate("cmp", "chpswd_pswd1"),
+			fieldLabel : Main.translate("changePswd", "pswd1"),
 			listeners : {
 				change : {
 					scope : this,
@@ -61,7 +61,7 @@ Ext.define("e4e.base.ChangePasswordWindow", {
 			}
 		}, {
 			name : "pswd2",
-			fieldLabel : Main.translate("cmp", "chpswd_pswd2"),
+			fieldLabel : Main.translate("changePswd", "pswd2"),
 			listeners : {
 				change : {
 					scope : this,
@@ -91,7 +91,7 @@ Ext.define("e4e.base.ChangePasswordWindow", {
 		 *            options
 		 */
 		onActionSuccess : function(response, options) {
-			Main.info(Main.translate("cmp", "chpswd_success"));
+			Main.info(Main.translate("changePswd", "success"));
 			this.up("window").close();
 		},
 
@@ -109,7 +109,7 @@ Ext.define("e4e.base.ChangePasswordWindow", {
 			var val = form.getValues();
 
 			if (val.pswd1 != val.pswd2) {
-				Main.error(Main.translate("cmp", "chpswd_nomatch"));
+				Main.error(Main.translate("changePswd", "nomatch"));
 				return;
 			}
 

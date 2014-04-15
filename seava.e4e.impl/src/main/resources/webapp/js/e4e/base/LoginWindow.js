@@ -52,7 +52,7 @@ Ext.define("e4e.base.LoginForm", {
 		return [ {
 			xtype : "textfield",
 			itemId : "usr",
-			fieldLabel : Main.translate("cmp", "login_user"),
+			fieldLabel : Main.translate("login", "user"),
 			value : getApplication().getSession().getUser().loginName,
 			listeners : {
 				change : {
@@ -63,7 +63,7 @@ Ext.define("e4e.base.LoginForm", {
 		}, {
 			xtype : "textfield",
 			itemId : "pswd",
-			fieldLabel : Main.translate("cmp", "login_pswd"),
+			fieldLabel : Main.translate("login", "pswd"),
 			inputType : "password",
 			listeners : {
 				change : {
@@ -74,7 +74,7 @@ Ext.define("e4e.base.LoginForm", {
 		}, {
 			xtype : "textfield",
 			itemId : "client",
-			fieldLabel : Main.translate("cmp", "login_client"),
+			fieldLabel : Main.translate("login", "client"),
 			value : getApplication().getSession().getClient().code,
 			listeners : {
 				change : {
@@ -298,12 +298,12 @@ Ext.define("e4e.base.LoginWindow", {
 	initComponent : function(config) {
 
 		var btn = Ext.create('Ext.Button', {
-			text : Main.translate("cmp", "login_btn"),
+			text : Main.translate("login", "btn"),
 			disabled : true
 		});
 
 		var cfg = {
-			title : Main.translate("cmp", "login_title"),
+			title : Main.translate("login", "title"),
 			border : true,
 			width : 350,
 			resizable : false,

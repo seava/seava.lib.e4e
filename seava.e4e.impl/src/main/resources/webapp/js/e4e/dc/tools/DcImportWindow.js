@@ -4,7 +4,7 @@
  */
 Ext.define("e4e.dc.tools.DcImportWindow", {
 	extend : "Ext.Window",
-	title : Main.translate("cmp", "imp_dp_title"),
+	title : Main.translate("dcImp", "title"),
 	border : true,
 	width : 500,
 	resizable : false,
@@ -33,9 +33,9 @@ Ext.define("e4e.dc.tools.DcImportWindow", {
 
 		items : [ {
 			xtype : "label",
-			html : Main.translate("cmp", "imp_dp_desc")
+			html : Main.translate("dcImp", "desc")
 		}, {
-			fieldLabel : Main.translate("cmp", "imp_dp_loc"),
+			fieldLabel : Main.translate("dcImp", "loc"),
 			name : "dataPackage",
 			padding : "10 0 0 0"
 		} ],
@@ -49,13 +49,13 @@ Ext.define("e4e.dc.tools.DcImportWindow", {
 				form.url = Main.urlDs + "/import";
 				if (form.isValid()) {
 					Main.working();
-					form.submit({						
+					form.submit({
 						success : function(form, action) {
 							Ext.Msg.hide();
-							Main.info(Main.translate("cmp", "imp_dp_success"));
+							Main.info(Main.translate("dcImp", "success"));
 							this.up("window").close();
 						},
-						failure : function(form, action) {							 
+						failure : function(form, action) {
 							Main.serverMessage(action.response.responseText);
 						},
 						scope : this

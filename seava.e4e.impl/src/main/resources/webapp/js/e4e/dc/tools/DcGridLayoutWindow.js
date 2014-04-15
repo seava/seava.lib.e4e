@@ -43,7 +43,7 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 			closable : true,
 			closeAction : 'hide',
 			bodyStyle : "padding:10 10 8 5;",
-			title : Main.translate("dcvgrid", "layout_title"),
+			title : Main.translate("dcGridLayout", "title"),
 			width : 400,
 			height : 200,
 			modal : true,
@@ -90,7 +90,7 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 	},
 
 	_doSaveAs_ : function() {
-		Ext.Msg.prompt("Save view as...", "Name:", this._onDoSaveAs_, this);
+		Ext.Msg.prompt(Main.translate("dcGridLayout", "saveAs__lbl"), Main.translate("dcGridLayout", "name"), this._onDoSaveAs_, this);
 	},
 
 	/**
@@ -224,7 +224,8 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 	 */
 	_buildButtons_ : function() {
 		this._elems_.add("btn_apply", {
-			text : "Apply",
+			text : Main.translate("dcGridLayout", "apply__lbl"),
+			tooltip : Main.translate("dcGridLayout", "apply__tlp"),
 			xtype : "button",
 			disabled : true,
 			handler : this._doApply_,
@@ -232,7 +233,8 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 			id : Ext.id()
 		});
 		this._elems_.add("btn_cancel", {
-			text : "Cancel",
+			text : Main.translate("dcGridLayout", "cancel__lbl"),
+			tooltip : Main.translate("dcGridLayout", "cancel__tlp"),
 			xtype : "button",
 			handler : this._doCancel_,
 			scope : this,
@@ -240,14 +242,16 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 		});
 
 		this._elems_.add("btn_saveas", {
-			text : "Save as",
+			text : Main.translate("dcGridLayout", "saveAs__lbl"),
+			tooltip : Main.translate("dcGridLayout", "saveAs__tlp"),
 			xtype : "button",
 			handler : this._doSaveAs_,
 			scope : this,
 			id : Ext.id()
 		});
 		this._elems_.add("btn_save", {
-			text : "Save",
+			text : Main.translate("dcGridLayout", "save__lbl"),
+			tooltip : Main.translate("dcGridLayout", "save__tlp"),
 			xtype : "button",
 			disabled : true,
 			handler : this._doSave_,
@@ -255,7 +259,8 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 			id : Ext.id()
 		});
 		this._elems_.add("btn_del", {
-			text : "Delete",
+			text : Main.translate("dcGridLayout", "delete__lbl"),
+			tooltip : Main.translate("dcGridLayout", "delete__tlp"),
 			xtype : "button",
 			disabled : true,
 			handler : this._doDelete_,
@@ -279,7 +284,7 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 		this._elems_.add("fld_views", {
 
 			name : "companyCode",
-			fieldLabel : "Layouts",
+			fieldLabel : Main.translate("dcGridLayout", "layout"),
 			xtype : "combo",
 			selectOnFocus : true,
 			forceSelection : true,
@@ -364,7 +369,7 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 		});
 
 		this._elems_.add("fld_hide_mine", {
-			fieldLabel : "Hide mine",
+			fieldLabel : Main.translate("dcGridLayout", "hideMine"),
 			xtype : "checkbox",
 			listeners : {
 				change : {
@@ -378,7 +383,7 @@ Ext.define("e4e.dc.tools.DcGridLayoutWindow", {
 		});
 
 		this._elems_.add("fld_hide_others", {
-			fieldLabel : "Hide other's",
+			fieldLabel : Main.translate("dcGridLayout", "hideOther"),
 			xtype : "checkbox",
 			listeners : {
 				change : {

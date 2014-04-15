@@ -4,7 +4,7 @@
  */
 Ext.define("e4e.dc.tools.DcExportWindow", {
 	extend : "Ext.Window",
-	title : Main.translate("cmp", "exp_title"),
+	title : Main.translate("dcExp", "title"),
 	border : true,
 	width : 350,
 	resizable : false,
@@ -41,24 +41,24 @@ Ext.define("e4e.dc.tools.DcExportWindow", {
 
 		items : [ {
 			name : "fld_format",
-			fieldLabel : Main.translate("cmp", "exp_format"),
+			fieldLabel : Main.translate("dcExp", "format"),
 			xtype : "combo",
 			forceSelection : true,
 			triggerAction : "all",
 			store : [ "csv", "html", "xml", "json" ],
 			value : "csv"
 		}, {
-			fieldLabel : Main.translate("cmp", "exp_columns"),
+			fieldLabel : Main.translate("dcExp", "columns"),
 			xtype : "radiogroup",
 			columns : 1,
 			items : [ {
 				name : "fld_columns",
-				boxLabel : Main.translate("cmp", "exp_col_visible"),
+				boxLabel : Main.translate("dcExp", "col_visible"),
 				inputValue : 'visible',
 				checked : true
 			}, {
 				name : "fld_columns",
-				boxLabel : Main.translate("cmp", "exp_col_all"),
+				boxLabel : Main.translate("dcExp", "col_all"),
 				inputValue : 'all'
 			} ]
 		} ],

@@ -4,7 +4,7 @@
  */
 Ext.define("e4e.dc.tools.DcPrintWindow", {
 	extend : "Ext.Window",
-	title : Main.translate("cmp", "print_title"),
+	title : Main.translate("dcPrint", "title"),
 	border : true,
 	width : 350,
 	resizable : false,
@@ -41,7 +41,7 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 
 		items : [ {
 			name : "fld_format",
-			fieldLabel : Main.translate("cmp", "print_format"),
+			fieldLabel : Main.translate("dcPrint", "format"),
 			xtype : "combo",
 			forceSelection : true,
 			triggerAction : "all",
@@ -57,7 +57,7 @@ Ext.define("e4e.dc.tools.DcPrintWindow", {
 			}
 		}, {
 			name : "fld_layout",
-			fieldLabel : Main.translate("cmp", "print_layout"),
+			fieldLabel : Main.translate("dcPrint", "layout"),
 			xtype : "combo",
 			forceSelection : true,
 			triggerAction : "all",
