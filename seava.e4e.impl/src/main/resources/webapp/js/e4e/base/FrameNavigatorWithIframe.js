@@ -130,7 +130,8 @@ e4e.base.FrameNavigatorWithIframe = {
 			};
 
 			var beforeCloseFn = function(tab, eOpts) {
-				if (window.frames[this.n21_iframeID].theFrameInstance.isDirty()) {
+				var _fr = window.frames[this.n21_iframeID];
+				if (_fr && _fr.theFrameInstance && _fr.theFrameInstance.isDirty()) {
 					return confirm(Main.translate("msg",
 							"dirty_data_on_frame_close"));
 				}
