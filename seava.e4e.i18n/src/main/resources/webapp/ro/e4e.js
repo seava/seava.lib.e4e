@@ -77,9 +77,9 @@ dnet.Translation = {
 	},
 	dcFilter : {
 		apply__lbl: "Aplică",
-		apply__tlp: "Aplică condiţie filtrare",
+		apply__tlp: "Aplică condiţii filtrare",
 		clear__lbl: "Anulează",
-		clear__tlp: "Anulează condiţie filtrare",
+		clear__tlp: "Anulează condiţii filtrare",
 		copy__lbl: "Copiază",
 		copy__tlp: "Copiază condiţie filtrare",
 		delete__lbl: "Şterge",
@@ -108,6 +108,12 @@ dnet.Translation = {
 		saveAs__lbl: "Salvează ca",
 		saveAs__tlp: "Salvează ca...",
 		title: "Vizualizări predefinite"
+	},
+	dcImp : {
+		desc: "Importă date dintr-un pachet aflat pe server.   Specifică locaţia fişierului de control al importului.",
+		loc: "Locaţie fişier",
+		success: "Import executat cu succes",
+		title: "Import pachet date"
 	},
 	dcPrint : {
 		format: "Format",
@@ -147,7 +153,7 @@ dnet.Translation = {
 		print__lbl: "T",
 		print__tlp: "Tipăreste date",
 		sort__lbl: "S",
-		sort__tlp: "Sortează după mai multe coloane",
+		sort__tlp: "Sortare multiplă",
 		sort_btn: "Sortare",
 		sort_run: "Aplică",
 		sort_title: "Sortează după mai multe coloane",

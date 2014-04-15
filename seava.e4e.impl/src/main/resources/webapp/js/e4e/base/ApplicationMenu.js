@@ -46,7 +46,7 @@ e4e.base.ApplicationMenu$HelpItems = [
 						items : [
 								{
 									text : Main
-											.translate("cmp", "imp_dp_title"),
+											.translate("dcImp", "title"),
 									handler : function() {
 										Ext.create(
 												"e4e.dc.tools.DcImportWindow",

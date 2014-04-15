@@ -109,6 +109,12 @@ dnet.Translation = {
 		saveAs__tlp: "Save as...",
 		title: "Predefined layouts"
 	},
+	dcImp : {
+		desc: "Import files from a data-package located on server. <br> Specify the index file used for import. ",
+		loc: "File location",
+		success: "Import executed successfully",
+		title: "Import data-package"
+	},
 	dcPrint : {
 		format: "Format",
 		layout: "Layout",
