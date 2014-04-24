@@ -253,7 +253,7 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 		if (!config.listeners[en]) {
 			config.listeners[en] = {};
 		}
-		config.listeners[en]['buffer'] = 500;
+		config.listeners[en]['buffer'] = 100;
 		if (fn != null) {
 			if (config.listeners[en].fn) {
 				config.listeners[en].fn = Ext.Function.createInterceptor(
@@ -315,8 +315,9 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 		if (!f.isValid()) {
 			return;
 		}
+		var fr = f._dcView_.getForm().getRecord();
 		var r = f._dcView_._controller_.getRecord();
-		if (!r)
+		if (!r || fr !== r)
 			return;
 		var rv = r.get(f.dataIndex);
 		nv = f.getValue();
