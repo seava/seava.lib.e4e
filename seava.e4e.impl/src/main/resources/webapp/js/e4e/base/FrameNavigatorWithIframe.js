@@ -131,11 +131,18 @@ e4e.base.FrameNavigatorWithIframe = {
 
 			var beforeCloseFn = function(tab, eOpts) {
 				var _fr = window.frames[this.n21_iframeID];
-				if (_fr && _fr.theFrameInstance && _fr.theFrameInstance.isDirty()) {
+				if (_fr && _fr.theFrameInstance
+						&& _fr.theFrameInstance.isDirty()) {
 					return confirm(Main.translate("msg",
 							"dirty_data_on_frame_close"));
 				}
 				return true;
+			};
+			var onActivateFn = function(tab, eOpts) {
+				var _fr = window.frames[this.n21_iframeID];
+				if (_fr && _fr.theFrameInstance) {
+					_fr.theFrameInstance.doLayout();
+				}
 			};
 
 			var _p = new Ext.Panel(
@@ -151,6 +158,9 @@ e4e.base.FrameNavigatorWithIframe = {
 						listeners : {
 							beforeclose : {
 								fn : beforeCloseFn
+							},
+							activate : {
+								fn : onActivateFn
 							}
 						},
 						html : '<div style="width:100%;height:100%;overflow: hidden;" id="div_'
