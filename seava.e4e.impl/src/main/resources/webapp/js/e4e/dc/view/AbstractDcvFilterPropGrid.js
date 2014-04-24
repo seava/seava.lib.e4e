@@ -103,8 +103,12 @@ Ext.define("e4e.dc.view.AbstractDcvFilterPropGrid",
 				// When enter-query requested, move the focus to the
 				// first navigation
 				// item.
-				this.mon(ctrl, "onEnterQuery", this._gotoFirstNavigationItem_,
-						this);
+				this.mon(ctrl, "onEnterQuery", function() {
+					if (this.getCollapsed()) {
+						this.expand(false);
+					}
+					this._gotoFirstNavigationItem_();
+				}, this);
 
 				this.mon(ctrl, "parameterValueChanged",
 						this._onParameterValueChanged_, this);

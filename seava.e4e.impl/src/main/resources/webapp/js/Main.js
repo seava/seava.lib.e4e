@@ -90,7 +90,7 @@ Ext.apply(Constants, {
 	/**
 	 * The maximum number of open tabs
 	 */
-	MAX_OPEN_TABS : 10,
+	MAX_OPEN_TABS : 15,
 	/**
 	 * Component ID for application level views
 	 */

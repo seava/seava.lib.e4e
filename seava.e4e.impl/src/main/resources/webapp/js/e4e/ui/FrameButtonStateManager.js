@@ -17,12 +17,14 @@ e4e.ui.FrameButtonStateManager = {
 	/**
 	 * Register dc-event to be listened by the specified button
 	 */
-	registerForDcEvent : function(btnName, frame, dc, eventName) {
+	registerForDcEvent : function(btnName, frame, dc, eventName) {  
 		dc.mon(dc, eventName, function(evnt) {
 			this._applyStateButton_(btnName);
-		}, frame, {
-			buffer : 100
-		});
+		}, frame
+//		, {
+//			buffer : 50
+//		}
+		);
 	},
 
 	/**
@@ -31,9 +33,11 @@ e4e.ui.FrameButtonStateManager = {
 	registerForDcStoreEvent : function(btnName, frame, dc, eventName) {
 		dc.mon(dc.store, eventName, function(evnt) {
 			this._applyStateButton_(btnName);
-		}, frame, {
-			buffer : 100
-		});
+		}, frame
+//		, {
+//			buffer : 50
+//		}
+		);
 	},
 
 	// record state based

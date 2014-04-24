@@ -37,7 +37,6 @@ Ext.define("e4e.dc.command.DcSaveCommand", {
 
 	onAjaxSuccess : function(ajaxResult) {
 		this.callParent(arguments);
-		this.dc.requestStateUpdate();
 		this.dc.fireEvent("afterDoCommitSuccess", this.dc,
 				ajaxResult.options.options);
 	},

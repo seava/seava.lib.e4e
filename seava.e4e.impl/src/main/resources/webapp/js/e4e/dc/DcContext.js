@@ -89,7 +89,7 @@ Ext.define("e4e.dc.DcContext", {
 	 * 
 	 * @type Number
 	 */
-	autoFetchDelay : 600,
+	autoFetchDelay : 500,
 
 	doQueryTask : null,
 
@@ -127,7 +127,10 @@ Ext.define("e4e.dc.DcContext", {
 
 		this.parentDc.mon(this.parentDc, "onEditIn", function() {
 			if (this.parentDc.trackEditMode) {
-				this.doQueryTask.delay(this.autoFetchDelay);
+				if (this.relation.fetchMode == "auto") {
+					this.doQueryTask.delay(this.autoFetchDelay);
+				}
+
 			}
 		}, this);
 
@@ -135,12 +138,12 @@ Ext.define("e4e.dc.DcContext", {
 			this._updateCtxData_("recordChange");
 		}, this);
 
-		this.parentDc.mon(this.parentDc, "statusChange", function() {
-			this.childDc.requestStateUpdate();
+		this.parentDc.mon(this.parentDc, "dcstatechange", function() {
+			this.childDc.updateDcState();
 		}, this);
 
-		this.childDc.mon(this.childDc, "stateUpdatePerformed", function() {
-			this.parentDc.requestStateUpdate();
+		this.childDc.mon(this.childDc, "dcstatechange", function() {
+			this.parentDc.updateDcState();
 		}, this);
 
 		this.parentDc.mon(this.parentDc.store, "write", function(store,

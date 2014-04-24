@@ -210,11 +210,10 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 * form.
 	 */
 	_onController_recordChange_ : function(evnt) {
-		var newRecord = evnt.newRecord;
-		var oldRecord = evnt.oldRecord;
+		var newRecord = evnt.newRecord;		 
 		var newIdx = evnt.newIdx;
-		if (newRecord != oldRecord) {
-			this._onUnbind_(oldRecord);
+		if (newRecord != this.getForm()._record) {
+			this._onUnbind_();
 			this._onBind_(newRecord);
 		}
 	},
@@ -264,7 +263,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 				field.setRawValue(field.formatDate(_v));
 			} else if (field.isCheckbox === true) {
 				field.suspendEvents();
-				field.setValue(_v);				
+				field.setValue(_v);
 				field.resumeEvents();
 			} else {
 				field.setRawValue(_v);
@@ -278,7 +277,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	/**
 	 * Un-bind the record from the form.
 	 */
-	_onUnbind_ : function(record) {
+	_onUnbind_ : function() {
 		var ctrl = this._controller_;
 		if (ctrl.trackEditMode && !ctrl.isEditMode) {
 			return;
@@ -303,7 +302,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 			this.getForm()._record = null;
 		}
 
-		this._afterUnbind_(record);
+		this._afterUnbind_(_r);
 	},
 
 	/**

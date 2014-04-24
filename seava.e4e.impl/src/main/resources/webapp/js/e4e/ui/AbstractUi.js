@@ -363,6 +363,7 @@ Ext.define("e4e.ui.AbstractUi", {
 		// frameFqn.length);
 		getApplication().setFrameTabTitle(frameFqn, this._title_);
 		getApplication().applyFrameCallback(frameFqn, this);
+		this._getRootDc_().doEnterQuery();
 	},
 
 	_config_ : function() {

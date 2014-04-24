@@ -66,9 +66,13 @@ Ext.define("e4e.dc.DcState", {
 		return false;
 	},
 
+	/**
+	 * Recalculate state flags and returns true if state change has been
+	 * detected.
+	 */
 	run : function(dc) {
 		var me = this;
-		var runManager = false;
+		var changed = false;
 
 		var flags = {
 			isReadOnly : dc.isReadOnly(),
@@ -115,14 +119,11 @@ Ext.define("e4e.dc.DcState", {
 
 		for ( var flag in flags) {
 			if (this.set(flag, flags[flag], true) == true) {
-				runManager = true;
+				changed = true;
 			}
 		}
 
-		if (runManager) {
-			e4e.dc.DcActionsStateManager.applyStates(dc);
-		}
-		return runManager;
+		return changed;
 	},
 
 	isRecordChangeAllowed : function() {

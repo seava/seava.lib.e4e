@@ -45,16 +45,20 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 				listeners : {
 					"selectionchange" : {
 						scope : this,
-						fn : this._selectionHandler_
+						fn : function(args) {
+							this._selectionHandler_(arguments);
+						}
 					},
 					"beforedeselect" : {
 						scope : this,
 						fn : function(sm, record, index, eopts) {
-							if (record == this._controller_.record
-									&& !this._controller_.dcState
-											.isRecordChangeAllowed()) {
-								return false;
+							if (record == this._controller_.record) {
+								if (!this._controller_.dcState
+										.isRecordChangeAllowed()) {
+									return false;
+								}								
 							}
+									 
 						}
 					}
 				}
@@ -87,10 +91,10 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "afterDoQuerySuccess", function(dc, ajaxResult) {
 			var o = ajaxResult.options;
-			if(!o || o.initiator != "dcContext") {
+			if (!o || o.initiator != "dcContext") {
 				this._gotoFirstNavigationItem_();
 			}
-			
+
 		}, this);
 		this.mon(ctrl, "selectionChange", this._onController_selectionChange,
 				this);

@@ -282,23 +282,25 @@ Ext.define("e4e.dc.AbstractDc", {
 						this);
 
 		/* after the store is loaded apply an initial selection */
-		this.mon(this.store, "load", this.onStore_load, this);
+		this.mon(this.store, "load", this.restoreSelection , this);
 
 		/* invoke the action state update whenever necessary */
-		this.mon(this, "recordChange", this.requestStateUpdate, this);
+		//this.mon(this, "recordChange", this.requestStateUpdate, this);
 		//
-		this.mon(this, "selectionChange", this.requestStateUpdate, this);
-		this.mon(this, "stateUpdateRequest", this.updateDcState, this);
+		//this.mon(this, "selectionChange", this.requestStateUpdate, this);
+		//this.mon(this, "stateUpdateRequest", this.updateDcState, this);
+		this.mon(this, "dcstatechange", function() {
+			e4e.dc.DcActionsStateManager.applyStates(this);
+		}, this, {
+			buffer : 50
+		});
+
 		/*
 		 * TODO: update flags immediatly in dcActionStateManager, then buffer
 		 * only the UI component's state update , { buffer : 100 }
 		 */
 	},
-
-	onStore_load : function(store, records, succes, eopts) {
-		this.restoreSelection();
-		this.requestStateUpdate();
-	},
+ 
 
 	/**
 	 * Default initial selection
@@ -348,15 +350,15 @@ Ext.define("e4e.dc.AbstractDc", {
 		this.fireEvent("statusChange", {
 			dc : this
 		});
-		this.requestStateUpdate();
+		this.updateDcState();
 	},
 
 	onStore_datachanged : function(store, eopts) {
-		this.requestStateUpdate();
+		this.updateDcState();
 	},
 
 	onStore_remove : function(store, records, index, eopts) {
-		this.requestStateUpdate();
+		//this.updateDcState();
 		this.doDefaultSelection();
 	},
 
@@ -578,22 +580,19 @@ Ext.define("e4e.dc.AbstractDc", {
 			return null;
 	},
 
-	requestStateUpdate : function() {
-		this.fireEvent("stateUpdateRequest", {
-			dc : this
-		});
-	},
+//	requestStateUpdate : function() {
+//		this.fireEvent("stateUpdateRequest", {
+//			dc : this
+//		});
+//	},
 
 	/**
 	 * Update the enabled/disabled states of the actions. Delegate the work to
 	 * the states manager.
 	 */
-	updateDcState : function(ifNeeded) {
-		// console.log("AbstractDc.updateActionsState (" +
-		// this.$className +
-		// ")");
+	updateDcState : function() {
 		if (this.dcState.run(this)) {
-			this.fireEvent("stateUpdatePerformed", {
+			this.fireEvent("dcstatechange", {
 				dc : this
 			});
 		}
@@ -861,13 +860,23 @@ Ext.define("e4e.dc.AbstractDc", {
 		}
 
 		if (changed) {
-			this.fireEvent('recordChange', {
+			this.updateDcState();
+			this.fireRecordChangeDelayed.delay(30,this.fireEvent,this, ['recordChange',{
 				dc : this,
 				newRecord : rec,
 				oldRecord : oldrec,
 				status : this.getRecordStatus(),
 				eOpts : eOpts
-			});
+			}]); 			
+			
+//			return ;
+//			this.fireEvent('recordChange', {
+//				dc : this,
+//				newRecord : rec,
+//				oldRecord : oldrec,
+//				status : this.getRecordStatus(),
+//				eOpts : eOpts
+//			});
 			if (selectIt === true) {
 				if (rec != null) {
 					this.setSelectedRecords([ rec ], eOpts);
@@ -878,6 +887,9 @@ Ext.define("e4e.dc.AbstractDc", {
 		}
 	},
 
+	fireRecordChangeDelayed :  new Ext.util.DelayedTask(this.fireEvent, this ),
+	
+	
 	/**
 	 * Returns the selected records
 	 */
@@ -914,6 +926,8 @@ Ext.define("e4e.dc.AbstractDc", {
 				}
 				if (!found) {
 					this.setRecord(this.selectedRecords[0], false);
+				} else {
+					this.updateDcState();
 				}
 			} else {
 				this.setRecord(this.selectedRecords[0], false);

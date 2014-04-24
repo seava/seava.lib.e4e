@@ -207,6 +207,18 @@ Ext.data.validations.presenceMessage = Main.translate("msg", "valid_not_null");
  * calls are routed through these dispatcher functions.
  * 
  */
+
+Ext.override(Ext.Img, {
+	_enable_ : function() {
+	},
+
+	_disable_ : function() {
+	},
+
+	_setDisabled_ : function(v) {
+	}
+});
+
 Ext.override(Ext.form.field.Base, {
 
 	_enable_ : function() {
