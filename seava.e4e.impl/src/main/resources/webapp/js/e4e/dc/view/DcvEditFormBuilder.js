@@ -302,11 +302,11 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 		if (Ext.isDate(rv)) {
 			var rd = Ext.Date.parse(Ext.Date.format(rv, f.format), f.format);
 			if (!r.isEqual(rd, nv)) {
-				ctrl.setParamValue(f.paramIndex, nv);
+				ctrl.setParamValue(f.paramIndex, nv, false, "user-input");
 			}
 		} else {
 			if (!r.isEqual(rv, nv)) {
-				ctrl.setParamValue(f.paramIndex, nv);
+				ctrl.setParamValue(f.paramIndex, nv, false, "user-input");
 			}
 		}
 	},

@@ -96,10 +96,12 @@ Ext.define("e4e.dc.view.AbstractDc_View", {
 		if (fld) {
 			fld = this._getElement_(fld.name);
 			if (fld.getValue() != nv) {
-				if (op == "clearQuery" || !fld.hasFocus) {
-					fld.suspendEvents();
-					fld.setValue(nv);
-					fld.resumeEvents();
+				if (!(fld.hasFocus && op == "user-input")) {
+					if (fld.getValue() != nv) {
+						fld.suspendEvents();
+						fld.setValue(nv);
+						fld.resumeEvents();
+					}
 				}
 			}
 		}
@@ -112,13 +114,13 @@ Ext.define("e4e.dc.view.AbstractDc_View", {
 	 * picked-up to refresh the correcponding form fields.
 	 * 
 	 */
-	_onParameterValueChanged_ : function(dc, property, ov, nv) {
+	_onParameterValueChanged_ : function(dc, property, ov, nv, op) {
 		var fld = this._elems_.findBy(function(item) {
 			return (item.paramIndex == property);
 		});
 		if (fld) {
 			fld = this._getElement_(fld.name);
-			if (!fld.hasFocus) {
+			if (!(fld.hasFocus && op == "user-input")) {
 				if (fld.getValue() != nv) {
 					fld.suspendEvents();
 					fld.setValue(nv);

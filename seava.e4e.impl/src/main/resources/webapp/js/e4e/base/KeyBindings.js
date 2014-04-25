@@ -166,6 +166,7 @@ KeyBindings = {
 					e.stopEvent();
 					var ctrl = theFrameInstance._getRootDc_();
 					ctrl.doClearQuery();
+					ctrl.doEnterQuery();
 				},
 				scope : this
 			}), Ext.apply(this.values.dc.doQuery, {
@@ -274,6 +275,7 @@ KeyBindings = {
 					if (frame) {
 						ctrl = frame._getRootDc_();
 						ctrl.doClearQuery();
+						ctrl.doEnterQuery();
 					}
 				},
 				scope : this

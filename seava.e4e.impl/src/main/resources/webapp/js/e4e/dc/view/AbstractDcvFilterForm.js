@@ -187,6 +187,7 @@ Ext.define("e4e.dc.view.AbstractDcvFilterForm", {
 				fn : function(keyCode, e) {
 					e.stopEvent();
 					this._controller_.doClearQuery();
+					this._controller_.doEnterQuery();
 				},
 				scope : this
 			}), Ext.apply(KeyBindings.values.dc.doQuery, {

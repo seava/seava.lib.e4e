@@ -191,10 +191,10 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "afterDoQuerySuccess", function(dc, ajaxResult) {
 			var o = ajaxResult.options;
-			if(!o || o.initiator != "dcContext") {
+			if (!o || o.initiator != "dcContext") {
 				this._gotoFirstNavigationItem_();
 			}
-			
+
 		}, this);
 	},
 
@@ -215,6 +215,21 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 				return event;
 			},
 			binding : [
+					Ext.apply(KeyBindings.values.dc.doEnterQuery, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.doEnterQuery();
+						},
+						scope : this
+					}),
+					Ext.apply(KeyBindings.values.dc.doClearQuery, {
+						fn : function(keyCode, e) {
+							e.stopEvent();
+							this._controller_.doClearQuery();
+							this._controller_.doEnterQuery();
+						},
+						scope : this
+					}),
 					Ext.apply(KeyBindings.values.dc.doQuery, {
 						fn : function(keyCode, e) {
 							e.stopEvent();
@@ -260,7 +275,6 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 					}),
 					Ext.apply(KeyBindings.values.dc.nextPage, {
 						fn : function(keyCode, e) {
-							// console.log("AbstractDcvGrid.nextPage");
 							e.stopEvent();
 							this._controller_.nextPage();
 						},

@@ -278,11 +278,11 @@ Ext.define("e4e.dc.view.DcvFilterFormBuilder", {
 		if (Ext.isDate(rv)) {
 			var rd = Ext.Date.parse(Ext.Date.format(rv, f.format), f.format);
 			if (!r.isEqual(rd, nv)) {
-				ctrl.setParamValue(f.paramIndex, nv);
+				ctrl.setParamValue(f.paramIndex, nv, false, "user-input");
 			}
 		} else {
 			if (!r.isEqual(rv, nv)) {
-				ctrl.setParamValue(f.paramIndex, nv);
+				ctrl.setParamValue(f.paramIndex, nv, false, "user-input");
 			}
 		}
 	},
@@ -299,11 +299,11 @@ Ext.define("e4e.dc.view.DcvFilterFormBuilder", {
 		if (Ext.isDate(rv)) {
 			var rd = Ext.Date.parse(Ext.Date.format(rv, f.format), f.format);
 			if (!r.isEqual(rd, nv)) {
-				ctrl.setFilterValue(f.dataIndex, nv);
+				ctrl.setFilterValue(f.dataIndex, nv, false, "user-input");
 			}
 		} else {
 			if (!r.isEqual(rv, nv)) {
-				ctrl.setFilterValue(f.dataIndex, nv);
+				ctrl.setFilterValue(f.dataIndex, nv, false, "user-input");
 			}
 		}
 	},
