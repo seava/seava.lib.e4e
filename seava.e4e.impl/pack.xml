@@ -54,7 +54,7 @@
 			<filelist dir="${sourcePathJsCore}/dc/command" files="DcClearQueryCommand.js,DcEnterQueryCommand.js,DcDeleteCommand.js,DcReloadRecCommand.js,DcReloadPageCommand.js,DcPrevRecCommand.js,DcNextRecCommand.js,DcRpcDataCommand.js,DcRpcDataListCommand.js,DcRpcIdListCommand.js,DcRpcFilterCommand.js" />
 
 			<filelist dir="${sourcePathJsCore}/ui" files="FrameBuilder.js,ActionBuilder.js,FrameButtonStateManager.js,AbstractUi.js" />
-			<filelist dir="${sourcePathJsCore}/dc" files="DcActionsStateManager.js,DcContext.js" />
+			<filelist dir="${sourcePathJsCore}/dc" files="DcActionsStateManager.js,DcContext.js,FlowContext.js" />
 			<filelist dir="${sourcePathJsCore}/lov" files="AbstractCombo.js" />
 		</concat>
 		<echo message="Done." />

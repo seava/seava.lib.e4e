@@ -42,7 +42,7 @@ Ext.define("e4e.dc.AbstractDc", {
 	isEditMode : false,
 
 	/**
-	 * Filter model instance. Has the same signature as the data model instance
+	 * Filter model instance.
 	 * 
 	 * @type Ext.data.Model
 	 */
@@ -68,8 +68,6 @@ Ext.define("e4e.dc.AbstractDc", {
 	 * @type Ext.data.Model
 	 */
 	recordModel : null,
-
-	recordModel : "",
 
 	/**
 	 * Filter model signature - filter constructor. Defaults to recordModel if
@@ -106,7 +104,7 @@ Ext.define("e4e.dc.AbstractDc", {
 		/**
 		 * Page-size for a query
 		 */
-		fetchSize : 30
+		fetchSize : Main.viewConfig.FETCH_SIZE
 	},
 
 	/**
@@ -138,6 +136,18 @@ Ext.define("e4e.dc.AbstractDc", {
 	 * @type e4e.dc.DcContext
 	 */
 	dcContext : null,
+
+	/**
+	 * Execution flow related context. Stores filter/params/record contextual
+	 * values. Example: {
+	 * 
+	 * record: { },
+	 * 
+	 * filter: {f1:v1, f2:v2 },
+	 * 
+	 * params: {p3:v3 } }
+	 */
+	flowContext : null,
 
 	readOnly : false,
 
@@ -282,25 +292,14 @@ Ext.define("e4e.dc.AbstractDc", {
 						this);
 
 		/* after the store is loaded apply an initial selection */
-		this.mon(this.store, "load", this.restoreSelection , this);
+		this.mon(this.store, "load", this.restoreSelection, this);
 
-		/* invoke the action state update whenever necessary */
-		//this.mon(this, "recordChange", this.requestStateUpdate, this);
-		//
-		//this.mon(this, "selectionChange", this.requestStateUpdate, this);
-		//this.mon(this, "stateUpdateRequest", this.updateDcState, this);
 		this.mon(this, "dcstatechange", function() {
 			e4e.dc.DcActionsStateManager.applyStates(this);
 		}, this, {
 			buffer : 50
 		});
-
-		/*
-		 * TODO: update flags immediatly in dcActionStateManager, then buffer
-		 * only the UI component's state update , { buffer : 100 }
-		 */
 	},
- 
 
 	/**
 	 * Default initial selection
@@ -358,7 +357,6 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	onStore_remove : function(store, records, index, eopts) {
-		//this.updateDcState();
 		this.doDefaultSelection();
 	},
 
@@ -579,12 +577,6 @@ Ext.define("e4e.dc.AbstractDc", {
 		else
 			return null;
 	},
-
-//	requestStateUpdate : function() {
-//		this.fireEvent("stateUpdateRequest", {
-//			dc : this
-//		});
-//	},
 
 	/**
 	 * Update the enabled/disabled states of the actions. Delegate the work to
@@ -844,7 +836,6 @@ Ext.define("e4e.dc.AbstractDc", {
 				}
 			} else {
 				rec = p;
-				// idx = this.store.indexOf(p);
 				if (rec && (this.record != rec)) {
 					oldrec = this.record;
 					this.record = rec;
@@ -861,22 +852,15 @@ Ext.define("e4e.dc.AbstractDc", {
 
 		if (changed) {
 			this.updateDcState();
-			this.fireRecordChangeDelayed.delay(30,this.fireEvent,this, ['recordChange',{
-				dc : this,
-				newRecord : rec,
-				oldRecord : oldrec,
-				status : this.getRecordStatus(),
-				eOpts : eOpts
-			}]); 			
-			
-//			return ;
-//			this.fireEvent('recordChange', {
-//				dc : this,
-//				newRecord : rec,
-//				oldRecord : oldrec,
-//				status : this.getRecordStatus(),
-//				eOpts : eOpts
-//			});
+			this.fireRecordChangeDelayed.delay(30, this.fireEvent, this, [
+					'recordChange', {
+						dc : this,
+						newRecord : rec,
+						oldRecord : oldrec,
+						status : this.getRecordStatus(),
+						eOpts : eOpts
+					} ]);
+
 			if (selectIt === true) {
 				if (rec != null) {
 					this.setSelectedRecords([ rec ], eOpts);
@@ -887,9 +871,8 @@ Ext.define("e4e.dc.AbstractDc", {
 		}
 	},
 
-	fireRecordChangeDelayed :  new Ext.util.DelayedTask(this.fireEvent, this ),
-	
-	
+	fireRecordChangeDelayed : new Ext.util.DelayedTask(this.fireEvent, this),
+
 	/**
 	 * Returns the selected records
 	 */
@@ -909,16 +892,9 @@ Ext.define("e4e.dc.AbstractDc", {
 		if (this.selectedRecords !== recArray) {
 			this.selectedRecords = recArray;
 			var l = this.selectedRecords.length || 0;
-			// console.log("AbstractDc-selectedRecords.length="
-			// + l);
 			if (this.record != null) {
-				// console.log("AbstractDc-record.code=" +
-				// this.record.data.code);
 				var found = false;
 				for (var i = 0; i < l; i++) {
-					// console.log("AbstractDc-looking for match
-					// ="
-					// + this.selectedRecords[i].data.code);
 					if (this.record === this.selectedRecords[i]) {
 						found = true;
 						break;
@@ -938,6 +914,24 @@ Ext.define("e4e.dc.AbstractDc", {
 				eOpts : eOpts
 			});
 		}
+	},
+
+	/**
+	 * Get flow context
+	 */
+	getFlowContext : function() {
+		if (this.flowContext == null) {
+			this.flowContext = Ext.create(e4e.dc.FlowContext, {});
+			this.flowContext.dc = this;
+		}
+		return this.flowContext;
+	},
+
+	/**
+	 * Set data-control context.
+	 */
+	setDcContext : function(ctx) {
+		this.dcContext = ctx;
 	},
 
 	/**
@@ -1008,9 +1002,7 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	/* ********************************************************** */
-	/*
-	 * ******************** Internal API ************************
-	 */
+	/* ******************** Internal API ************************ */
 	/* ********************************************************** */
 
 	/**
@@ -1081,10 +1073,6 @@ Ext.define("e4e.dc.AbstractDc", {
 		}
 	},
 
-	setDcContext : function(dcCtx) {
-		this.dcContext = dcCtx;
-	},
-
 	onCleanDc : function() {
 		this.fireEvent('cleanDc', {
 			dc : this
@@ -1101,7 +1089,6 @@ Ext.define("e4e.dc.AbstractDc", {
 	},
 
 	destroy : function() {
-		// console.log("AbstractDc.destroy");
 		for ( var p in this.actions) {
 			delete this.actions[p].dc;
 		}

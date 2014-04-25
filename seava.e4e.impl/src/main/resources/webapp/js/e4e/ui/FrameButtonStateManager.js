@@ -17,14 +17,10 @@ e4e.ui.FrameButtonStateManager = {
 	/**
 	 * Register dc-event to be listened by the specified button
 	 */
-	registerForDcEvent : function(btnName, frame, dc, eventName) {  
+	registerForDcEvent : function(btnName, frame, dc, eventName) {
 		dc.mon(dc, eventName, function(evnt) {
 			this._applyStateButton_(btnName);
-		}, frame
-//		, {
-//			buffer : 50
-//		}
-		);
+		}, frame);
 	},
 
 	/**
@@ -33,11 +29,24 @@ e4e.ui.FrameButtonStateManager = {
 	registerForDcStoreEvent : function(btnName, frame, dc, eventName) {
 		dc.mon(dc.store, eventName, function(evnt) {
 			this._applyStateButton_(btnName);
-		}, frame
-//		, {
-//			buffer : 50
-//		}
-		);
+		}, frame);
+	},
+
+	// 
+	rule_param : function(btnName, state, dcName, frame, options) {
+		var theDc = frame._getDc_(dcName);
+		this.registerForDcEvent(btnName, frame, theDc, "parameterValueChanged");
+	},
+
+	rule_filter : function(btnName, state, dcName, frame, options) {
+		var theDc = frame._getDc_(dcName);
+		this.registerForDcEvent(btnName, frame, theDc, "filterValueChanged");
+	},
+
+	rule_param_and_filter : function(btnName, state, dcName, frame, options) {
+		var theDc = frame._getDc_(dcName);
+		this.registerForDcEvent(btnName, frame, theDc, "parameterValueChanged");
+		this.registerForDcEvent(btnName, frame, theDc, "filterValueChanged");
 	},
 
 	// record state based
@@ -107,6 +116,16 @@ e4e.ui.FrameButtonStateManager = {
 	},
 
 	// helper functions
+
+	is_rule_param : function(dc) {
+		return true;
+	},
+	is_rule_filter : function(dc) {
+		return true;
+	},
+	is_rule_param_and_filter : function(dc) {
+		return true;
+	},
 
 	is_record_is_clean : function(dc) {
 		return dc.getRecord() && !dc.isCurrentRecordDirty();
