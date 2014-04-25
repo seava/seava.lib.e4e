@@ -12,8 +12,14 @@ Ext.define("e4e.dc.command.DcClearQueryCommand", {
 		var dc = this.dc;
 		dc.advancedFilter = null;
 		var f = dc.filter;
-		var fcf = dc.flowContext.filter || {};
-		var fcp = dc.flowContext.params || {};
+
+		var fcf = {};
+		var fcp = {};
+
+		if (dc.flowContext) {
+			fcf = dc.flowContext.filter;
+			fcp = dc.flowContext.params;
+		}
 
 		// reset fields
 		for ( var k in dc.filter.data) {

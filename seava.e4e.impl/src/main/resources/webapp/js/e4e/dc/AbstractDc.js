@@ -824,10 +824,9 @@ Ext.define("e4e.dc.AbstractDc", {
 		if (this.beforeSetRecord() === false) {
 			return false;
 		}
-		var rec, idx, changed = false, oldrec;
+		var rec, changed = false, oldrec = null;
 		if (p != null) {
 			if (Ext.isNumber(p)) {
-				// idx = p;
 				rec = this.store.getAt(p);
 				if (rec && (this.record != rec)) {
 					oldrec = this.record;
@@ -1102,10 +1101,14 @@ Ext.define("e4e.dc.AbstractDc", {
 		if (this.dcContext) {
 			this.dcContext.destroy();
 		}
-
 		delete this.children;
 		delete this.parent;
 		delete this.dcContext;
+
+		if (this.flowContext) {
+			this.flowContext.dc = null;
+			delete this.flowContext;
+		}
 
 	}
 });
