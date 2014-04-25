@@ -773,13 +773,13 @@ Ext.define("e4e.dc.AbstractDc", {
 	/**
 	 * Set parameter property value
 	 */
-	setParamValue : function(property, newValue, silent) {
+	setParamValue : function(property, newValue, silent, op) {
 		var ov = this.params.get(property);
 		if (ov != newValue) {
 			this.params.set(property, newValue);
 			if (silent !== true) {
 				this.fireEvent("parameterValueChanged", this, property, ov,
-						newValue);
+						newValue, op);
 			}
 		}
 	},

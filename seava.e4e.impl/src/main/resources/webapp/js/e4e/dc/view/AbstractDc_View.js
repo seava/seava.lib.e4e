@@ -96,16 +96,15 @@ Ext.define("e4e.dc.view.AbstractDc_View", {
 		if (fld) {
 			fld = this._getElement_(fld.name);
 			if (fld.getValue() != nv) {
-				if (!(fld.hasFocus && op == "user-input")) {
-					if (fld.getValue() != nv) {
-						fld.suspendEvents();
-						fld.setValue(nv);
-						fld.resumeEvents();
-					}
+				if (!fld.hasFocus || op != "user-input") {
+					fld.suspendEvents();
+					fld.setValue(nv);
+					fld.resumeEvents();
 				}
 			}
 		}
 	},
+
 	/**
 	 * The parameters model is not part of a store, so we have listen to changes
 	 * made to the model through the `parameterValueChanged` event raised by the
@@ -120,8 +119,8 @@ Ext.define("e4e.dc.view.AbstractDc_View", {
 		});
 		if (fld) {
 			fld = this._getElement_(fld.name);
-			if (!(fld.hasFocus && op == "user-input")) {
-				if (fld.getValue() != nv) {
+			if (fld.getValue() != nv) {
+				if (!fld.hasFocus || op != "user-input") {
 					fld.suspendEvents();
 					fld.setValue(nv);
 					fld.resumeEvents();
