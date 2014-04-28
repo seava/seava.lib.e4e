@@ -43,12 +43,29 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 			selModel : {
 				mode : "MULTI",
 				listeners : {
-					"selectionchange" : {
+
+					"select" : {
 						scope : this,
-						fn : function(args) {
-							this._selectionHandler_(arguments);
+						fn : function(sm, record, index, eOpts) {
+							var ctrl = this._controller_;
+							ctrl.selectRecord(record, {
+								fromGrid : true,
+								grid : this
+							});
 						}
 					},
+
+					"deselect" : {
+						scope : this,
+						fn : function(sm, record, index, eOpts) {
+							var ctrl = this._controller_;
+							ctrl.deSelectRecord(record, {
+								fromGrid : true,
+								grid : this
+							});
+						}
+					},
+
 					"beforedeselect" : {
 						scope : this,
 						fn : function(sm, record, index, eopts) {
@@ -56,11 +73,11 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 								if (!this._controller_.dcState
 										.isRecordChangeAllowed()) {
 									return false;
-								}								
+								}
 							}
-									 
 						}
 					}
+
 				}
 			},
 			listeners : {
@@ -86,16 +103,21 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 		var ctrl = this._controller_;
 		var store = ctrl.store;
 
-		// When edit-out requested, focus this grid view. It's very likely that
-		// coming from an editor, the user wants to get to the list.
+		// When edit-out requested, focus this grid view.
+		// It's very likely that coming from an editor, the user wants to get to
+		// the list.
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "afterDoQuerySuccess", function(dc, ajaxResult) {
 			var o = ajaxResult.options;
 			if (!o || o.initiator != "dcContext") {
 				this._gotoFirstNavigationItem_();
 			}
-
 		}, this);
+
+		this.mon(ctrl, "afterDoDeleteSuccess", function() {
+			this._gotoFirstNavigationItem_();
+		}, this);
+
 		this.mon(ctrl, "selectionChange", this._onController_selectionChange,
 				this);
 		this.mon(store, "load", this._onStore_load_, this);
@@ -106,11 +128,6 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 			target : this.view,
 			eventName : 'itemkeydown',
 			processEvent : function(view, record, node, index, event) {
-				// event.view = view;
-				// event.store = view.getStore();
-				// event.sm = view.getSelectionModel();
-				// event.record = record;
-				// event.index = index;
 				return event;
 			},
 			binding : [ Ext.apply(KeyBindings.values.dc.doEnterQuery, {
@@ -173,13 +190,13 @@ Ext.define("e4e.dc.view.AbstractDcvGrid", {
 			}), Ext.apply(KeyBindings.values.dc.nextPage, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
-					this._controller_.nextPage();
+					this._controller_.doNextPage();
 				},
 				scope : this
 			}), Ext.apply(KeyBindings.values.dc.prevPage, {
 				fn : function(keyCode, e) {
 					e.stopEvent();
-					this._controller_.previousPage();
+					this._controller_.doPrevPage();
 				},
 				scope : this
 			}), { // In the context of a grid, allow to switch to editor with

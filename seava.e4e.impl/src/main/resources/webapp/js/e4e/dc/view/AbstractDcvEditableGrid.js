@@ -145,21 +145,41 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 			selModel : {
 				mode : "MULTI",
 				listeners : {
-					"selectionchange" : {
+					"select" : {
 						scope : this,
-						fn : this._selectionHandler_
-					}
-				},
-				"beforedeselect" : {
-					scope : this,
-					fn : function(sm, record, index, eopts) {
-						if (record == this._controller_.record
-								&& !this._controller_.dcState
-										.isRecordChangeAllowed()) {
-							return false;
+						fn : function(sm, record, index, eOpts) {
+							var ctrl = this._controller_;
+							ctrl.selectRecord(record, {
+								fromGrid : true,
+								grid : this
+							});
+						}
+					},
+
+					"deselect" : {
+						scope : this,
+						fn : function(sm, record, index, eOpts) {
+							var ctrl = this._controller_;
+							ctrl.deSelectRecord(record, {
+								fromGrid : true,
+								grid : this
+							});
+						}
+					},
+
+					"beforedeselect" : {
+						scope : this,
+						fn : function(sm, record, index, eopts) {
+							if (record == this._controller_.record
+									&& !this._controller_.dcState
+											.isRecordChangeAllowed()) {
+								return false;
+							}
 						}
 					}
+
 				}
+
 			}
 		});
 
@@ -188,6 +208,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 				this);
 		this.mon(store, "load", this._onStore_load_, this);
 		this.mon(store, "write", this._gotoFirstNavigationItem_, this);
+		this.mon(store, "remove", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "onEditOut", this._gotoFirstNavigationItem_, this);
 		this.mon(ctrl, "afterDoQuerySuccess", function(dc, ajaxResult) {
 			var o = ajaxResult.options;
@@ -276,7 +297,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 					Ext.apply(KeyBindings.values.dc.nextPage, {
 						fn : function(keyCode, e) {
 							e.stopEvent();
-							this._controller_.nextPage();
+							this._controller_.doNextPage();
 						},
 						scope : this
 					}),
@@ -284,7 +305,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditableGrid", {
 						fn : function(keyCode, e) {
 							// console.log("AbstractDcvGrid.prevPage");
 							e.stopEvent();
-							this._controller_.previousPage();
+							this._controller_.doPrevPage();
 						},
 						scope : this
 					}),

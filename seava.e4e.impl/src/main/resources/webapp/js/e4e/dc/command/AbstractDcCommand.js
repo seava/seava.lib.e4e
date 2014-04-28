@@ -124,12 +124,12 @@ Ext.define("e4e.dc.command.AbstractDcCommand", {
 		try {
 			options = options || {};
 
-			if (!this.canExecute(options)) {
+			if (this.canExecute(options) === false) {
 				this.dc.info(Main.msg.DC_ACTION_NOT_ALLOWED, "msg");
 				return;
 			}
 
-			if (!this.isActionAllowed(options)) {
+			if (this.isActionAllowed(options) === false) {
 				return;
 			}
 

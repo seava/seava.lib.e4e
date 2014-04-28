@@ -286,13 +286,28 @@ Ext.define("e4e.dc.AbstractDc", {
 
 		this.mon(this.store, "beforeload", this.onStore_beforeload, this);
 		this.mon(this.store, "update", this.onStore_update, this);
-		this.mon(this.store, "datachanged", this.onStore_datachanged, this);
-		this
-				.mon(this.store, "changes_rejected", this.onStore_datachanged,
-						this);
 
-		/* after the store is loaded apply an initial selection */
-		this.mon(this.store, "load", this.restoreSelection, this);
+		this.mon(this.store, "remove", function() {
+			// console.log("dc-store-remove");
+			this.doDefaultSelection();
+		}, this);
+
+		this.mon(this.store, "datachanged", function() {
+			// console.log("dc-store-datachanged");
+			this.updateDcState();
+		}, this);
+
+		this.mon(this.store, "changes_rejected", function() {
+			// console.log("dc-store-changes_rejected");
+			this.updateDcState();
+		}, this);
+
+		this.mon(this.store, "load", function() {
+			this.restoreSelection();
+		}, this);
+		this.mon(this.store, "write", function() {
+			this.restoreSelection();
+		}, this);
 
 		this.mon(this, "dcstatechange", function() {
 			e4e.dc.DcActionsStateManager.applyStates(this);
@@ -333,12 +348,6 @@ Ext.define("e4e.dc.AbstractDc", {
 		}
 	},
 
-	doDefaultSelection : function() {
-		if (this.store.length > 0) {
-			this.setSelectedRecords(this.store.getAt(0));
-		}
-	},
-
 	onStore_beforeload : function(store, operation, eopts) {
 		if (e4e.dc.DcActionsStateManager.isQueryDisabled(this)) {
 			return false;
@@ -363,6 +372,12 @@ Ext.define("e4e.dc.AbstractDc", {
 	/* ***************************************************** */
 	/* ***************** Public API ************************ */
 	/* ***************************************************** */
+
+	doDefaultSelection : function() {
+		if (this.store.count() > 0) {
+			this.setSelectedRecords([ this.store.getAt(0) ]);
+		}
+	},
 
 	/**
 	 * Execute query to fetch data.
@@ -486,21 +501,40 @@ Ext.define("e4e.dc.AbstractDc", {
 	/**
 	 * Set the previous available record as current record.
 	 */
-	setPreviousAsCurrent : function(options) {
+	doPrevRec : function(options) {
 		this.commands.doPrevRec.execute(options);
 	},
 
 	/**
 	 * Set the next available record as current record.
 	 */
-	setNextAsCurrent : function(options) {
+	doNextRec : function(options) {
 		this.commands.doNextRec.execute(options);
+	},
+
+	/**
+	 * Load the previous page of records
+	 */
+	doPrevPage : function(options) {
+		var s = this.store;
+		if (s.loading) {
+			return;
+		}
+		if (e4e.dc.DcActionsStateManager.isQueryDisabled(this)) {
+			this.info(Main.msg.DC_QUERY_NOT_ALLOWED, "msg");
+			return false;
+		}
+		if (s.currentPage > 1) {
+			s.loadPage(s.currentPage - 1, options);
+		} else {
+			this.info(Main.msg.AT_FIRST_PAGE, "msg");
+		}
 	},
 
 	/**
 	 * Load the next page of records
 	 */
-	nextPage : function(options) {
+	doNextPage : function(options) {
 		var s = this.store;
 		if (s.loading) {
 			return;
@@ -519,25 +553,6 @@ Ext.define("e4e.dc.AbstractDc", {
 			s.loadPage(s.currentPage + 1, options);
 		}
 
-	},
-
-	/**
-	 * Load the previous page of records
-	 */
-	previousPage : function(options) {
-		var s = this.store;
-		if (s.loading) {
-			return;
-		}
-		if (e4e.dc.DcActionsStateManager.isQueryDisabled(this)) {
-			this.info(Main.msg.DC_QUERY_NOT_ALLOWED, "msg");
-			return false;
-		}
-		if (s.currentPage > 1) {
-			s.loadPage(s.currentPage - 1, options);
-		} else {
-			this.info(Main.msg.AT_FIRST_PAGE, "msg");
-		}
 	},
 
 	// --------------- other ---------------
@@ -693,8 +708,7 @@ Ext.define("e4e.dc.AbstractDc", {
 
 	},
 
-	// --------------------- getters / setters
-	// ----------------------
+	// --------------------- getters / setters ----------------------
 
 	/**
 	 * Returns the filter instance
@@ -879,39 +893,58 @@ Ext.define("e4e.dc.AbstractDc", {
 		return this.selectedRecords;
 	},
 
-	/**
-	 * Set the selected records
-	 */
+	selectRecord : function(r, eOpts) {
+		Ext.Array.insert(this.selectedRecords, this.selectedRecords.length,
+				[ r ]);
+		this.updateDcState();
+		this.setRecordFromSelection();
+		this.fireEvent('selectionChange', {
+			dc : this,
+			eOpts : eOpts
+		});
+	},
+
+	deSelectRecord : function(r, eOpts) {
+		Ext.Array.remove(this.selectedRecords, r);
+		this.updateDcState();
+		this.setRecordFromSelection();
+		this.fireEvent('selectionChange', {
+			dc : this,
+			eOpts : eOpts
+		});
+	},
+
 	setSelectedRecords : function(recArray, eOpts) {
-		recArray = recArray || [];
-		if (!Ext.isArray(recArray)) {
-			recArray = [ recArray ];
-		}
+		var s = this.selectedRecords;
+		var recs = recArray || [];
 
-		if (this.selectedRecords !== recArray) {
-			this.selectedRecords = recArray;
-			var l = this.selectedRecords.length || 0;
-			if (this.record != null) {
-				var found = false;
-				for (var i = 0; i < l; i++) {
-					if (this.record === this.selectedRecords[i]) {
-						found = true;
-						break;
-					}
-				}
-				if (!found) {
-					this.setRecord(this.selectedRecords[0], false);
-				} else {
-					this.updateDcState();
-				}
-			} else {
-				this.setRecord(this.selectedRecords[0], false);
-			}
+		var Arr = Ext.Array;
+		var c = Arr.intersect(s, recs);
 
+		if (c.length != s.length || c.length != recs.length) {
+			Arr.erase(s, 0, s.length);
+			Arr.insert(s, 0, recs);
+			this.setRecordFromSelection();
 			this.fireEvent('selectionChange', {
 				dc : this,
 				eOpts : eOpts
 			});
+		}
+	},
+
+	setRecordFromSelection : function() {
+		var s = this.selectedRecords;
+		var r = this.record;
+		var Arr = Ext.Array;
+
+		if (r != null) {
+			if (Arr.indexOf(s, r) == -1) {
+				this.setRecord(s[0], false);
+			} else {
+				this.updateDcState();
+			}
+		} else {
+			this.setRecord(s[0], false);
 		}
 	},
 

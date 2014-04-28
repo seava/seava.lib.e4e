@@ -359,10 +359,11 @@ Ext.define("e4e.ui.AbstractUi", {
 
 	_onReady_ : function(p) {
 		var frameFqn = this.$className;
-		// var simpleName = frameFqn.substring(frameFqn.lastIndexOf(".") + 1,
-		// frameFqn.length);
 		getApplication().setFrameTabTitle(frameFqn, this._title_);
 		getApplication().applyFrameCallback(frameFqn, this);
+		this._dcs_.each(function(item, index, len) {
+			item.updateDcState();
+		});
 		this._getRootDc_().doEnterQuery();
 	},
 

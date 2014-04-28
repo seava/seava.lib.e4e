@@ -254,7 +254,7 @@ e4e.dc.DcActionsFactory = {
 							+ KeyBindings
 									.toString(KeyBindings.values.dc.prevRec),
 					scope : dc,
-					handler : dc.setPreviousAsCurrent
+					handler : dc.doPrevRec
 				});
 	},
 
@@ -273,7 +273,7 @@ e4e.dc.DcActionsFactory = {
 			tooltip : Main.translate("tlbitem", "next_rec__tlp") + " | "
 					+ KeyBindings.toString(KeyBindings.values.dc.nextRec),
 			scope : dc,
-			handler : dc.setNextAsCurrent
+			handler : dc.doNextRec
 		});
 	},
 

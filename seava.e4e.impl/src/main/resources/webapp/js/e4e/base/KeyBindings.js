@@ -225,7 +225,7 @@ KeyBindings = {
 					// console.log("indexFrame.nextRec");
 					e.stopEvent();
 					var ctrl = theFrameInstance._getRootDc_();
-					ctrl.setNextAsCurrent();
+					ctrl.doNextRec();
 				},
 				scope : this
 			}), Ext.apply(this.values.dc.prevRec, {
@@ -233,21 +233,21 @@ KeyBindings = {
 					// console.log("indexFrame.prevRec");
 					e.stopEvent();
 					var ctrl = theFrameInstance._getRootDc_();
-					ctrl.setPreviousAsCurrent();
+					ctrl.doPrevRec();
 				},
 				scope : this
 			}), Ext.apply(this.values.dc.nextPage, {
 				fn : function(keyCode, e) {
 					// console.log("indexFrame.nextPage");
 					e.stopEvent();
-					theFrameInstance._getRootDc_().nextPage();
+					theFrameInstance._getRootDc_().doNextPage();
 				},
 				scope : this
 			}), Ext.apply(this.values.dc.prevPage, {
 				fn : function(keyCode, e) {
 					// console.log("indexFrame.prevPage");
 					e.stopEvent();
-					theFrameInstance._getRootDc_().previousPage();
+					theFrameInstance._getRootDc_().doPrevPage();
 				},
 				scope : this
 			}) ]
@@ -367,7 +367,7 @@ KeyBindings = {
 					var frame = __application__.getActiveFrameInstance();
 					if (frame) {
 						ctrl = frame._getRootDc_();
-						ctrl.setNextAsCurrent();
+						ctrl.doNextRec();
 					}
 				},
 				scope : this
@@ -378,7 +378,7 @@ KeyBindings = {
 					var frame = __application__.getActiveFrameInstance();
 					if (frame) {
 						ctrl = frame._getRootDc_();
-						ctrl.setPreviousAsCurrent();
+						ctrl.doPrevRec();
 					}
 				},
 				scope : this
@@ -389,7 +389,7 @@ KeyBindings = {
 					var frame = __application__.getActiveFrameInstance();
 					if (frame) {
 						ctrl = frame._getRootDc_();
-						ctrl.nextPage();
+						ctrl.doNextPage();
 					}
 				},
 				scope : this
@@ -400,7 +400,7 @@ KeyBindings = {
 					var frame = __application__.getActiveFrameInstance();
 					if (frame) {
 						ctrl = frame._getRootDc_();
-						ctrl.previousPage();
+						ctrl.doPrevPage();
 					}
 				},
 				scope : this

@@ -165,7 +165,9 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 		}
 		if (this._acquireFocusUpdate_) {
 			this.mon(ctrl, "onEditIn", this._gotoFirstNavigationItem_, this);
-			this.mon(store, "write", this._gotoFirstNavigationItem_, this);
+			this.mon(ctrl, "afterDoSaveSuccess", function() {
+				this._gotoFirstNavigationItem_();
+			}, this);
 		}
 
 		// store listeners
@@ -210,7 +212,7 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 	 * form.
 	 */
 	_onController_recordChange_ : function(evnt) {
-		var newRecord = evnt.newRecord;		 
+		var newRecord = evnt.newRecord;
 		var newIdx = evnt.newIdx;
 		if (newRecord != this.getForm()._record) {
 			this._onUnbind_();
@@ -515,28 +517,28 @@ Ext.define("e4e.dc.view.AbstractDcvEditForm", {
 					Ext.apply(KeyBindings.values.dc.nextRec, {
 						fn : function(keyCode, e) {
 							e.stopEvent();
-							this._controller_.setNextAsCurrent();
+							this._controller_.doNextRec();
 						},
 						scope : this
 					}),
 					Ext.apply(KeyBindings.values.dc.prevRec, {
 						fn : function(keyCode, e) {
 							e.stopEvent();
-							this._controller_.setPreviousAsCurrent();
+							this._controller_.doPrevRec();
 						},
 						scope : this
 					}),
 					Ext.apply(KeyBindings.values.dc.nextPage, {
 						fn : function(keyCode, e) {
 							e.stopEvent();
-							this._controller_.nextPage();
+							this._controller_.doNextPage();
 						},
 						scope : this
 					}),
 					Ext.apply(KeyBindings.values.dc.prevPage, {
 						fn : function(keyCode, e) {
 							e.stopEvent();
-							this._controller_.previousPage();
+							this._controller_.doPrevPage();
 						},
 						scope : this
 					}),
