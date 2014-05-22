@@ -30,6 +30,7 @@ dnet.Translation = {
 		system__lbl: "Meniuri sistem",
 		theme__lbl: "Stil",
 		theme_aqua__lbl: "Standard",
+		theme_gray__lbl: "Gri",
 		tools__lbl: "Instrumente",
 		upload_imp__lbl: "Upload şi importă",
 		user__lbl: "Utilizator",

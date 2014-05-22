@@ -17,7 +17,13 @@ e4e.base.ApplicationMenu$Themes = [ {
 	handler : function() {
 		getApplication().changeCurrentTheme("dnet-theme-aqua");
 	}
-} ]
+},{
+	text : Main.translate("appmenuitem", "theme_gray__lbl"),
+	handler : function() {
+		getApplication().changeCurrentTheme("ext-theme-gray");
+	}
+}]
+
 
 /**
  * Languages
@@ -31,6 +37,11 @@ e4e.base.ApplicationMenu$Languages = [ {
 	text : "Română",
 	handler : function() {
 		getApplication().changeCurrentLanguage("ro");
+	}
+}, {
+	text : "Deutsch",
+	handler : function() {
+		getApplication().changeCurrentLanguage("de");
 	}
 } ]
 
