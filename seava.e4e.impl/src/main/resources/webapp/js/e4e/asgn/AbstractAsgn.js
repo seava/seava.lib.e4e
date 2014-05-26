@@ -64,11 +64,13 @@ Ext.define("e4e.asgn.AbstractAsgn", {
 			clientId : null
 		}
 		if (this.recordModel == null) {
-			this.recordModel = this.$className + "$Model";
+			this.recordModel = Ext.ClassManager.get(this.$className + "$Model");
 		}
 		if (this.dsName == null) {
-			this.dsName = this.$className.substring(this.$className
-					.lastIndexOf('.') + 1, this.$className.length);
+			// this.dsName = this.$className.substring(this.$className
+			// .lastIndexOf('.') + 1, this.$className.length);
+			
+			this.dsName = this.recordModel.ALIAS;
 		}
 		this.filter = {
 			left : {

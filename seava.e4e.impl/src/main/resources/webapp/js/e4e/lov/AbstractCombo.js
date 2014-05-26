@@ -145,9 +145,10 @@ Ext.define("e4e.lov.AbstractCombo", {
 			} else {
 				this.recordModelFqn = this.recordModel;
 			}
-			this._dataProviderName_ = this.recordModelFqn.substring(
-					this.recordModelFqn.lastIndexOf('.') + 1,
-					this.recordModelFqn.length);
+//			this._dataProviderName_ = this.recordModelFqn.substring(
+//					this.recordModelFqn.lastIndexOf('.') + 1,
+//					this.recordModelFqn.length);
+			this._dataProviderName_ = this.recordModel.ALIAS;
 		}
 		this.store = Ext.create("Ext.data.Store", {
 			model : this.recordModel,

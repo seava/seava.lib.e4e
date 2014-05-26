@@ -151,12 +151,12 @@ Main = {
 	bundle : {},
 
 	dsName : {
-		VIEW_STATE_LOV : "ViewStateRtLov_Ds",
-		VIEW_STATE : "ViewState_Ds",
-		MENU : "MenuRtLov_Ds",
-		MENU_ITEM : "MenuItemRtLov_Ds",
-		COMPANY_LOV : "OrgLov_Ds",
-		DS_LOV : "DataSourceLov_Ds"
+		VIEW_STATE_LOV : "ad_ViewStateRtLov_Ds",
+		VIEW_STATE : "ad_ViewState_Ds",
+		MENU : "ad_MenuRtLov_Ds",
+		MENU_ITEM : "ad_MenuItemRtLov_Ds",
+		COMPANY_LOV : "ad_OrgLov_Ds",
+		DS_LOV : "ad_DataSourceLov_Ds"
 	},
 
 	msgType : {

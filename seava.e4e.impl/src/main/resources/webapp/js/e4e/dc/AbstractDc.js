@@ -168,7 +168,9 @@ Ext.define("e4e.dc.AbstractDc", {
 			_rm = this.recordModel.$className;
 		}
 
-		this.dsName = _rm.substring(_rm.lastIndexOf('.') + 1, _rm.length);
+		//this.dsName = _rm.substring(_rm.lastIndexOf('.') + 1, _rm.length);		
+		this.dsName = this.recordModel.ALIAS;
+		
 		this.recordModelFqn = _rm;
 
 		if (this.store == null) {
@@ -205,6 +207,7 @@ Ext.define("e4e.dc.AbstractDc", {
 				type : 'ajax',
 				timeout : this.tuning.storeTimeout,
 				api : Main.dsAPI(this.dsName, "json"),
+				//api : Main.dsAPI(this.recordModel.ALIAS, "json"),
 				model : this.recordModel,
 				extraParams : {
 					params : {}
