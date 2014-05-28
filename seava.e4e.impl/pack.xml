@@ -14,7 +14,7 @@
 
 	<property name="yui.path" value="yui.path" />
 
-	<target name="run" depends="pack, minimize, cleanup">
+	<target name="run" depends="pack, minimize">
 		<echo>Done.</echo>
 	</target>
 
