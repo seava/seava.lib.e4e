@@ -56,7 +56,7 @@ Ext.define("e4e.dc.view.DcvEditFormBuilder", {
 	addDateTimeField : function(config) {
 		config.xtype = "datefield";
 		Ext.applyIf(config, {
-			_mask_ : Masks.DATETIME_FORMAT,
+			_mask_ : Masks.DATETIME,
 			altFormats : Main.ALT_FORMATS
 		});
 		config.format = Main[config._mask_];

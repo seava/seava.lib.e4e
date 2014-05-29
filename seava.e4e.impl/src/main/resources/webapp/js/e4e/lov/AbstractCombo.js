@@ -262,7 +262,7 @@ Ext.define("e4e.lov.AbstractCombo", {
 
 	/**
 	 * Params:<br>
-	 * crec: combo selected record <br>
+	 * crec: Combo selected record <br>
 	 * drec - Controller data-record. <br>
 	 * The current record or current filter based on the view-type context <br>
 	 * prec - Controller params record
@@ -275,7 +275,6 @@ Ext.define("e4e.lov.AbstractCombo", {
 			var nv, ov, isParam, rawv = this.getRawValue();
 
 			for (var i = this.retFieldMapping.length - 1; i >= 0; i--) {
-
 				var retDataIndex = null;
 				isParam = !Ext.isEmpty(this.retFieldMapping[i]["dsParam"]);
 				if (isParam) {
@@ -285,7 +284,6 @@ Ext.define("e4e.lov.AbstractCombo", {
 					retDataIndex = this.retFieldMapping[i]["dsField"];
 					ov = drec.get(retDataIndex);
 				}
-
 				if (crec && crec.data) {
 					nv = crec.data[this.retFieldMapping[i]["lovField"]];
 					if (nv != ov) {
@@ -302,7 +300,6 @@ Ext.define("e4e.lov.AbstractCombo", {
 						}
 					}
 				} else {
-
 					if (retDataIndex == this.dataIndex) {
 						if (this._validateListValue_ && rawv != ov) {
 							rawv = null;
@@ -321,7 +318,6 @@ Ext.define("e4e.lov.AbstractCombo", {
 								}
 							}
 						}
-
 					} else {
 						if ((ov != null && ov != "")) {
 							if (isParam) {
@@ -348,7 +344,6 @@ Ext.define("e4e.lov.AbstractCombo", {
 		}
 		if (this.retFieldMapping != null) {
 			for (var i = this.retFieldMapping.length - 1; i >= 0; i--) {
-
 				var retDataIndex = null;
 				var nv = null;
 				isParam = !Ext.isEmpty(this.retFieldMapping[i]["dsParam"]);
