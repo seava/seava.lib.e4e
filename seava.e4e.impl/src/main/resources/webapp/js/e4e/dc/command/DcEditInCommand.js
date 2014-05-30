@@ -13,13 +13,5 @@ Ext.define("e4e.dc.command.DcEditInCommand", {
 			dc.isEditMode = true;
 		}
 		dc.fireEvent("onEditIn", dc, options);
-	},
-
-	isActionAllowed : function() {
-		if (this.dc.record == null) {
-			this.dc.warning(Main.msg.NO_CURRENT_RECORD, "msg");
-			return false;
-		}
-		return true;
 	}
 });
